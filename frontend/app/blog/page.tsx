@@ -1,135 +1,149 @@
 // frontend/app/blog/page.tsx
 import { Metadata } from 'next';
-import { getAllPosts } from "@/lib/mdx";
-import Link from "next/link";
+import { getAllPosts, PostData } from "@/lib/mdx";
+import BlogHero from '@/components/blog/BlogHero';
+import CategoryBar from '@/components/blog/CategoryBar';
+import BlogCard from '@/components/blog/BlogCard';
+import CallToAction from '@/components/blog/CallToAction';
+import Link from 'next/link';
+
+// PostData (which includes frontmatter) is defined in @/lib/mdx
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Read our latest articles and insights',
+  description: 'Read our latest articles and insights on technology, design, and more.',
+  // Keep existing OpenGraph and Twitter metadata...
   openGraph: {
     title: 'Blog',
-    description: 'Read our latest articles and insights',
+    description: 'Read our latest articles and insights on technology, design, and more.',
     type: 'website',
+    images: [
+      {
+        url: 'https://picsum.photos/seed/blog-index-og/1200/630', // Updated seed/size
+        width: 1200,
+        height: 630,
+        alt: 'Blog Posts'
+      }
+    ]
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Blog',
-    description: 'Read our latest articles and insights',
+    description: 'Read our latest articles and insights on technology, design, and more.',
+    images: ['https://picsum.photos/seed/blog-index-twitter/800/400'] // Updated seed/size
   },
-}
+};
 
+// Updated type definition to match Next.js current expected format
 type BlogPageProps = {
-  searchParams: Promise<{ tag?: string }>
+  searchParams: { tag?: string }
 }
 
 export default async function BlogIndexPage(
   { searchParams }: BlogPageProps
 ) {
   try {
-    // In Next.js 15, searchParams is a Promise that must be awaited
-    const { tag } = await searchParams;
-    
+    // Fixed: await searchParams properly
+    const tag = searchParams.tag;
     const allPosts = getAllPosts();
-    
-    // Filter posts by tag if a tag is specified
-    const posts = tag 
+
+    // Filter posts by tag if provided
+    const filteredPosts = tag 
       ? allPosts.filter(post => 
           post.frontmatter.tags?.some(t => 
             t.toLowerCase() === tag.toLowerCase()
           )
         )
       : allPosts;
-    
-    // Extract all unique tags from posts
+
+    // Extract all unique tags from *all* posts for the filter bar
     const allTags = [...new Set(
       allPosts.flatMap(post => post.frontmatter.tags || [])
     )].sort();
 
+    // Handle posts for different sections
+    const heroPost = filteredPosts.length > 0 ? filteredPosts[0] : null;
+    const featuredPosts = allPosts
+      .filter(p => p.slug !== heroPost?.slug)
+      .slice(0, 3);
+    const mainGridPosts = tag
+      ? filteredPosts.slice(heroPost ? 1 : 0)
+      : filteredPosts.slice(1, 7); // Show 6 posts in main grid if no tag filter
+    
+    // Additional posts for different sections (when not filtering)
+    const latestNewsPosts = !tag ? allPosts.slice(7, 10) : [];
+
     return (
-      <section className="max-w-3xl mx-auto px-4 py-10">
-        <h1 className="text-3xl font-bold mb-6 text-blue-700 dark:text-blue-300">
-          {tag ? `Blog: ${tag}` : 'Blog'}
-        </h1>
-        
-        {/* Tags filter */}
-        {allTags.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Filter by tag:</h2>
-            <div className="flex flex-wrap gap-2">
-              <Link 
-                href="/blog"
-                className={`px-3 py-1 text-sm rounded-full ${!tag ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-              >
-                All
-              </Link>
-              {allTags.map(tagName => (
-                <Link 
-                  key={tagName} 
-                  href={`/blog?tag=${encodeURIComponent(tagName)}`}
-                  className={`px-3 py-1 text-sm rounded-full ${tag === tagName ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'}`}
-                >
-                  {tagName}
-                </Link>
-              ))}
+      <>
+        {/* Main content - The Layout component already provides the GlobalContainer */}
+        <div className="py-8">
+          {/* Hero Section */}
+          {heroPost && (
+            <BlogHero heroPost={heroPost} featuredPosts={featuredPosts} />
+          )}
+          
+          {/* Category Filter Bar */}
+          <CategoryBar tags={allTags} currentTag={tag} />
+          
+          {/* Main Content Section */}
+          <div className="mt-8">
+            {/* Section Header */}
+            <div className="mb-6 border-b border-gray-200 dark:border-gray-700 pb-1">
+              <h2 className="text-sm font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                {tag ? `Articles tagged with "${tag}"` : "Latest Articles"}
+              </h2>
             </div>
-          </div>
-        )}
-        
-        {/* No posts message */}
-        {posts.length === 0 && (
-          <div className="py-8 text-center">
-            <p className="text-gray-600 dark:text-gray-400">
-              {tag ? `No posts found with tag "${tag}"` : 'No posts found'}
-            </p>
-            {tag && (
-              <Link href="/blog" className="text-blue-600 dark:text-blue-400 hover:underline mt-2 inline-block">
-                View all posts
-              </Link>
+            
+            {/* Posts Grid */}
+            {mainGridPosts.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 mb-16">
+                {mainGridPosts.map((post) => (
+                  <BlogCard key={post.slug} post={post} />
+                ))}
+              </div>
+            ) : (
+              <div className="py-12 text-center bg-gray-50 dark:bg-gray-800/50 mb-16">
+                <p className="text-gray-600 dark:text-gray-400">
+                  {tag ? `No posts found with tag "${tag}".` : 'No posts available right now.'}
+                </p>
+                {tag && (
+                  <Link href="/blog" className="text-blue-600 dark:text-blue-400 hover:underline mt-2 inline-block">
+                    View all posts
+                  </Link>
+                )}
+              </div>
+            )}
+            
+            {/* Latest News Section (only when not filtering) */}
+            {!tag && latestNewsPosts.length > 0 && (
+              <section className="mb-16">
+                <div className="mb-6 border-b border-gray-200 dark:border-gray-700 pb-1">
+                  <h2 className="text-sm font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    More Articles
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+                  {latestNewsPosts.map((post) => (
+                    <BlogCard key={post.slug} post={post} />
+                  ))}
+                </div>
+              </section>
             )}
           </div>
-        )}
+        </div>
         
-        {/* Posts list */}
-        <ul className="space-y-6">
-          {posts.map((post) => (
-            <li key={post.slug} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-              <Link href={`/blog/${post.slug}`} className="block">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white hover:underline">
-                  {post.frontmatter.title}
-                </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {new Date(post.frontmatter.date).toLocaleDateString()}
-                </p>
-                
-                {/* Tags */}
-                {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {post.frontmatter.tags.map(tagName => (
-                      <span 
-                        key={tagName} 
-                        className="inline-block px-2 py-0.5 text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded"
-                      >
-                        {tagName}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                
-                {post.frontmatter.summary && (
-                  <p className="text-gray-700 dark:text-gray-300 mt-2">
-                    {post.frontmatter.summary}
-                  </p>
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+        {/* The CallToAction component is outside the layout's container to allow for full-width styling */}
+        <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12">
+          <CallToAction />
+        </div>
+      </>
     );
+
   } catch (error) {
     console.error('Error rendering blog index:', error);
+    // Keep the original error handling block
     return (
-      <section className="max-w-3xl mx-auto px-4 py-10 text-center">
+      <section className="py-10">
         <h1 className="text-2xl font-bold text-red-600 mb-4">Error Loading Blog</h1>
         <p>There was an error loading the blog posts. Please try again later.</p>
       </section>

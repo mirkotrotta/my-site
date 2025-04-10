@@ -8,8 +8,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ['"IBM Plex Sans"', 'sans-serif'],
-      mono: ['"IBM Plex Mono"', 'monospace'],
+      sans: ['"IBM Plex Sans"', 'var(--font-geist-sans)', 'sans-serif'],
+      mono: ['"IBM Plex Mono"', 'var(--font-geist-mono)', 'monospace'],
     },
     extend: {
       colors: {
@@ -26,6 +26,26 @@ module.exports = {
           50: '#f4f4f4',
         },
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.gray.600'),
+            maxWidth: 'none',
+            'a': {
+              color: theme('colors.blue.600'),
+              textDecoration: 'none',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            },
+          },
+        },
+        invert: {
+          css: {
+            color: theme('colors.gray.300'),
+          },
+        },
+      }),
     },
   },
   plugins: [require('@tailwindcss/typography')],

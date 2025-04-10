@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { Sun, Moon, Menu, Close } from "@carbon/icons-react";
 import SocialLinks from "@/components/SocialLinks";
+import GlobalContainer from "@/components/ui/GlobalContainer";
 
 interface LayoutProps {
   children: ReactNode;
@@ -13,13 +14,38 @@ export default function Layout({ children }: LayoutProps) {
   const [darkMode, setDarkMode] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Function to update header height CSS variable
+  const updateHeaderHeight = () => {
+    const header = document.querySelector('header');
+    if (header) {
+      const height = header.offsetHeight;
+      document.documentElement.style.setProperty('--header-height', `${height}px`);
+    }
+  };
+
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme === "dark") {
       document.documentElement.classList.add("dark");
       setDarkMode(true);
     }
+    
+    // Set the header height CSS variable based on actual header height
+    updateHeaderHeight();
+    
+    // Listen for window resize to update header height
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
   }, []);
+  
+  // Update header height when mobile menu is toggled
+  useEffect(() => {
+    // Use setTimeout to ensure the DOM has updated
+    const timer = setTimeout(() => {
+      updateHeaderHeight();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [mobileOpen]);
 
   const toggleDarkMode = () => {
     const isDark = !darkMode;
@@ -30,57 +56,63 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <div className="font-sans text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 min-h-screen flex flex-col">
-      <header className="border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-14">
-          <div className="flex items-center space-x-6">
-            <Link href="/">
-              <span className="font-bold text-lg tracking-tight">Mirko</span>
-            </Link>
-            <nav className="hidden md:flex space-x-4 text-sm">
-              <Link href="/resume" className="hover:underline">Resume</Link>
-              <Link href="/projects" className="hover:underline">Projects</Link>
-              <Link href="/blog" className="hover:underline">Blog</Link>
-              <Link href="/contact" className="hover:underline">Contact</Link>
-            </nav>
+      <header className="sticky-header border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
+        <GlobalContainer>
+          <div className="flex justify-between items-center h-14">
+            <div className="flex items-center space-x-6">
+              <Link href="/">
+                <span className="font-bold text-lg tracking-tight">Mirko</span>
+              </Link>
+              <nav className="hidden md:flex space-x-4 text-sm">
+                <Link href="/about" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">About</Link>
+                <Link href="/resume" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Resume</Link>
+                <Link href="/projects" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Projects</Link>
+                <Link href="/blog" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Blog</Link>
+                <Link href="/contact" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Contact</Link>
+              </nav>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggleDarkMode}
+                className="border border-gray-400 dark:border-gray-600 p-2 w-8 h-8 text-xs hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center"
+                aria-label="Toggle theme"
+              >
+                {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+              <button
+                onClick={() => setMobileOpen((prev) => !prev)}
+                className="md:hidden border border-gray-400 dark:border-gray-600 p-2 w-8 h-8 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center"
+                aria-label="Toggle mobile menu"
+              >
+                {mobileOpen ? <Close size={16} /> : <Menu size={16} />}
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggleDarkMode}
-              className="border border-gray-400 dark:border-gray-600 p-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center"
-              aria-label="Toggle theme"
-            >
-              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
-            <button
-              onClick={() => setMobileOpen((prev) => !prev)}
-              className="md:hidden border border-gray-400 dark:border-gray-600 p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
-              aria-label="Toggle mobile menu"
-            >
-              {mobileOpen ? <Close size={16} /> : <Menu size={16} />}
-            </button>
-          </div>
-        </div>
+        </GlobalContainer>
         {mobileOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-gray-700 px-4 py-3 space-y-2 bg-white dark:bg-gray-900">
+          <GlobalContainer className="md:hidden border-t border-gray-200 dark:border-gray-700 py-3 space-y-2 bg-white dark:bg-gray-900">
+            <Link href="/about" className="block hover:underline">About</Link>
             <Link href="/resume" className="block hover:underline">Resume</Link>
             <Link href="/projects" className="block hover:underline">Projects</Link>
             <Link href="/blog" className="block hover:underline">Blog</Link>
             <Link href="/contact" className="block hover:underline">Contact</Link>
-          </div>
+          </GlobalContainer>
         )}
       </header>
 
-      <main className="flex-grow max-w-7xl mx-auto w-full px-4 py-10">
-        {children}
+      <main className="flex-grow w-full py-10">
+        <GlobalContainer>
+          {children}
+        </GlobalContainer>
       </main>
 
       <footer className="mt-auto border-t border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-xs py-8 text-gray-600 dark:text-gray-400">
-        <div className="max-w-7xl mx-auto px-4 text-center">
+        <GlobalContainer className="text-center">
           <p className="font-semibold">Mirko – Full-stack Developer</p>
           <p className="mt-1">Remote | Open Source Contributor</p>
           <SocialLinks className="mt-3 justify-center" />
           <p className="mt-4 text-gray-400">© {new Date().getFullYear()} Mirko. Built with Next.js & FastAPI.</p>
-        </div>
+        </GlobalContainer>
       </footer>
     </div>
   );

@@ -12,6 +12,7 @@ export interface Frontmatter {
   date: string;
   summary?: string;
   tags?: string[];
+  coverImage?: string;
 }
 
 export interface PostData {
@@ -117,7 +118,16 @@ export const getPostData = cache(async (slug: string): Promise<{
     // Serialize MDX content
     let mdxSource;
     try {
-      mdxSource = await serialize(content);
+      mdxSource = await serialize(content, {
+        // Add MDX parsing options to better handle images
+        parseFrontmatter: true,
+        mdxOptions: {
+          development: process.env.NODE_ENV === 'development',
+          remarkPlugins: [],
+          rehypePlugins: [],
+          format: 'mdx',
+        }
+      });
     } catch (e) {
       console.error(`Error serializing MDX for ${slug}:`, e);
       return null;

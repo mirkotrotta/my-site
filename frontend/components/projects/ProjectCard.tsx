@@ -39,7 +39,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="block border border-gray-200 dark:border-gray-700 rounded-md p-5 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-400 transition-all bg-white dark:bg-gray-800"
+      className="block border border-gray-200 dark:border-gray-700 p-5 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-400 transition-all bg-white dark:bg-gray-800"
     >
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold truncate text-blue-700 dark:text-blue-300">{project.name}</h2>
@@ -51,7 +51,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       <div className="flex flex-wrap items-center text-xs text-gray-500 dark:text-gray-400 gap-x-3 gap-y-1">
         {project.language && (
           <span className="flex items-center gap-1">
-            <span className={`w-2 h-2 rounded-full ${langColor}`} />
+            <span className={`w-2 h-2 ${langColor}`} />
             {project.language}
           </span>
         )}
@@ -67,7 +67,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             return (
               <span
                 key={topic}
-                className={`text-xs px-2 py-1 rounded-full hover:opacity-80 transition ${style}`}
+                className={`text-xs px-2 py-1 hover:opacity-80 transition ${style}`}
               >
                 #{topic}
               </span>

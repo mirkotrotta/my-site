@@ -6,6 +6,7 @@ import BlogPost from '@/components/blog/BlogPost';
 import { notFound } from 'next/navigation';
 import path from 'path';
 import fs from 'fs';
+import { getRelatedPosts } from '@/lib/relatedPosts';
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>
@@ -58,6 +59,9 @@ export async function generateMetadata(
     
     const { frontmatter } = post;
     
+    // Generate the cover image URL, or fallback to a placeholder
+    const coverImage = frontmatter.coverImage || `https://picsum.photos/seed/${slug}/800/400`;
+    
     return {
       title: frontmatter.title,
       description: frontmatter.summary || `${frontmatter.title} - Blog Post`,
@@ -69,11 +73,20 @@ export async function generateMetadata(
         type: 'article',
         publishedTime: frontmatter.date,
         tags: frontmatter.tags,
+        images: [
+          {
+            url: coverImage,
+            width: 800,
+            height: 400,
+            alt: frontmatter.title
+          }
+        ]
       },
       twitter: {
         card: 'summary_large_image',
         title: frontmatter.title,
         description: frontmatter.summary || `${frontmatter.title} - Blog Post`,
+        images: [coverImage]
       },
       alternates: {
         canonical: `/blog/${slug}`
@@ -105,12 +118,19 @@ export default async function BlogPostPage(
       return notFound();
     }
     
-    const postWithSlug = {
+    // Get related posts based on tags
+    const relatedPosts = await getRelatedPosts(
+      slug, 
+      post.frontmatter.tags || []
+    );
+    
+    const postWithDetails = {
       ...post,
-      slug: slug
+      slug: slug,
+      relatedPosts
     };
     
-    return <BlogPost post={postWithSlug} />
+    return <BlogPost post={postWithDetails} />
   } catch (error) {
     console.error('Error rendering blog post:', error);
     return (

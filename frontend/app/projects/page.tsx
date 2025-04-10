@@ -33,9 +33,8 @@ export default function ProjectsPage() {
     localStorage.theme = newMode ? "dark" : "light";
     document.documentElement.classList.toggle("dark", newMode);
   }
-
   return (
-    <Layout darkMode={darkMode} toggleDarkMode={toggleDarkMode}>
+    <Layout>
       <h1 className="text-3xl font-semibold mb-6">Projects</h1>
 
       {loading && <p className="text-sm text-gray-500">Loading...</p>}
