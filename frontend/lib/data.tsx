@@ -20,6 +20,7 @@ export type SkillOrService = {
   title: string;
   description: string;
   icon: React.ReactNode;
+  url: string;
 };
 
 // Skill/Service data
@@ -27,42 +28,50 @@ export const skillsData: SkillOrService[] = [
   {
     title: 'Full-stack Development',
     description: 'Building complete applications with modern frontend and backend technologies like React, Next.js, Node.js, and Python.',
-    icon: <Application size={24} />
+    icon: <Application size={36} />,
+    url: 'https://example.com/full-stack-development'
   },
   {
     title: 'Software Architecture',
     description: 'Designing scalable, maintainable systems with clean architecture principles and best practices.',
-    icon: <Network size={24} />
+    icon: <Network size={36} />,
+    url: 'https://example.com/software-architecture'
   },
   {
     title: 'DevOps',
     description: 'Implementing CI/CD pipelines, containerization, and cloud infrastructure on AWS, Azure, and GCP.',
-    icon: <Settings size={24} />
+    icon: <Settings size={36} />,
+    url: 'https://example.com/devops'
   },
   {
     title: 'Data Engineering',
     description: 'Building robust data pipelines, integrations, and analytics solutions for business intelligence.',
-    icon: <ChartLineData size={24} />
+    icon: <ChartLineData size={36} />,
+    url: 'https://example.com/data-engineering'
   },
   {
     title: 'API Development',
     description: 'Creating RESTful and GraphQL APIs with secure authentication, testing, and documentation.',
-    icon: <Code size={24} />
+    icon: <Code size={36} />,
+    url: 'https://example.com/api-development'
   },
   {
     title: 'AI/ML Integration',
     description: 'Incorporating machine learning models and AI services into web and mobile applications.',
-    icon: <MagicWand size={24} />
+    icon: <MagicWand size={36} />,
+    url: 'https://example.com/ai-ml-integration'
   },
   {
     title: 'Cloud Services',
     description: 'Using cloud services like AWS, Azure, and GCP to store and process data.',
-    icon: <CloudServices size={24} />
+    icon: <CloudServices size={36} />,
+    url: 'https://example.com/cloud-services'
   },
   {
     title: 'CrewAI',
     description: 'Streamline workflows across industries with powerful AI agents. Build and deploy automated workflows.',
-    icon: <AiLabel size={24} />
+    icon: <AiLabel size={36} />,
+    url: 'https://example.com/crewai'
   }
 ];
 

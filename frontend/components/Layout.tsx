@@ -61,7 +61,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className="flex justify-between items-center h-14">
             <div className="flex items-center space-x-6">
               <Link href="/">
-                <span className="font-bold text-lg tracking-tight">Mirko</span>
+                <span className="font-bold text-lg tracking-tight">Moon Site</span>
               </Link>
               <nav className="hidden md:flex space-x-4 text-sm">
                 <Link href="/about" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">About</Link>
@@ -108,10 +108,10 @@ export default function Layout({ children }: LayoutProps) {
 
       <footer className="mt-auto border-t border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-xs py-8 text-gray-600 dark:text-gray-400">
         <GlobalContainer className="text-center">
-          <p className="font-semibold">Mirko – Full-stack Developer</p>
+          <p className="font-semibold">Moon Site – Professional and Blog Template</p>
           <p className="mt-1">Remote | Open Source Contributor</p>
           <SocialLinks className="mt-3 justify-center" />
-          <p className="mt-4 text-gray-400">© {new Date().getFullYear()} Mirko. Built with Next.js & FastAPI.</p>
+          <p className="mt-4 text-gray-400">© {new Date().getFullYear()} Moon Site. Built with Next.js & FastAPI.</p>
         </GlobalContainer>
       </footer>
     </div>

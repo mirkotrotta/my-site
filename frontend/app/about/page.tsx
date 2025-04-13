@@ -66,13 +66,11 @@ export default function AboutPage() {
 
       {/* Skills & Services Section */}
       <section className="py-16">
-        <GlobalContainer>
           <div className="grid grid-cols-2 gap-4 mb-16">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">Skills & Services</h2>
             <p className="text-lg text-gray-700 dark:text-gray-300">Explore a range of skills and services that I offer, tailored to meet your project needs.</p>
           </div>
           <SkillsServicesGrid items={skillsData} />
-        </GlobalContainer>
       </section>
 
               {/* Blog Preview Section - Client Component */}
