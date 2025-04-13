@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   description: 'Personal website built with Next.js and Tailwind CSS',
   keywords: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'],
-  authors: [{ name: 'Mirko Trotta' }],
-  creator: 'Mirko Trotta',
+  authors: [{ name: 'Anonymous' }],
+  creator: 'Anonymous',
   robots: {
     index: true,
     follow: true,

@@ -11,24 +11,24 @@ import HeroWithSidebar from "@/components/ui/HeroWithSidebar";
 export default function Home() {
   return (
     <Layout>
-      {/* Hero Section */}
+      {/* Hero Section - CUSTOMIZE: Update with your own title, description and CTAs */}
       <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white">
               <HeroWithSidebar
-          title="Moon Site: Do more at the core"
-          description="By scaling advanced AI directly across mission-critical data and workloads, the latest Moon Site platform powers productivity and innovation."
+          title="Moon Site: Your Website Title"
+          description="CUSTOMIZE: Add your website's main description here. This is the first thing visitors will see when they arrive at your site."
           primaryCta={{ text: "Read the announcement", href: "/blog/first-post" }}
           secondaryCta={{ text: "Explore possibilities", href: "/blog" }}
-          imageSrc="/images/moon-place-holder-background-1.jpg"
+          imageSrc="/images/moon-place-holder-background-1.jpg" // CUSTOMIZE: Replace with your own hero image
         />
       </section>
 
-      {/* About/Introduction Section */}
+      {/* About/Introduction Section - CUSTOMIZE: Update with your personal information */}
       <section className="py-16 bg-white dark:bg-gray-900">
         <div className="md:grid md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-4 mb-8 md:mb-0">
             <div className="relative aspect-square max-w-sm mx-auto overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
               <img 
-                src="/images/moon-site-website-profile-place-holder.png"
+                src="/images/moon-site-website-profile-place-holder.png" // CUSTOMIZE: Replace with your profile picture
                 alt="Profile Image"
                 className="h-full w-full object-cover"
               />
@@ -37,6 +37,7 @@ export default function Home() {
           <div className="md:col-span-8">
             <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-gray-900 dark:text-white">About Me</h2>
             <div className="prose dark:prose-invert">
+              {/* CUSTOMIZE: Update the following paragraphs with your own bio */}
               <p className="mb-4">
                 Hello! I'm a passionate full-stack developer with over 5 years of experience building modern web applications. 
                 I specialize in TypeScript, React, Next.js, Node.js, and Python, with a strong focus on creating clean, maintainable, and scalable code.
@@ -70,6 +71,7 @@ export default function Home() {
           <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">Skills & Services</h2>
           <p className="text-lg text-gray-700 dark:text-gray-300">Explore a range of skills and services that I offer, tailored to meet your project needs.</p>
         </div>
+        {/* Skills data is populated from lib/data.tsx - edit that file to customize */}
         <SkillsServicesGrid items={skillsData} />
       </section>
 
@@ -84,6 +86,7 @@ export default function Home() {
             View all projects
           </Link>
         </div>
+        {/* Project data is populated from lib/data.tsx and GitHub API - edit lib/data.tsx to customize */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredProjects.map((project) => (
             <ProjectCard key={project.name} project={project} />
@@ -96,7 +99,7 @@ export default function Home() {
         <ClientBlogSection />
       </section>
 
-      {/* Global CTA Section */}
+      {/* Global CTA Section - CUSTOMIZE: Update with your own call to action */}
       <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 mb-16">
         <GlobalCTA 
           title="Let's Work Together"
