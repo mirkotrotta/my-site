@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { ReactNode } from "react";
 import Button from "@/components/ui/Button";
 import ClientHeroNews from "./ClientHeroNews";
@@ -14,6 +13,7 @@ type HeroWithSidebarProps = {
     text: string;
     href: string;
   };
+  imageSrc: string;
   children?: ReactNode;
 };
 
@@ -22,6 +22,7 @@ export default function HeroWithSidebar({
   description,
   primaryCta,
   secondaryCta,
+  imageSrc,
   children,
 }: HeroWithSidebarProps) {
   return (
@@ -45,8 +46,7 @@ export default function HeroWithSidebar({
       </div>
       <div className="lg:col-span-4">
         <div className="h-full w-full bg-black/80 overflow-hidden">
-          {/* Placeholder for image */}
-          <div className="h-full w-full bg-[url('https://source.unsplash.com/800x600/?technology')] bg-cover bg-center grayscale" />
+          <img src={imageSrc} alt="Hero Image" className="h-full w-full object-cover" />
         </div>
       </div>
       <div className="lg:col-span-2 bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800 p-4">

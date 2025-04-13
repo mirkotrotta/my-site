@@ -1,6 +1,5 @@
 // Server Component
 import Link from "next/link";
-import GlobalContainer from "@/components/ui/GlobalContainer";
 import GlobalCTA from "@/components/ui/GlobalCTA";
 import SkillsServicesGrid from "@/components/ui/SkillsServicesGrid";
 import ProjectCard from "@/components/projects/ProjectCard";
@@ -19,6 +18,7 @@ export default function Home() {
           description="By scaling advanced AI directly across mission-critical data and workloads, the latest Moon Site platform powers productivity and innovation."
           primaryCta={{ text: "Read the announcement", href: "/blog/first-post" }}
           secondaryCta={{ text: "Explore possibilities", href: "/blog" }}
+          imageSrc="/images/moon-place-holder-background-1.jpg"
         />
       </section>
 
@@ -27,10 +27,11 @@ export default function Home() {
         <div className="md:grid md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-4 mb-8 md:mb-0">
             <div className="relative aspect-square max-w-sm mx-auto overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800">
-              {/* Profile image placeholder */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-5xl text-gray-400">👨‍💻</span>
-              </div>
+              <img 
+                src="/images/moon-site-website-profile-place-holder.png"
+                alt="Profile Image"
+                className="h-full w-full object-cover"
+              />
             </div>
           </div>
           <div className="md:col-span-8">

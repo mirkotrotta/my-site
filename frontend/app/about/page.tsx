@@ -36,7 +36,7 @@ export default function AboutPage() {
           <div className="md:col-span-4 flex justify-center md:justify-start">
             <div className="w-64 h-auto md:w-full relative shadow-md border border-gray-300 dark:border-gray-700">
               <Image
-                src="https://picsum.photos/400/500"
+                src="/images/moon-site-website-profile-place-holder.png"
                 alt="Profile Picture"
                 width={400}
                 height={500}
