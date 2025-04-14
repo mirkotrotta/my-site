@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from 'react';
-import { ArrowRight } from '@carbon/icons-react';
+import { MoveRight } from 'lucide-react';
 
 type SkillOrService = {
   title: string;
@@ -36,7 +36,7 @@ export default function SkillsServicesGrid({ items, className = '' }: SkillsServ
                 {item.icon}
               </div>
               <div className="text-blue-600 dark:text-blue-400">
-                <ArrowRight size={24} />
+                <MoveRight size={24} className="transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </div>

@@ -1,9 +1,8 @@
 import React from 'react';
 import {
-  Application, Code, MagicWand, ChartLineData, Network_1 as Network, Settings,
-  CloudServices,
-  AiLabel
-} from '@carbon/icons-react';
+  Code, Settings, Cloud, Network, LineChart, WandSparkles, Bot
+} from 'lucide-react';
+import { FaLaptopCode } from 'react-icons/fa'; // for Application
 
 // Define the Project interface locally to avoid import issues
 export interface Project {
@@ -28,7 +27,7 @@ export const skillsData: SkillOrService[] = [
   {
     title: 'Full-stack Development',
     description: 'Building complete applications with modern frontend and backend technologies like React, Next.js, Node.js, and Python.',
-    icon: <Application size={36} />,
+    icon: <FaLaptopCode size={36} />,
     url: '/services/full-stack-development' // CUSTOMIZE: Link to your service page or portfolio item
   },
   {
@@ -46,7 +45,7 @@ export const skillsData: SkillOrService[] = [
   {
     title: 'Data Engineering',
     description: 'Building robust data pipelines, integrations, and analytics solutions for business intelligence.',
-    icon: <ChartLineData size={36} />,
+    icon: <LineChart size={36} />,
     url: '/services/data-engineering' // CUSTOMIZE: Link to your service page or portfolio item
   },
   {
@@ -58,19 +57,19 @@ export const skillsData: SkillOrService[] = [
   {
     title: 'AI/ML Integration',
     description: 'Incorporating machine learning models and AI services into web and mobile applications.',
-    icon: <MagicWand size={36} />,
+    icon: <WandSparkles size={36} />,
     url: '/services/ai-ml-integration' // CUSTOMIZE: Link to your service page or portfolio item
   },
   {
     title: 'Cloud Services',
     description: 'Using cloud services like AWS, Azure, and GCP to store and process data.',
-    icon: <CloudServices size={36} />,
+    icon: <Cloud size={36} />,
     url: '/services/cloud-services' // CUSTOMIZE: Link to your service page or portfolio item
   },
   {
     title: 'AI Workflow Automation',
     description: 'Streamline workflows across industries with powerful AI agents. Build and deploy automated workflows.',
-    icon: <AiLabel size={36} />,
+    icon: <Bot size={36} />,
     url: '/services/ai-workflow-automation' // CUSTOMIZE: Link to your service page or portfolio item
   }
 ];

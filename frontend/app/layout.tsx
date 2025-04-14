@@ -14,11 +14,10 @@ const geistMono = Geist_Mono({
   display: "swap",
   subsets: ["latin"],
 });
-
 export const metadata: Metadata = {
   title: {
-    default: 'Moon Site',
-    template: '%s | Moon Site',
+    default: 'Mirko Trotta | Full Stack Developer & Product Manager',
+    template: '%s | Mirko Trotta'
   },
   description: 'Personal website built with Next.js and Tailwind CSS',
   keywords: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'],

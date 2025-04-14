@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { PostData } from '@/lib/mdx'; // Use PostData
-import { ArrowRight } from '@carbon/icons-react'; // Import the IBM ArrowRight icon
+import { PostData } from '@/lib/mdx';
+import { MoveRight } from 'lucide-react';
+import Button from '@/components/ui/Button';
 
 type BlogCardProps = {
   post: PostData;
@@ -56,10 +57,13 @@ export default function BlogCard({ post }: BlogCardProps) {
         )}
       </div>
       <div className="mt-2 p-4">
-        <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm text-blue-600 dark:text-blue-400 group-hover:underline">
+        <Button 
+          href={`/blog/${post.slug}`} 
+          className="inline-flex items-center text-sm text-blue-600 dark:text-blue-400 group-hover:underline"
+        >
           Read more
-          <ArrowRight className="ml-3 w-5 h-5" />
-        </Link>
+          <MoveRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-1" />
+        </Button>
       </div>
     </article>
   );

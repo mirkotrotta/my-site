@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
-import { Sun, Moon, Menu, Close } from "@carbon/icons-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import SocialLinks from "@/components/SocialLinks";
 import GlobalContainer from "@/components/ui/GlobalContainer";
 
@@ -84,7 +84,7 @@ export default function Layout({ children }: LayoutProps) {
                 className="md:hidden border border-gray-400 dark:border-gray-600 p-2 w-8 h-8 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center"
                 aria-label="Toggle mobile menu"
               >
-                {mobileOpen ? <Close size={16} /> : <Menu size={16} />}
+                {mobileOpen ? <X size={16} /> : <Menu size={16} />}
               </button>
             </div>
           </div>

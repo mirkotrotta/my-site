@@ -28,7 +28,7 @@ export default function HeroWithSidebar({
   return (
     <section className="grid grid-cols-1 lg:grid-cols-12 min-h-[600px]">
       <div className="lg:col-span-6 flex flex-col justify-center px-6 py-12 bg-white dark:bg-gray-900">
-        <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        <h1 className="text-3xl md:text-5xl font-normal text-gray-900 dark:text-white mb-6">
           {title}
         </h1>
         <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8">

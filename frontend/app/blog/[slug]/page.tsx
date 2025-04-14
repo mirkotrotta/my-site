@@ -1,7 +1,7 @@
 // app/blog/[slug]/page.tsx
 
 import { Metadata } from 'next';
-import { getPostData, getAllPosts } from '@/lib/mdx';
+import { getPostData } from '@/lib/mdx';
 import BlogPost from '@/components/blog/BlogPost';
 import { notFound } from 'next/navigation';
 import path from 'path';

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { PostData } from '@/lib/mdx';
-import { ArrowRight } from '@carbon/icons-react';
 
 type BlogCardSimpleProps = {
     post: PostData;

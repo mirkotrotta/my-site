@@ -1,6 +1,6 @@
 "use client";
 
-import { LogoGithub } from "@carbon/icons-react";
+import { SiGithub } from "react-icons/si";
 
 export interface Project {
   name: string;
@@ -43,7 +43,7 @@ export default function ProjectCard({ project }: { project: Project }) {
     >
       <div className="flex items-center justify-between mb-2">
         <h2 className="text-lg font-semibold truncate text-blue-700 dark:text-blue-300">{project.name}</h2>
-        <LogoGithub size={18} className="text-gray-600 dark:text-gray-300" />
+        <SiGithub size={18} className="text-gray-600 dark:text-gray-300" />
       </div>
 
       <p className="text-sm text-gray-700 dark:text-gray-300 mb-3 line-clamp-3">{project.description}</p>
