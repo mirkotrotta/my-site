@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import BlogCardSimple from "@/components/blog/BlogCardSimple";
-import GlobalContainer from "@/components/ui/GlobalContainer";
 import { fetchAllPosts, PostData } from "./actions";
+import BlogCard from "@/components/blog/BlogCard";
 
 export default function ClientBlogSection() {
   const [posts, setPosts] = useState<PostData[]>([]);
@@ -44,7 +43,7 @@ export default function ClientBlogSection() {
             <p className="text-gray-500 dark:text-gray-400 col-span-3 text-center py-8">Loading blog posts...</p>
           ) : posts.length > 0 ? (
             posts.map((post) => (
-              <BlogCardSimple key={post.slug} post={post} />
+              <BlogCard key={post.slug} post={post} />
             ))
           ) : (
             <p className="text-gray-500 dark:text-gray-400 col-span-3 text-center py-8">No blog posts found.</p>

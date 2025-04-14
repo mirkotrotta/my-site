@@ -12,14 +12,14 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section - CUSTOMIZE: Update with your own title, description and CTAs */}
-      <section className="relative h-[70vh] min-h-[600px] flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-              <HeroWithSidebar
-          title="Moon Site: Your Website Title"
-          description="CUSTOMIZE: Add your website's main description here. This is the first thing visitors will see when they arrive at your site."
-          primaryCta={{ text: "Read the announcement", href: "/blog/first-post" }}
-          secondaryCta={{ text: "Explore possibilities", href: "/blog" }}
-          imageSrc="/images/moon-place-holder-background-1.jpg" // CUSTOMIZE: Replace with your own hero image
-        />
+      <section className="bg-white dark:bg-gray-900">
+          <HeroWithSidebar
+            title="Moon Site: Your Website Title"
+            description="CUSTOMIZE: Add your website's main description here. This is the first thing visitors will see when they arrive at your site."
+            primaryCta={{ text: "Read the announcement", href: "/blog/first-post" }}
+            secondaryCta={{ text: "Explore possibilities", href: "/blog" }}
+            imageSrc="/images/mirko trotta, metacubo studio, services germany, development.JPG"
+          />
       </section>
 
       {/* About/Introduction Section - CUSTOMIZE: Update with your personal information */}
