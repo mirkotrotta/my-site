@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { LogoTwitter, LogoFacebook, LogoLinkedin, Share, Link } from "@carbon/icons-react";
+import { SiX, SiFacebook, SiLinkedin } from "react-icons/si";
+import { Share, Link2 } from "lucide-react";
 import SocialLinks from "@/components/SocialLinks";
 import { trackSocialShare } from '@/components/analytics/ShareTracker';
 
@@ -83,7 +84,7 @@ export default function SocialSharing({ url, title, summary = "", className = ""
                 className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
                 onClick={() => isClient && trackSocialShare('twitter')}
               >
-                <LogoTwitter size={20} className="text-gray-700 dark:text-gray-300" />
+                <SiX size={20} className="text-gray-700 dark:text-gray-300" />
               </a>
               <a 
                 href={facebookUrl}
@@ -93,7 +94,7 @@ export default function SocialSharing({ url, title, summary = "", className = ""
                 className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
                 onClick={() => isClient && trackSocialShare('facebook')}
               >
-                <LogoFacebook size={20} className="text-gray-700 dark:text-gray-300" />
+                <SiFacebook size={20} className="text-gray-700 dark:text-gray-300" />
               </a>
               <a 
                 href={linkedinUrl}
@@ -103,7 +104,7 @@ export default function SocialSharing({ url, title, summary = "", className = ""
                 className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
                 onClick={() => isClient && trackSocialShare('linkedin')}
               >
-                <LogoLinkedin size={20} className="text-gray-700 dark:text-gray-300" />
+                <SiLinkedin size={20} className="text-gray-700 dark:text-gray-300" />
               </a>
             </>
           ) : (
@@ -120,7 +121,7 @@ export default function SocialSharing({ url, title, summary = "", className = ""
             aria-label="Copy link"
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors relative"
           >
-            <Link size={20} className="text-gray-700 dark:text-gray-300" />
+            <Link2 size={20} className="text-gray-700 dark:text-gray-300" />
             {copied && (
               <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded">
                 Copied!

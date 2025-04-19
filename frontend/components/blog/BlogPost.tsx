@@ -171,7 +171,7 @@ export default function BlogPost({ post }: BlogPostProps) {
             className="prose dark:prose-invert prose-headings:font-light prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline max-w-none"
           >
             {!isContentReady && (
-              <div className="my-8">
+              <div className="my-4">
                 <Loading message="Rendering content..." />
               </div>
             )}

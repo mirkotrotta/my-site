@@ -1,13 +1,21 @@
 import { ReactNode } from "react";
+import Button from './Button'; // Ensure the Button component is imported
+
+type ButtonProps = {
+  text: string;
+  href: string;
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'link';
+  arrow?: boolean;
+};
 
 type ButtonGroupProps = {
-  children: ReactNode;
+  buttons?: ButtonProps[]; // Update to accept buttons prop with variants
   className?: string;
   direction?: "row" | "col"; // Allows for horizontal or vertical layout
 };
 
 export default function ButtonGroup({
-  children,
+  buttons,
   className = "",
   direction = "row",
 }: ButtonGroupProps) {
@@ -17,7 +25,11 @@ export default function ButtonGroup({
         direction === "col" ? "flex-col gap-4" : "flex-row gap-3"
       } ${className}`}
     >
-      {children}
+      {buttons && buttons.map((button, index) => (
+        <Button key={index} href={button.href} variant={button.variant} showArrow={button.arrow}> 
+          {button.text}
+        </Button>
+      ))}
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { Rocket, Code, Idea, Task } from "@carbon/icons-react";
 
 interface InfoCardProps {
   title: string;

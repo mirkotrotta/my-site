@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight } from '@carbon/icons-react';
+import { MoveRight } from 'lucide-react';
 import Link from 'next/link';
 import { ComponentProps, ReactNode } from 'react';
 import clsx from 'clsx';
@@ -12,6 +12,7 @@ type ButtonProps = {
   className?: string;
   href?: string;
   onClick?: () => void;
+  showArrow?: boolean;
 } & ComponentProps<'button'>;
 
 export default function Button({
@@ -21,10 +22,11 @@ export default function Button({
   className,
   href,
   onClick,
+  showArrow = false,
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+    'inline-flex items-start justify-start transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
   const sizeStyles = {
     sm: 'text-sm px-4 py-2',
@@ -36,7 +38,7 @@ export default function Button({
     primary: 'bg-blue-600 text-white hover:bg-blue-700',
     secondary: 'bg-gray-800 text-white hover:bg-gray-900',
     tertiary:
-      'border border-blue-600 text-blue-600 hover:bg-blue-50 dark:hover:bg-gray-900',
+      'border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white',
     link: 'text-blue-600 hover:underline dark:text-blue-400',
   };
 
@@ -44,13 +46,16 @@ export default function Button({
     baseStyles,
     sizeStyles[size],
     variantStyles[variant],
-    className
+    className,
+    showArrow && 'group'
   );
 
   const content = (
     <>
       {children}
-      <ArrowRight size={16} className="ml-2" />
+      {showArrow && (
+        <MoveRight size={24} className="ml-2 transition-transform group-hover:translate-x-1" />
+      )}
     </>
   );
 

@@ -14,16 +14,15 @@ const geistMono = Geist_Mono({
   display: "swap",
   subsets: ["latin"],
 });
-
 export const metadata: Metadata = {
   title: {
-    default: 'Moon Site',
-    template: '%s | Moon Site',
+    default: 'Full Stack Developer | React, Python, FastAPI, Docker | Mirko Trotta',
+    template: '%s | Mirko Trotta'
   },
-  description: 'Personal website built with Next.js and Tailwind CSS',
+  description: 'Full stack developer with a background in design and digital production. Building scalable web apps with React, FastAPI, Docker, and CI/CD for cloud deployment. Based in Germany.',
   keywords: ['Next.js', 'React', 'Tailwind CSS', 'TypeScript'],
-  authors: [{ name: 'Anonymous' }],
-  creator: 'Anonymous',
+  authors: [{ name: 'Mirko Trotta' }],
+  creator: 'Mirko Trotta',
   robots: {
     index: true,
     follow: true,
