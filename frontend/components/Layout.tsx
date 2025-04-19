@@ -1,74 +1,90 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { ReactNode, useEffect, useState } from "react";
-import { Sun, Moon, Menu, X } from "lucide-react";
-import SocialLinks from "@/components/SocialLinks";
-import GlobalContainer from "@/components/ui/GlobalContainer";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { ReactNode, useEffect, useState } from 'react'
+import { Sun, Moon, Menu, X } from 'lucide-react'
+import SocialLinks from '@/components/SocialLinks'
+import GlobalContainer from '@/components/ui/GlobalContainer'
 
 interface LayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const [darkMode, setDarkMode] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const pathname = usePathname()
 
-  // Function to update header height CSS variable
+  const navItems = [
+    { href: '/about', label: 'About' },
+    { href: '/resume', label: 'Resume' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/contact', label: 'Contact' },
+  ]
+
   const updateHeaderHeight = () => {
-    const header = document.querySelector('header');
+    const header = document.querySelector('header')
     if (header) {
-      const height = header.offsetHeight;
-      document.documentElement.style.setProperty('--header-height', `${height}px`);
+      const height = header.offsetHeight
+      document.documentElement.style.setProperty('--header-height', `${height}px`)
     }
-  };
+  }
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      setDarkMode(true);
+    const storedTheme = localStorage.getItem('theme')
+    if (storedTheme === 'dark') {
+      document.documentElement.classList.add('dark')
+      setDarkMode(true)
     }
-    
-    // Set the header height CSS variable based on actual header height
-    updateHeaderHeight();
-    
-    // Listen for window resize to update header height
-    window.addEventListener('resize', updateHeaderHeight);
-    return () => window.removeEventListener('resize', updateHeaderHeight);
-  }, []);
-  
-  // Update header height when mobile menu is toggled
+    updateHeaderHeight()
+    window.addEventListener('resize', updateHeaderHeight)
+    return () => window.removeEventListener('resize', updateHeaderHeight)
+  }, [])
+
   useEffect(() => {
-    // Use setTimeout to ensure the DOM has updated
     const timer = setTimeout(() => {
-      updateHeaderHeight();
-    }, 50);
-    return () => clearTimeout(timer);
-  }, [mobileOpen]);
+      updateHeaderHeight()
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [mobileOpen])
 
   const toggleDarkMode = () => {
-    const isDark = !darkMode;
-    setDarkMode(isDark);
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-    document.documentElement.classList.toggle("dark", isDark);
-  };
+    const isDark = !darkMode
+    setDarkMode(isDark)
+    localStorage.setItem('theme', isDark ? 'dark' : 'light')
+    document.documentElement.classList.toggle('dark', isDark)
+  }
 
   return (
     <div className="font-sans text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 min-h-screen flex flex-col">
-      <header className="sticky-header border-b border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <header className="sticky-header border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
         <GlobalContainer>
           <div className="flex justify-between items-center h-14">
             <div className="flex items-center space-x-6">
               <Link href="/">
-                <span className="font-bold text-lg tracking-tight">Moon Site</span>
+                <span className="font-bold text-lg tracking-tight text-blue-500 dark:text-gray-100 hover:text-blue-600 dark:hover:text-gray-200">
+                  Mirko Trotta
+                </span>
               </Link>
-              <nav className="hidden md:flex space-x-4 text-sm">
-                <Link href="/about" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">About</Link>
-                <Link href="/resume" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Resume</Link>
-                <Link href="/projects" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Projects</Link>
-                <Link href="/blog" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Blog</Link>
-                <Link href="/contact" className="hover:underline hover:bg-gray-200 w-full h-full flex items-center justify-center">Contact</Link>
+              <nav className="hidden md:flex text-sm">
+                {navItems.map(({ href, label }) => {
+                  const isActive = pathname === href
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className={`px-4 py-4 transition-colors ${
+                        isActive
+                          ? 'border-b-2 border-blue-500'
+                          : 'hover:bg-gray-50 hover:text-black dark:hover:bg-gray-800 dark:hover:text-gray-200'
+                      }`}
+                    >
+                      {label}
+                    </Link>
+                  )
+                })}
               </nav>
             </div>
             <div className="flex items-center gap-2">
@@ -91,29 +107,39 @@ export default function Layout({ children }: LayoutProps) {
         </GlobalContainer>
         {mobileOpen && (
           <GlobalContainer className="md:hidden border-t border-gray-200 dark:border-gray-700 py-3 space-y-2 bg-white dark:bg-gray-900">
-            <Link href="/about" className="block hover:underline">About</Link>
-            <Link href="/resume" className="block hover:underline">Resume</Link>
-            <Link href="/projects" className="block hover:underline">Projects</Link>
-            <Link href="/blog" className="block hover:underline">Blog</Link>
-            <Link href="/contact" className="block hover:underline">Contact</Link>
+            {navItems.map(({ href, label }) => {
+              const isActive = pathname === href
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`block px-4 py-2 rounded-md transition-colors ${
+                    isActive
+                      ? 'bg-gray-100 text-black dark:bg-gray-800 dark:text-white'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {label}
+                </Link>
+              )
+            })}
           </GlobalContainer>
         )}
       </header>
 
-      <main className="flex-grow w-full py-10">
-        <GlobalContainer>
-          {children}
-        </GlobalContainer>
+      <main className="flex-grow w-full py-16">
+        <GlobalContainer>{children}</GlobalContainer>
       </main>
-
-      <footer className="mt-auto border-t border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-xs py-8 text-gray-600 dark:text-gray-400">
+      <footer className="border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 text-xs py-16 text-gray-600 dark:text-gray-400">
         <GlobalContainer className="text-center">
-          <p className="font-semibold">Moon Site – Professional and Blog Template</p>
+          <p className="font-semibold text-lg">Mirko Trotta – Full Stack Developer</p>
           <p className="mt-1">Remote | Open Source Contributor</p>
           <SocialLinks className="mt-3 justify-center" />
-          <p className="mt-4 text-gray-400">© {new Date().getFullYear()} Moon Site. Built with Next.js & FastAPI.</p>
+          <p className="mt-4 text-gray-400">
+            © {new Date().getFullYear()} All rights reserved. Built with Next.js & FastAPI.
+          </p>
         </GlobalContainer>
       </footer>
     </div>
-  );
+  )
 }
