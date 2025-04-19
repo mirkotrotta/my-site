@@ -26,7 +26,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    'inline-flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+    'inline-flex items-start justify-start transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
   const sizeStyles = {
     sm: 'text-sm px-4 py-2',
@@ -54,7 +54,7 @@ export default function Button({
     <>
       {children}
       {showArrow && (
-        <MoveRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
+        <MoveRight size={24} className="ml-2 transition-transform group-hover:translate-x-1" />
       )}
     </>
   );

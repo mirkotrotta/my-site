@@ -24,7 +24,7 @@ export default function ClientHeroNews() {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 pl-0">
       {loading ? (
         <p className="text-gray-500 text-sm">Loading news...</p>
       ) : posts.length > 0 ? (

@@ -1,35 +1,35 @@
-import Button from './Button';
+import ButtonGroup from './ButtonGroup';
 
 export type GlobalCTAProps = {
   title: string;
   subtitle?: string;
   buttonText: string;
   buttonHref: string;
+  buttonTextSecondary?: string;
+  buttonHrefSecondary?: string;
   onClick?: () => void;
   className?: string;
 };
 
-/**
- * GlobalCTA - A reusable call-to-action component with IBM-inspired minimal styling
- */
 export default function GlobalCTA({
   title,
   subtitle,
   buttonText,
   buttonHref,
-  onClick,
+  buttonTextSecondary,
+  buttonHrefSecondary,
   className = '',
 }: GlobalCTAProps) {
   return (
     <section
       className={`
-        py-10 md:py-14
+        py-20 md:py-16
         bg-gray-50 dark:bg-gray-800
         ${className}
       `}
     >
-      <div className="px-6 max-w-3xl mx-auto">
-        <h2 className="text-xl md:text-2xl font-medium mb-3 text-gray-900 dark:text-white">
+      <div className="px-24 max-w-full mx-auto">
+        <h2 className="text-4xl md:text-5xl font-normal mb-6 text-gray-900 dark:text-white">
           {title}
         </h2>
 
@@ -38,15 +38,22 @@ export default function GlobalCTA({
             {subtitle}
           </p>
         )}
-
-        <Button
-          href={buttonHref}
-          onClick={onClick}
-          variant="primary"
-          size="lg"
-        >
-          {buttonText}
-        </Button>
+        <ButtonGroup
+          buttons={[
+            {
+              text: buttonText,
+              href: buttonHref,
+              variant: 'primary',
+              arrow: true,
+            },
+            {
+              text: buttonTextSecondary || '',
+              href: buttonHrefSecondary || '',
+              variant: 'tertiary',
+              arrow: true,
+            },
+          ]}
+        />
       </div>
     </section>
   );
