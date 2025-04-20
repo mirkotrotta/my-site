@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { components } from "@/components/blog/mdxComponents";
 import Script from "next/script";
@@ -15,6 +15,8 @@ import { NavigationItem } from '@/components/ui/SidebarA';
 import { SidebarSection } from '@/components/ui/SidebarB';
 import { generateTableOfContents, addHeadingIds } from '@/lib/toc';
 import SocialSharing from './SocialSharing';
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
+import GlobalCTA from '../ui/GlobalCTA';
 
 export type Frontmatter = {
   title: string;
@@ -57,16 +59,68 @@ export default function BlogPost({ post }: BlogPostProps) {
     if (isContentReady && contentRef.current) {
       // Small delay to ensure content is fully rendered
       const timer = setTimeout(() => {
-        const contentHtml = contentRef.current?.innerHTML || '';
+        let contentHtml = contentRef.current?.innerHTML || '';
         if (contentHtml) {
+          // Add IDs to headings before generating TOC
+          contentHtml = addHeadingIds(contentHtml);
           const toc = generateTableOfContents(contentHtml);
           setTableOfContents(toc);
         }
       }, 200);
-      
       return () => clearTimeout(timer);
     }
   }, [isContentReady]);
+
+  // Intersection Observer Scrollspy: highlight active heading in TOC
+  useEffect(() => {
+    if (!isContentReady || !contentRef.current || tableOfContents.length === 0) return;
+    const headings = Array.from(contentRef.current.querySelectorAll('h1, h2, h3'));
+    if (headings.length === 0) return;
+
+    let activeId = '';
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      // Find the heading closest to the top (but still visible)
+      const visible = entries.filter(e => e.isIntersecting && e.intersectionRatio > 0);
+      if (visible.length > 0) {
+        // Sort by boundingClientRect.top
+        visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        activeId = visible[0].target.id;
+      } else {
+        // If none are visible, fallback to the last heading above the viewport
+        const scrollY = window.scrollY || window.pageYOffset;
+        const offset = 120;
+        let lastAbove = headings[0].id;
+        for (const heading of headings) {
+          const rect = heading.getBoundingClientRect();
+          const top = rect.top + scrollY - offset;
+          if (scrollY >= top) {
+            lastAbove = heading.id;
+          }
+        }
+        activeId = lastAbove;
+      }
+      // Recursively set active property in TOC
+      function markActive(items: NavigationItem[]): NavigationItem[] {
+        return items.map((item) => {
+          const isActive = item.href === `#${activeId}`;
+          return {
+            ...item,
+            active: isActive,
+            items: item.items ? markActive(item.items) : [],
+          };
+        });
+      }
+      setTableOfContents(prev => markActive(prev));
+    };
+
+    const observer = new window.IntersectionObserver(handleIntersect, {
+      root: null,
+      rootMargin: '-120px 0px 0px 0px', // Offset for sticky header
+      threshold: [0, 0.1, 0.5, 1],
+    });
+    headings.forEach(h => observer.observe(h));
+    return () => observer.disconnect();
+  }, [isContentReady, tableOfContents]);
 
   // Handle missing post data
   if (!post) {
@@ -131,24 +185,29 @@ export default function BlogPost({ post }: BlogPostProps) {
   );
 
   // Content-based sidebar (table of contents)
-  const contentSidebar = tableOfContents.length > 0 ? (
+  const contentSidebar = (
     <SidebarA
       title="In this article"
       items={tableOfContents}
     />
-  ) : undefined;
+  );
 
-  // Related content sidebar with social sharing
+  // Related content sidebar with newsletter at the top, no heading, and 'Connect with me' at the bottom
   const relatedContentSidebar = (
     <SidebarB
-      title="Related Content"
       sections={relatedPosts}
+      // No title prop, so no heading at the top
     >
-      <SocialSharing 
-        url={`/blog/${slug}`}
-        title={frontmatter.title}
-        summary={frontmatter.summary || ''}
-      />
+      {/* Newsletter subscription at the top */}
+      <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-900">
+        <h4 className="text-lg font-normal text-blue-600 dark:text-blue-400 mb-2">Subscribe to our Newsletter</h4>
+        {/* Replace below with your newsletter embed code */}
+        <div className="newsletter-embed-placeholder text-xs text-gray-500 dark:text-gray-400">
+          Newsletter signup form goes here.
+        </div>
+      </div>
+      {/* New custom widget */}
+      {/*<div className="my-6 p-4 bg-green-50">My Custom Widget Here</div>*/}
     </SidebarB>
   );
 
@@ -158,14 +217,13 @@ export default function BlogPost({ post }: BlogPostProps) {
       <Script id="blogpost-ld-json" type="application/ld+json">
         {JSON.stringify(jsonLd)}
       </Script>
-      
       <SidebarLayout
         sidebarLeft={contentSidebar}
         sidebarRight={relatedContentSidebar}
       >
         <article className="min-h-[800px]">
           <BlogPostHeader frontmatter={frontmatter} coverImage={coverImage} />
-          
+          {/* Main content */}
           <div 
             ref={contentRef}
             className="prose dark:prose-invert prose-headings:font-light prose-headings:text-gray-900 dark:prose-headings:text-gray-100 prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline max-w-none"
@@ -181,8 +239,23 @@ export default function BlogPost({ post }: BlogPostProps) {
               </MDXErrorBoundary>
             )}
           </div>
+          {/* Social sharing at the end of the article */}
+          <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-8 mt-16">
+            <SocialSharing url={`${window.location.origin}/blog/${slug}`} title={frontmatter.title} summary={frontmatter.summary} />
+          </div>
         </article>
       </SidebarLayout>
+
+      <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 mb-16">
+        <GlobalCTA
+          title="Let's connect"
+          subtitle="Open to connecting around thoughtful systems, internal tooling, or automation — especially where structure and clarity matter."
+          buttonText="Contact Me"
+          buttonHref="/contact"
+          buttonTextSecondary="Download Resume"
+          buttonHrefSecondary="/resume"
+        />
+      </div>
     </>
   );
 }

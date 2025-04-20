@@ -93,30 +93,5 @@ export async function getRelatedPosts(
     });
   }
   
-  // Add popular tags section
-  const allTags = new Map<string, number>();
-  allPosts.forEach(post => {
-    (post.frontmatter.tags || []).forEach(tag => {
-      allTags.set(tag, (allTags.get(tag) || 0) + 1);
-    });
-  });
-  
-  // Get top tags (excluding current post's tags for variety)
-  const topTags = [...allTags.entries()]
-    .sort((a, b) => b[1] - a[1])
-    .filter(([tag]) => !currentTags.includes(tag))
-    .slice(0, 5)
-    .map(([tag]) => tag);
-  
-  if (topTags.length > 0) {
-    sections.push({
-      title: 'Popular Topics',
-      items: topTags.map(tag => ({
-        title: tag,
-        href: `/blog?tag=${encodeURIComponent(tag)}`
-      }))
-    });
-  }
-  
   return sections;
 } 

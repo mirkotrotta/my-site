@@ -38,12 +38,12 @@ export default function SidebarLayout({
     <GlobalContainer className={`py-12 ${className}`}>
       <div className={`grid grid-cols-1 gap-y-8 ${gridTemplateClass}`}>
         {sidebarLeft && (
-          <div className="order-2 lg:order-1">
+          <div className="order-1 lg:order-1">
             {sidebarLeft}
           </div>
         )}
         
-        <div className={`order-1 ${sidebarLeft ? 'lg:order-2' : ''}`}>
+        <div className={`order-2 ${sidebarLeft ? 'lg:order-2' : ''}`}>
           {children}
         </div>
         

@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { SiX, SiFacebook, SiLinkedin } from "react-icons/si";
-import { Share, Link2 } from "lucide-react";
-import SocialLinks from "@/components/SocialLinks";
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
+import { IoLogoTwitter, IoLogoFacebook, IoLogoLinkedin, IoShareSocial, IoLinkOutline } from "react-icons/io5";
 import { trackSocialShare } from '@/components/analytics/ShareTracker';
 
 type SocialSharingProps = {
@@ -26,19 +25,9 @@ export default function SocialSharing({ url, title, summary = "", className = ""
   // Safely initialize client-side values after mount
   useEffect(() => {
     setIsClient(true);
-    setFullUrl(`${window.location.origin}${url}`);
+    setFullUrl(url.startsWith('http') ? url : `${window.location.origin}${url}`);
     setCanUseNativeShare(!!navigator.share);
   }, [url]);
-  
-  // Encode components for sharing URLs - only use encoded values on client
-  const encodedUrl = encodeURIComponent(fullUrl);
-  const encodedTitle = encodeURIComponent(title);
-  const encodedSummary = encodeURIComponent(summary);
-  
-  // Generate sharing URLs
-  const twitterUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
-  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-  const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&title=${encodedTitle}&summary=${encodedSummary}`;
   
   const handleNativeShare = async () => {
     if (!canUseNativeShare) return;
@@ -49,7 +38,7 @@ export default function SocialSharing({ url, title, summary = "", className = ""
         text: summary,
         url: fullUrl,
       });
-      // trackSocialShare is called automatically via the ShareTracker override
+      trackSocialShare('native');
     } catch (error) {
       console.error('Error sharing:', error);
     }
@@ -74,54 +63,51 @@ export default function SocialSharing({ url, title, summary = "", className = ""
         </h4>
         <div className="flex space-x-4">
           {/* Render the same UI structure on both server and client */}
-          {!isClient || !canUseNativeShare ? (
-            <>
-              <a 
-                href={twitterUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Share on Twitter"
-                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
-                onClick={() => isClient && trackSocialShare('twitter')}
-              >
-                <SiX size={20} className="text-gray-700 dark:text-gray-300" />
-              </a>
-              <a 
-                href={facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Share on Facebook"
-                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
-                onClick={() => isClient && trackSocialShare('facebook')}
-              >
-                <SiFacebook size={20} className="text-gray-700 dark:text-gray-300" />
-              </a>
-              <a 
-                href={linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Share on LinkedIn"
-                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
-                onClick={() => isClient && trackSocialShare('linkedin')}
-              >
-                <SiLinkedin size={20} className="text-gray-700 dark:text-gray-300" />
-              </a>
-            </>
-          ) : (
+          <TwitterShareButton
+            url={fullUrl}
+            title={title}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+            aria-label="Share on Twitter"
+            onClick={() => isClient && trackSocialShare('twitter')}
+          >
+            <IoLogoTwitter size={20} className="text-gray-700 dark:text-gray-300" />
+          </TwitterShareButton>
+          <FacebookShareButton
+            url={fullUrl}
+            quote={title}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+            aria-label="Share on Facebook"
+            onClick={() => isClient && trackSocialShare('facebook')}
+          >
+            <IoLogoFacebook size={20} className="text-gray-700 dark:text-gray-300" />
+          </FacebookShareButton>
+          <LinkedinShareButton
+            url={fullUrl}
+            title={title}
+            summary={summary}
+            className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+            aria-label="Share on LinkedIn"
+            onClick={() => isClient && trackSocialShare('linkedin')}
+          >
+            <IoLogoLinkedin size={20} className="text-gray-700 dark:text-gray-300" />
+          </LinkedinShareButton>
+          {/* Native share button */}
+          {isClient && canUseNativeShare && (
             <button
               onClick={handleNativeShare}
-              aria-label="Share"
+              aria-label="Share via device"
               className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
             >
-              <Share size={20} className="text-gray-700 dark:text-gray-300" />
+              <IoShareSocial size={20} className="text-gray-700 dark:text-gray-300" />
             </button>
           )}
+          {/* Copy link button */}
           <button
             onClick={copyToClipboard}
             aria-label="Copy link"
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors relative"
           >
-            <Link2 size={20} className="text-gray-700 dark:text-gray-300" />
+            <IoLinkOutline size={20} className="text-gray-700 dark:text-gray-300" />
             {copied && (
               <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded">
                 Copied!
@@ -129,13 +115,6 @@ export default function SocialSharing({ url, title, summary = "", className = ""
             )}
           </button>
         </div>
-      </div>
-      
-      <div className="pt-6 mt-6 border-t border-gray-200 dark:border-gray-800">
-        <h4 className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4 font-medium">
-          Connect With Us
-        </h4>
-        <SocialLinks className="justify-start" />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-// Tailwind Design System inspired by IBM Carbon
 "use client";
 
 import { useEffect, useState } from "react";
@@ -45,7 +44,7 @@ export default function ResumePage() {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-semibold tracking-tight border-b border-gray-300 dark:border-gray-700 pb-2 mb-6">
+      <h1 className="text-3xl font-normal text-gray-900 dark:text-white pb-2 my-8">
         My Resume
       </h1>
 

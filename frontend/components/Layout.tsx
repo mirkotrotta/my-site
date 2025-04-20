@@ -64,7 +64,7 @@ export default function Layout({ children }: LayoutProps) {
           <div className="flex justify-between items-center h-14">
             <div className="flex items-center space-x-6">
               <Link href="/">
-                <span className="font-bold text-lg tracking-tight text-blue-500 dark:text-gray-100 hover:text-blue-600 dark:hover:text-gray-200">
+                <span className="font-medium text-lg text-blue-500 dark:text-gray-100 hover:text-blue-600 dark:hover:text-gray-200">
                   Mirko Trotta
                 </span>
               </Link>
@@ -113,7 +113,7 @@ export default function Layout({ children }: LayoutProps) {
                 <Link
                   key={href}
                   href={href}
-                  className={`block px-4 py-2 rounded-md transition-colors ${
+                  className={`block px-4 py-2 transition-colors ${
                     isActive
                       ? 'bg-gray-100 text-black dark:bg-gray-800 dark:text-white'
                       : 'hover:bg-gray-100 dark:hover:bg-gray-800'
@@ -127,13 +127,13 @@ export default function Layout({ children }: LayoutProps) {
         )}
       </header>
 
-      <main className="flex-grow w-full py-16">
+      <main className="flex-grow w-full py-0">
         <GlobalContainer>{children}</GlobalContainer>
       </main>
-      <footer className="border-t border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900 text-xs py-16 text-gray-600 dark:text-gray-400">
+      <footer className="bg-white dark:bg-gray-900 text-xs py-16 text-gray-600 dark:text-gray-400">
         <GlobalContainer className="text-center">
           <p className="font-semibold text-lg">Mirko Trotta – Full Stack Developer</p>
-          <p className="mt-1">Remote | Open Source Contributor</p>
+          <p className="mt-1">Open Source Contributor</p>
           <SocialLinks className="mt-3 justify-center" />
           <p className="mt-4 text-gray-400">
             © {new Date().getFullYear()} All rights reserved. Built with Next.js & FastAPI.
