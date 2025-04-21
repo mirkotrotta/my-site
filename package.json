@@ -1,4 +1,8 @@
 {
+  "name": "my-site",
+  "version": "1.0.0",
+  "description": "Personal website and portfolio, based on the moon-site template.",
+  "author": "Mirko Trotta",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "boxen": "^8.0.1",
