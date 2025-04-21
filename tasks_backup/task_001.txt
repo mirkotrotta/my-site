@@ -1,0 +1,11 @@
+# Task ID: 1
+# Title: Fix Responsive Issues
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Address responsive design issues in the Hero component and blog post container on mobile devices.
+# Details:
+1. Fix the `HeroWithSidebar.tsx` component to be responsive across all device sizes. Implement media queries to adjust layout, font sizes, and spacing. 2. Reduce excessive side padding in blog post containers on mobile view. Adjust the container padding to be proportional to screen size.
+
+# Test Strategy:
+Test on multiple device sizes (mobile, tablet, desktop) using browser dev tools. Verify proper rendering across Chrome, Firefox, and Safari. Take screenshots before and after for comparison.
