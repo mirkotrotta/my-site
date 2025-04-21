@@ -1,6 +1,7 @@
 "use client";
 
 import { SiGithub } from "react-icons/si";
+import { useState, useEffect } from "react";
 
 export interface Project {
   name: string;
