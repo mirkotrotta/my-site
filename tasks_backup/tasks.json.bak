@@ -1,0 +1,133 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Fix Responsive Issues",
+      "description": "Address responsive design issues in the Hero component and blog post container on mobile devices.",
+      "status": "done",
+      "dependencies": [],
+      "priority": "high",
+      "details": "1. Fix the `HeroWithSidebar.tsx` component to be responsive across all device sizes. Implement media queries to adjust layout, font sizes, and spacing. 2. Reduce excessive side padding in blog post containers on mobile view. Adjust the container padding to be proportional to screen size.",
+      "testStrategy": "Test on multiple device sizes (mobile, tablet, desktop) using browser dev tools. Verify proper rendering across Chrome, Firefox, and Safari. Take screenshots before and after for comparison."
+    },
+    {
+      "id": 2,
+      "title": "Implement Core Pages",
+      "description": "Create and adapt the Home, About, and Resume pages with personal information.",
+      "status": "done",
+      "dependencies": [
+        1
+      ],
+      "priority": "high",
+      "details": "1. Create Home page with personal introduction, skills overview, and featured projects. 2. Develop About page with detailed bio, professional journey, and personal interests. 3. Build Resume page with education, work experience, skills, and downloadable PDF option. Use consistent styling across all pages and ensure responsive design.",
+      "testStrategy": "Review content accuracy and layout consistency. Test navigation between pages. Verify responsive behavior on different screen sizes. Conduct peer review for content and design feedback."
+    },
+    {
+      "id": 3,
+      "title": "Add Blog Functionality",
+      "description": "Remove template blog posts and add at least 3 original blog posts with improved blog card component.",
+      "status": "in-progress",
+      "dependencies": [
+        1
+      ],
+      "priority": "high",
+      "details": "1. Remove all template blog posts. 2. Create at least 3 original blog posts with proper formatting and images. 3. Implement the improved blog card component on the homepage to showcase recent posts. 4. Ensure blog post pages have proper metadata, navigation, and sharing options.",
+      "testStrategy": "Verify blog posts render correctly with proper formatting. Test blog card component on homepage. Check navigation between blog list and individual posts. Ensure images load properly and responsively.",
+      "subtasks": []
+    },
+    {
+      "id": 4,
+      "title": "Create Contact Page",
+      "description": "Develop a contact page with form functionality and validation.",
+      "status": "pending",
+      "dependencies": [
+        2
+      ],
+      "priority": "medium",
+      "details": "1. Design and implement a contact form with fields for name, email, subject, and message. 2. Add client-side validation for all form fields. 3. Implement form submission handling (temporarily store submissions until backend integration). 4. Add alternative contact methods (social media, email) as fallback options.",
+      "testStrategy": "Test form validation with valid and invalid inputs. Verify form submission process and feedback messages. Check responsive design on various screen sizes. Test keyboard navigation and accessibility."
+    },
+    {
+      "id": 5,
+      "title": "Implement Multilanguage Support",
+      "description": "Add i18n support with German as default, English as fallback, and Spanish and Italian as additional languages.",
+      "status": "pending",
+      "dependencies": [
+        2,
+        3,
+        4
+      ],
+      "priority": "medium",
+      "details": "1. Set up i18n framework with locale files for DE (default), EN (fallback), ES, and IT. 2. Create translation files for all static content across pages. 3. Implement language switcher component in the navigation. 4. Add language detection based on browser settings. 5. Ensure proper fallback mechanism when translations are missing.",
+      "testStrategy": "Verify all text elements are properly translated in each language. Test language switching functionality. Check default language loading and fallback behavior. Validate URL structure with language prefixes if applicable."
+    },
+    {
+      "id": 6,
+      "title": "Enhance UI Components",
+      "description": "Add Button component to all pages and refactor UI components for better reusability.",
+      "status": "pending",
+      "dependencies": [
+        2,
+        3,
+        4
+      ],
+      "priority": "medium",
+      "details": "1. Add the Button component consistently across all pages for calls-to-action. 2. Refactor UI components to improve reusability and maintainability. 3. Replace hardcoded values with variables/constants. 4. Improve type safety across components. 5. Create a component documentation page for future reference.",
+      "testStrategy": "Review component implementation for consistency. Verify button functionality across pages. Test component rendering with different props and states. Validate type safety improvements with TypeScript compiler."
+    },
+    {
+      "id": 7,
+      "title": "Add Animations with Framer Motion",
+      "description": "Implement animations throughout the site using Framer Motion library.",
+      "status": "pending",
+      "dependencies": [
+        6
+      ],
+      "priority": "low",
+      "details": "1. Install and configure Framer Motion. 2. Add page transition animations. 3. Implement scroll-triggered animations for content sections. 4. Add hover and interaction animations for buttons and interactive elements. 5. Ensure animations are subtle and enhance UX without causing distractions or accessibility issues.",
+      "testStrategy": "Test animation performance across devices. Verify animations work correctly in all supported browsers. Check for animation-related accessibility issues. Validate that animations degrade gracefully when reduced motion is preferred."
+    },
+    {
+      "id": 8,
+      "title": "Automate Blog Post Creation from Obsidian",
+      "description": "Create a workflow to automatically convert and publish Obsidian markdown files as blog posts.",
+      "status": "pending",
+      "dependencies": [
+        3
+      ],
+      "priority": "medium",
+      "details": "1. Develop a script to parse Obsidian markdown files and extract frontmatter. 2. Create a conversion utility to transform Obsidian-specific markdown to standard markdown or HTML. 3. Implement an automated workflow to move processed files to the blog directory. 4. Add support for Obsidian attachments (images, files) with proper path resolution.",
+      "testStrategy": "Test with various Obsidian markdown files containing different elements (tables, code blocks, images, links). Verify frontmatter extraction and conversion accuracy. Test the end-to-end workflow from Obsidian to published post."
+    },
+    {
+      "id": 9,
+      "title": "Implement SEO and Analytics",
+      "description": "Add SEO optimizations, OpenGraph meta tags, structured data, and analytics integration.",
+      "status": "pending",
+      "dependencies": [
+        5
+      ],
+      "priority": "high",
+      "details": "1. Add OpenGraph meta tags for better social sharing. 2. Implement structured data (JSON-LD) for blog posts and personal information. 3. Create multilingual sitemap.xml and robots.txt. 4. Set up Plausible Analytics with privacy-focused configuration. 5. Implement proper heading hierarchy and semantic HTML throughout the site.",
+      "testStrategy": "Validate OpenGraph tags using sharing debuggers (Facebook, Twitter). Test structured data using Google's Rich Results Test. Verify sitemap format and entries. Check analytics implementation with test pageviews. Run Lighthouse SEO audit."
+    },
+    {
+      "id": 10,
+      "title": "Setup CI/CD and Security Enhancements",
+      "description": "Implement CI/CD pipeline with GitHub Actions and enhance security with proper headers and configurations.",
+      "status": "pending",
+      "dependencies": [
+        9
+      ],
+      "priority": "high",
+      "details": "1. Create GitHub Actions workflow for build, test, and deployment. 2. Integrate type checking, linting, and formatting into CI pipeline. 3. Implement security headers (CSP, HSTS, X-Content-Type-Options, etc.). 4. Add rate limiting for API endpoints. 5. Configure proper CORS settings. 6. Run and address OWASP security audit findings.",
+      "testStrategy": "Verify CI/CD pipeline with test commits. Validate security headers using SecurityHeaders.com. Test rate limiting functionality. Run automated security scans (OWASP ZAP). Check CORS configuration with cross-origin requests."
+    }
+  ],
+  "metadata": {
+    "projectName": "my-site Enhancement Project",
+    "totalTasks": 10,
+    "sourceFile": "scripts/future_work.md",
+    "generatedAt": "2023-11-09"
+  }
+}

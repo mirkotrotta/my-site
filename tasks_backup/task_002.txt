@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Implement Core Pages
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Create and adapt the Home, About, and Resume pages with personal information.
+# Details:
+1. Create Home page with personal introduction, skills overview, and featured projects. 2. Develop About page with detailed bio, professional journey, and personal interests. 3. Build Resume page with education, work experience, skills, and downloadable PDF option. Use consistent styling across all pages and ensure responsive design.
+
+# Test Strategy:
+Review content accuracy and layout consistency. Test navigation between pages. Verify responsive behavior on different screen sizes. Conduct peer review for content and design feedback.
