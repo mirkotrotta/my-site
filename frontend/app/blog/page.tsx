@@ -8,6 +8,7 @@ import Link from 'next/link';
 import GlobalCTA from '@/components/ui/GlobalCTA';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('http://127.0.0.1:4000'),
   title: 'System Logs – Dev Blog by Mirko Trotta',
   description: 'System Logs is the personal developer blog of Mirko Trotta, a full stack engineer based in Germany. Tutorials, case studies, and insights on backend systems, automation, and developer tools.',
   openGraph: {
@@ -32,9 +33,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BlogIndexPage({ searchParams }: { searchParams: { tag?: string } }) {
+export default async function BlogIndexPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tag?: string }>;
+}) {
   try {
-    const tag = searchParams.tag;
+    const { tag } = await searchParams;
     const allPosts = getAllPosts();
 
     const filteredPosts = tag
