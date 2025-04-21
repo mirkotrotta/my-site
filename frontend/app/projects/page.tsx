@@ -35,7 +35,7 @@ export default function ProjectsPage() {
   }
   return (
     <Layout>
-      <h1 className="text-3xl font-semibold mb-6">Projects</h1>
+      <h1 className="text-3xl font-normal text-gray-900 dark:text-white pb-2 my-8">Projects</h1>
 
       {loading && <p className="text-sm text-gray-500">Loading...</p>}
       {error && <p className="text-sm text-red-600">{error}</p>}

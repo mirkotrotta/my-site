@@ -17,7 +17,7 @@ export default function Home() {
           <HeroWithSidebar
             eyebrowText="React · Python · FastAPI · Docker · AI Workflows"
             title="Full Stack Developer"
-            description="I build full stack applications, APIs, and internal tools — with a focus on backend logic, developer workflows, and automation. My background blends frontend experience with hands-on backend work, shaped by real projects and self-taught discipline."
+            description="I’m a full stack developer focused on frontend clarity and backend functionality — building web applications, small APIs, and automation tools using React, Python, and FastAPI. My path blends creative experience with real project work and self-taught engineering."
             primaryCta={{ text: "Case Studies", href: "/projects" }}
             secondaryCta={{ text: "Download Resume", href: "/resume" }}
             imageSrc="/images/mirko trotta, metacubo studio, services germany, development.JPG"
@@ -39,15 +39,15 @@ export default function Home() {
           <div className="md:col-span-8">
             <h2 className="text-3xl md:text-4xl font-normal mb-4 text-blue-500 dark:text-white">A Different Path Into Development</h2>
             <div className="prose dark:prose-invert">
-              <p className="mb-4 text-lg">
-                I didn't come to software through a degree or bootcamp. I came through life.
-              </p>
-              <p className="mb-4 text-lg">
-                After moving to Germany with my family, I rebuilt my career from scratch — learning new tools, new languages, and a new industry. As a father, a migrant, and a self-taught developer, I've learned to work with persistence, purpose, and clarity — not just code.
-              </p>
-              <p className="mb-4 text-lg">
-                That mindset now shapes everything I build.
-              </p>
+            <p className="mb-4 text-lg">
+              I didn’t take the traditional path into tech — no degree, no bootcamp. Just real work, curiosity, and persistence.
+            </p>
+            <p className="mb-4 text-lg">
+              After relocating to Germany with my family, I rebuilt my career from the ground up. Learning new tools, adapting to a new country, and transitioning into development taught me how to problem-solve across more than just code.
+            </p>
+            <p className="mb-4 text-lg">
+              Today, that mindset shapes how I approach software: with structure, clarity, and long-term thinking.
+            </p>
             </div>
             <div className="mt-6">
               <Button href="/about" variant="primary" showArrow size="lg">
@@ -93,7 +93,7 @@ export default function Home() {
       <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 mb-16">
         <GlobalCTA 
           title="Let's connect"
-          subtitle="If you're building something thoughtful — internal tools, automation flows, or systems that scale — I'd be glad to connect."
+          subtitle="Open to connecting around thoughtful systems, internal tooling, or automation — especially where structure and clarity matter."
           buttonText="Contact Me"
           buttonHref="/contact"
           buttonTextSecondary="Download Resume"

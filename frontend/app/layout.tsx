@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+// import { Geist, Geist_Mono } from "next/font/google"; // Removed
+import { IBM_Plex_Sans } from "next/font/google"; // Keep this import
 import "./globals.css";
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// const geistSans = Geist({ // Removed
+//   variable: "--font-geist-sans",
+//   display: "swap",
+//   subsets: ["latin"],
+// });
+
+// const geistMono = Geist_Mono({ // Removed
+//   variable: "--font-geist-mono",
+//   display: "swap",
+//   subsets: ["latin"],
+// });
+
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   display: "swap",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  display: "swap",
-  subsets: ["latin"],
-});
 export const metadata: Metadata = {
   title: {
     default: 'Full Stack Developer | React, Python, FastAPI, Docker | Mirko Trotta',
@@ -35,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${ibmPlexSans.variable}`}>
       <body>
         <AnalyticsProvider
           // Add your analytics IDs here - these are just examples

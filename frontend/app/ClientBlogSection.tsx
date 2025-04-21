@@ -29,7 +29,7 @@ export default function ClientBlogSection() {
     <section className="py-16">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="md:col-span-1">
-          <h2 className="text-2xl md:text-3xl text-blue-500 dark:text-white mb-4">Latest Articles</h2>
+          <h2 className="text-2xl md:text-3xl text-gray-900 dark:text-white mb-4">Latest Articles</h2>
           <Button href="/blog" variant="link" showArrow={false} className="pl-0">View All Articles</Button>
         </div>
         <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

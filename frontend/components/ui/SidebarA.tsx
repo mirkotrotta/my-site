@@ -22,8 +22,8 @@ export default function SidebarA({ items, title, className = '' }: SidebarAProps
   return (
     <aside className={`border-0 bg-transparent sticky top-24 self-start ${className}`}>
       {title && (
-        <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-4">
-          <h3 className="font-semibold text-gray-700 dark:text-gray-300 text-sm uppercase tracking-wider">{title}</h3>
+        <div className="border-b border-gray-100 dark:border-gray-700 pb-4 mb-6">
+          <h4 className="font-normal text-gray-500 dark:text-gray-300 text-lg">{title}</h4>
         </div>
       )}
       <nav>
@@ -43,20 +43,22 @@ type NavItemProps = {
 };
 
 function NavItem({ item, level = 0 }: NavItemProps) {
-  const paddingLeft = level > 0 ? `pl-${level * 3}` : '';
+  // Use inline style for padding, since Tailwind doesn't support dynamic classnames for pl-*
+  const paddingLeft = { paddingLeft: `${level * 16}px` };
   const activeClass = item.active
-    ? 'text-blue-600 dark:text-blue-400 font-medium'
+    ? 'text-blue-600 dark:text-blue-400 font-medium underline bg-blue-50 dark:bg-blue-900/20'
     : 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400';
 
   return (
     <li>
       <Link
         href={item.href}
-        className={`block py-1 text-sm ${paddingLeft} ${activeClass} no-underline`}
+        className={`block py-1 text-sm ${activeClass} no-underline`}
+        style={paddingLeft}
       >
         {item.title}
       </Link>
-      
+      {/* To add more sections, add more NavigationItem objects to the items prop */}
       {item.items && item.items.length > 0 && (
         <ul className="mt-1">
           {item.items.map((subItem, index) => (
