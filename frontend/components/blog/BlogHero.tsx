@@ -52,9 +52,7 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
                 </div>
                 <h1 className="text-3xl font-normal mb-2">{heroPost.frontmatter.title}</h1>
                 {/* Read More Button */}
-                <Button href={`/blog/${heroPost.slug}`} variant="link" showArrow={true} className="mt-8 pl-0 items-center" children={undefined}>
-                  {/* No text for the button */}
-                </Button>
+                <Button href={`/blog/${heroPost.slug}`} variant="link" showArrow={true} className="mt-8 pl-0 items-center" children={undefined} />
               </div>
             </div>
           </Link>
@@ -85,9 +83,7 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
                         <h4>{post.frontmatter.title}</h4>
                       </Link>
                       {/* Read More Button */}
-                      <Button href={`/blog/${post.slug}`} variant="link" showArrow={true} className="mt-2 pl-0 items-center" children={undefined}>
-                        {/* No text for the button */}
-                      </Button>
+                      <Button href={`/blog/${post.slug}`} variant="link" showArrow={true} className="mt-2 pl-0 items-center" children={undefined} />
                     </div>
                     <div className="col-span-4 relative aspect-[4/3] overflow-hidden">
                       <Link href={`/blog/${post.slug}`}>

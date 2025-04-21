@@ -28,7 +28,7 @@ export default function GlobalContainer<T extends ElementType = 'div'>({
     <Component
       className={`
         w-full
-        px-8
+        px-4 sm:px-6 md:px-8
         py-0
         ${!fluid ? 'max-w-full' : ''}
         mx-auto

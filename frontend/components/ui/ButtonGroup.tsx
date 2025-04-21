@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Button from './Button'; // Ensure the Button component is imported
 
-type ButtonProps = {
+export type ButtonProps = {
   text: string;
   href: string;
   variant?: 'primary' | 'secondary' | 'tertiary' | 'link';

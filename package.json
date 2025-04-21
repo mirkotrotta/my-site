@@ -20,7 +20,8 @@
     "next": "^15.3.0",
     "openai": "^4.89.0",
     "ora": "^8.2.0",
-    "punycode": "^2.3.1"
+    "punycode": "^2.3.1",
+    "react-share": "^5.2.2"
   },
   "scripts": {
     "dev": "node scripts/dev.js",

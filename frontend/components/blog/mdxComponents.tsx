@@ -57,6 +57,16 @@ const containsOnlyImage = (children: ReactNode): boolean => {
   }
 };
 
+// Helper to generate heading IDs from text
+function generateIdFromChildren(children: React.ReactNode): string {
+  const text = React.Children.toArray(children).join(' ');
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]/g, '');
+}
+
 export const components: MDXComponents = {
   a: ({ href = "#", children, ...props }) => (
     <Link
@@ -67,15 +77,18 @@ export const components: MDXComponents = {
       {children}
     </Link>
   ),
-  h1: (props: ComponentPropsWithoutRef<"h1">) => (
-    <h1 {...props} className="text-3xl font-light mt-8 mb-4" id={props.id} />
-  ),
-  h2: (props: ComponentPropsWithoutRef<"h2">) => (
-    <h2 {...props} className="text-2xl font-light mt-7 mb-3" id={props.id} />
-  ),
-  h3: (props: ComponentPropsWithoutRef<"h3">) => (
-    <h3 {...props} className="text-xl font-light mt-6 mb-3" id={props.id} />
-  ),
+  h1: ({ id, children, ...props }: ComponentPropsWithoutRef<"h1">) => {
+    const headingId = id || generateIdFromChildren(children);
+    return <h1 {...props} id={headingId} className="text-3xl font-light mt-8 mb-4" >{children}</h1>;
+  },
+  h2: ({ id, children, ...props }: ComponentPropsWithoutRef<"h2">) => {
+    const headingId = id || generateIdFromChildren(children);
+    return <h2 {...props} id={headingId} className="text-2xl font-light mt-7 mb-3" >{children}</h2>;
+  },
+  h3: ({ id, children, ...props }: ComponentPropsWithoutRef<"h3">) => {
+    const headingId = id || generateIdFromChildren(children);
+    return <h3 {...props} id={headingId} className="text-xl font-light mt-6 mb-3" >{children}</h3>;
+  },
   p: ({ children, ...props }) => {
     try {
       // Always directly render children if they're images to avoid p > figure > figcaption nesting
