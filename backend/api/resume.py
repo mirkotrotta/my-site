@@ -22,7 +22,7 @@ def get_resume():
             marital_status="Married",
             nationality="Italian",
         ),
-        professional_profile="Full stack developer with a strong focus on backend development, automation, and system-level workflows. Combines technical implementation with creative experience and cross-functional project coordination. Solid knowledge of Python, FastAPI, React, Docker, databases, and cloud-native tools. Self-directed, solution-oriented, and experienced in remote and cross-disciplinary teams.",
+        professional_profile="Full stack developer with a backend and automation focus, experienced in building APIs, internal tools, and cloud-ready workflows. Combines hands-on technical skills with a background in creative production and cross-functional delivery. Skilled in Python, FastAPI, React, Docker, and cloud platforms like Azure. Self-taught, reliable, and effective in distributed teams.",
         professional_experience=[
             ExperienceEntry(
                 company="Santana Consulting",
@@ -38,13 +38,13 @@ def get_resume():
             ),
             ExperienceEntry(
                 company="Freelance",
-                title="Freelance Full Stack Developer",
+                title="**Independent Technology Consultant**",
                 start_date="2023",
                 end_date="Present",
                 description=[
-                    "Built and maintained open source tools such as 'Moon Site' and 'Streamlit Web Scraper'",
-                    "Applied Next.js, Docker, FastAPI, Python, and Slack API in real automation workflows",
-                    "Designed developer setups, content pipelines, and AI-powered agent tools"
+                    "Developed 'Moon Site' (Next.js) for frontend skills.",
+                    "Built automation tool (Python, FastAPI, Slack API) for backend and integration.",
+                    "Explored development setups and AI agent concepts.",
                 ],
                 location="Hanau, Germany"
             ),
@@ -141,17 +141,20 @@ def get_resume():
             ),
         ],
         skills=Skills(
-            technologies=[
-                ["React", "Next.js", "Tailwind CSS", "TypeScript", "HTML", "CSS"],
-                ["Python", "FastAPI", "Pydantic", "REST APIs"],
-                ["PostgreSQL", "SQLite"],
-                ["Docker", "GitHub Actions", "Vercel", "Azure (in progress)"]
+            frontend_development=[
+                ["React", "Next.js", "TypeScript", "Tailwind CSS", "Responsive UI Design"]
+            ],
+            backend_systems=[
+                ["Python", "FastAPI", "Pydantic", "REST APIs", "Docker"] 
+            ],
+            databases_devops=[
+                ["PostgreSQL", "SQLite", "GitHub Actions", "CI/CD Pipelines", "Azure"] 
             ],
             automation_ai=[
-                ["CrewAI", "LangChain", "OpenAI API", "MCP agents", "Streamlit", "Selenium"]
+                ["OpenAI API", "LangChain", "CrewAI", "MCP Agents", "Automation Design"]
             ],
-            tools_systems=[
-                ["Git", "GitHub", "VSCode", "Figma", "Sitecore", "Webflow"]
+            developer_environments_tooling=[
+                ["Linux", "Git", "GitHub", "WSL", "Agile Frameworks"]
             ]
         ),
         languages=[

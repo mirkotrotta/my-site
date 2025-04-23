@@ -51,9 +51,11 @@ interface CertificationEntry {
 }
 
 interface Skills {
-  technologies: string[][];
+  frontend_development: string[][];
+  backend_systems: string[][];
+  databases_devops: string[][];
   automation_ai: string[][];
-  tools_systems: string[][];
+  developer_environments_tooling: string[][];
 }
 
 interface LanguageEntry {
@@ -191,9 +193,9 @@ export default function ResumePage() {
             <ul>
               {resume.education.map((entry, idx) => (
                 <li key={idx}>
-                  <span className="font-semibold text-lg">{entry.institution}</span> – {entry.degree} ({entry.year})
+                  <span className="font-normal text-sm">{entry.institution}</span> – {entry.degree} ({entry.year})
                   {entry.focus && (
-                    <ul className="list-disc pl-5 mt-2 text-lg text-gray-700 dark:text-gray-200">
+                    <ul className="list-disc pl-5 mt-2 text-sm text-gray-700 dark:text-gray-200">
                       {entry.focus.map((point, i) => <li key={i}>{point}</li>)}
                     </ul>
                   )}
@@ -207,9 +209,9 @@ export default function ResumePage() {
             <ul>
               {resume.certifications.map((cert, idx) => (
                 <li key={idx}>
-                  <span className="font-semibold text-lg">{cert.name}</span> {cert.status && <>({cert.status})</>}
+                  <span className="font-normal text-sm">{cert.name}</span> {cert.status && <>({cert.status})</>}
                   {cert.notes && (
-                    <ul className="list-disc pl-5 mt-2 text-lg text-gray-700 dark:text-gray-200">
+                    <ul className="list-disc pl-5 mt-2 text-sm text-gray-700 dark:text-gray-200">
                       {cert.notes.map((point, i) => <li key={i}>{point}</li>)}
                     </ul>
                   )}
@@ -221,21 +223,33 @@ export default function ResumePage() {
           <section>
             <h2 className="text-2xl font-normal mb-2">Skills & Competencies</h2>
             <div className="mb-6">
-              <h3 className="text-lg font-normal mt-2 mb-1">Technologies</h3>
+              <h3 className="text-lg font-normal text-blue-600 dark:text-blue-400 mt-2 mb-1">Frontend Development</h3>
               <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
-                {resume.skills.technologies.map((group, idx) => (
+                {resume.skills.frontend_development.map((group, idx) => (
                   <li key={idx}>{group.join(", ")}</li>
                 ))}
               </ul>
-              <h3 className="text-lg font-normal mt-4 mb-1">Automation & AI</h3>
+              <h3 className="text-lg font-normal text-blue-600 dark:text-blue-400 mt-4 mb-1">Backend Systems</h3>
+              <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
+                {resume.skills.backend_systems.map((group, idx) => (
+                  <li key={idx}>{group.join(", ")}</li>
+                ))}
+              </ul>
+              <h3 className="text-lg font-normal text-blue-600 dark:text-blue-400 mt-4 mb-1">Databases & DevOps</h3>
+              <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
+                {resume.skills.databases_devops.map((group, idx) => (
+                  <li key={idx}>{group.join(", ")}</li>
+                ))}
+              </ul>
+              <h3 className="text-lg font-normal text-blue-600 dark:text-blue-400 mt-4 mb-1">Automation & AI</h3>
               <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
                 {resume.skills.automation_ai.map((group, idx) => (
                   <li key={idx}>{group.join(", ")}</li>
                 ))}
               </ul>
-              <h3 className="text-lg font-normal mt-4 mb-1">Tools & Systems</h3>
+              <h3 className="text-lg font-normal text-blue-600 dark:text-blue-400 mt-4 mb-1">Developer Environments & Tooling</h3>
               <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
-                {resume.skills.tools_systems.map((group, idx) => (
+                {resume.skills.developer_environments_tooling.map((group, idx) => (
                   <li key={idx}>{group.join(", ")}</li>
                 ))}
               </ul>
