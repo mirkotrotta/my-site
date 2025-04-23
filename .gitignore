@@ -1,6 +1,13 @@
 # Dependencies
 node_modules/
 **/node_modules/
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
 # Python specific
 __pycache__/
@@ -15,9 +22,13 @@ dist/
 build/
 out/
 /.next/ # Next.js build output
+**/.next/ # Next.js build output in any subfolder
+/out/
+**/out/
 
 # Test coverage
 /coverage/
+**/coverage/
 
 # Logs
 logs/
@@ -34,6 +45,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env*
 !.env.example # Ensure example env files are NOT ignored
 
 # Temporary files
@@ -60,6 +72,7 @@ Thumbs.db
 
 # TypeScript build info
 *.tsbuildinfo
+next-env.d.ts
 
 # Cursor specific files
 .cursor/
@@ -88,3 +101,71 @@ tasks.json
 tasks/ 
 tasks_backup/
 README-task-master.md
+
+# Additional items to ignore
+
+# Python virtual environment
+backend/env/
+
+# Cache directories
+**/__pycache__/
+
+# Local configuration
+.npmrc
+.yarnrc
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# React/Next.js specific
+.next
+out
+build
+.cache
+storybook-static
+
+# ESLint
+.eslintcache
+
+# Windows specific
+desktop.ini
+
+# Visual Studio Code directory
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Local history for Visual Studio Code
+.history/
+
+# Authentication files and secrets
+**/*config.json
+!tsconfig.json
+!next.config.ts
+!postcss.config.js
+!tailwind.config.js
+!eslint.config.mjs
+**/auth.json
+**/credentials.json
+**/*.key
+**/*.pem
+**/secrets.*
+
+# Log files beyond those already ignored
+**/*.log.*
+
+# Backup files
+**/*.bak
+**/*.backup
+tasks_backup/*.bak
+tasks_backup/tasks.json.bak
+tasks_backup/*.txt
+
+# Generated API documentation
+/api-docs/
+/docs/build/
+
+# Specific script outputs (but keep example_prd.txt)
+scripts/task-complexity-report.json
