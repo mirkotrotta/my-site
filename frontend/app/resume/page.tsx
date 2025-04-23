@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
 import ProfileCard from "@/components/ui/ProfileCard";
 import ProjectCard, { Project } from "@/components/projects/ProjectCard";
-import GlobalCTA from "@/components/ui/GlobalCTA";
-import { Mail } from "lucide-react";
 // import Skills from "@/components/ui/Skills"; // Uncomment if you have this
 // import Projects from "@/components/ui/Projects"; // Uncomment if you have this
 
@@ -147,7 +145,7 @@ export default function ResumePage() {
           {/* 1. Professional Profile */}
           <section>
             <h2 className="text-2xl font-normal mb-2">Professional Profile</h2>
-            <p className="text-base text-gray-700 dark:text-gray-200">{resume.professional_profile}</p>
+            <p className="text-lg text-gray-700 dark:text-gray-200">{resume.professional_profile}</p>
           </section>
           {/* 2. Professional Experience */}
           <section>
@@ -159,14 +157,14 @@ export default function ResumePage() {
                   <h3 className="text-xl font-normal text-blue-600 dark:text-blue-400 leading-snug">
                     {entry.title} @ {entry.company}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 mt-1">
                     {entry.start_date} - {entry.end_date ?? "Present"}
                   </p>
                   {/* Description as bullet points */}
-                  <ul className="list-disc pl-5 mt-2 text-sm text-gray-700 dark:text-gray-200">
+                  <ul className="list-disc pl-5 mt-2 text-lg text-gray-700 dark:text-gray-200">
                     {entry.description?.map((point, i) => <li key={i}>{point}</li>)}
                   </ul>
-                  <p className="text-xs text-gray-500 italic mt-1">{entry.location}</p>
+                  <p className="text-sm text-gray-500 italic mt-1">{entry.location}</p>
                 </div>
               ))}
             </div>
@@ -193,9 +191,9 @@ export default function ResumePage() {
             <ul>
               {resume.education.map((entry, idx) => (
                 <li key={idx}>
-                  <span className="font-semibold">{entry.institution}</span> – {entry.degree} ({entry.year})
+                  <span className="font-semibold text-lg">{entry.institution}</span> – {entry.degree} ({entry.year})
                   {entry.focus && (
-                    <ul className="list-disc pl-5 mt-2 text-sm text-gray-700 dark:text-gray-200">
+                    <ul className="list-disc pl-5 mt-2 text-lg text-gray-700 dark:text-gray-200">
                       {entry.focus.map((point, i) => <li key={i}>{point}</li>)}
                     </ul>
                   )}
@@ -209,9 +207,9 @@ export default function ResumePage() {
             <ul>
               {resume.certifications.map((cert, idx) => (
                 <li key={idx}>
-                  <span className="font-semibold">{cert.name}</span> {cert.status && <>({cert.status})</>}
+                  <span className="font-semibold text-lg">{cert.name}</span> {cert.status && <>({cert.status})</>}
                   {cert.notes && (
-                    <ul className="list-disc pl-5 mt-2 text-sm text-gray-700 dark:text-gray-200">
+                    <ul className="list-disc pl-5 mt-2 text-lg text-gray-700 dark:text-gray-200">
                       {cert.notes.map((point, i) => <li key={i}>{point}</li>)}
                     </ul>
                   )}
@@ -224,19 +222,19 @@ export default function ResumePage() {
             <h2 className="text-2xl font-normal mb-2">Skills & Competencies</h2>
             <div className="mb-6">
               <h3 className="text-lg font-normal mt-2 mb-1">Technologies</h3>
-              <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-200">
+              <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
                 {resume.skills.technologies.map((group, idx) => (
                   <li key={idx}>{group.join(", ")}</li>
                 ))}
               </ul>
               <h3 className="text-lg font-normal mt-4 mb-1">Automation & AI</h3>
-              <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-200">
+              <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
                 {resume.skills.automation_ai.map((group, idx) => (
                   <li key={idx}>{group.join(", ")}</li>
                 ))}
               </ul>
               <h3 className="text-lg font-normal mt-4 mb-1">Tools & Systems</h3>
-              <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-200">
+              <ul className="list-disc pl-5 text-lg text-gray-700 dark:text-gray-200">
                 {resume.skills.tools_systems.map((group, idx) => (
                   <li key={idx}>{group.join(", ")}</li>
                 ))}
@@ -247,8 +245,8 @@ export default function ResumePage() {
               <ul className="space-y-2">
                 {resume.languages.map((lang, idx) => (
                   <li key={idx} className="flex flex-col items-start">
-                    <span className="font-normal text-gray-700 dark:text-gray-200">{lang.language}</span>
-                    <span className="text-xs text-blue-500 dark:text-gray-400">{lang.level}</span>
+                    <span className="font-normal text-lg text-gray-700 dark:text-gray-200">{lang.language}</span>
+                    <span className="text-sm text-blue-500 dark:text-gray-400">{lang.level}</span>
                   </li>
                 ))}
               </ul>

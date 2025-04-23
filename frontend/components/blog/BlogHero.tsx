@@ -42,9 +42,9 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
                 <div className="flex items-center text-base text-gray-500 dark:text-gray-400 mb-4">
                   {heroPost.frontmatter.tags && heroPost.frontmatter.tags.length > 0 && (
                     <>
-                      <Link href={`/blog?tag=${encodeURIComponent(heroPost.frontmatter.tags[0])}`} className="text-lg text-blue-600 dark:text-blue-400 hover:underline">
+                      <span className="text-lg text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
                         {heroPost.frontmatter.tags[0]}
-                      </Link>
+                      </span>
                       <span className="mx-1">|</span>
                     </>
                   )}
@@ -54,8 +54,6 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
               </div>
             </div>
           </Link>
-          {/* Read More Button */}
-          <Button href={`/blog/${heroPost.slug}`} variant="link" showArrow={true} className="mt-8 pl-0 items-center" children={undefined} />
         </div>
 
         {/* Side Panel */}
@@ -66,35 +64,35 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
                 const featuredCoverImage = post.frontmatter.coverImage || `https://picsum.photos/seed/${post.slug}-featured/400/200`;
                 return (
                   <li key={post.slug} className={`group grid grid-cols-12 gap-4 py-7 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 ${index === 0 ? 'border-t-0' : 'border-t border-gray-100 dark:border-gray-700'} ${index === featuredPosts.length - 1 ? 'border-b-0' : 'border-b border-gray-100 dark:border-gray-700'}`}>
-                    <div className="col-span-8 flex flex-col justify-between">
+                    <Link href={`/blog/${post.slug}`} className="col-span-8 flex flex-col justify-between no-underline">
                       {/* Tag and Date */}
                       <div className="flex items-center text-base text-gray-500 dark:text-gray-400 mb-1">
                         {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
                           <>
-                            <Link href={`/blog?tag=${encodeURIComponent(post.frontmatter.tags[0])}`} className="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                            <span className="text-sm text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
                               {post.frontmatter.tags[0]}
-                            </Link>
+                            </span>
                             <span className="mx-1">|</span>
                           </>
                         )}
                         <p className="text-xs">{formatDate(post.frontmatter.date)}</p>
                       </div>
-                      <Link href={`/blog/${post.slug}`} className="text-xl font-normal text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                      <span className="text-xl font-normal text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                         <h4>{post.frontmatter.title}</h4>
-                      </Link>
+                      </span>
                       {/* Read More Button */}
-                      <Button href={`/blog/${post.slug}`} variant="link" showArrow={true} className="mt-2 pl-0 items-center" children={undefined} />
-                    </div>
+                      <span className="mt-2 pl-0 items-center text-blue-600 dark:text-blue-400 cursor-pointer">
+                       Read More
+                      </span>
+                    </Link>
                     <div className="col-span-4 relative aspect-[4/3] overflow-hidden">
-                      <Link href={`/blog/${post.slug}`}>
-                        <Image 
-                          src={featuredCoverImage}
-                          alt={`Cover image for ${post.frontmatter.title}`}
-                          fill
-                          sizes="33vw"
-                          className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
-                        />
-                      </Link>
+                      <Image 
+                        src={featuredCoverImage}
+                        alt={`Cover image for ${post.frontmatter.title}`}
+                        fill
+                        sizes="33vw"
+                        className="object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
+                      />
                     </div>
                   </li>
                 );
