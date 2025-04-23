@@ -15,8 +15,8 @@ import { NavigationItem } from '@/components/ui/SidebarA';
 import { SidebarSection } from '@/components/ui/SidebarB';
 import { generateTableOfContents, addHeadingIds } from '@/lib/toc';
 import SocialSharing from './SocialSharing';
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton } from 'react-share';
 import GlobalCTA from '../ui/GlobalCTA';
+import NewsletterForm from '../forms/NewsletterForm';
 
 export type Frontmatter = {
   title: string;
@@ -194,20 +194,8 @@ export default function BlogPost({ post }: BlogPostProps) {
 
   // Related content sidebar with newsletter at the top, no heading, and 'Connect with me' at the bottom
   const relatedContentSidebar = (
-    <SidebarB
-      sections={relatedPosts}
-      // No title prop, so no heading at the top
-    >
-      {/* Newsletter subscription at the top */}
-      <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-900">
-        <h4 className="text-lg font-normal text-blue-600 dark:text-blue-400 mb-2">Subscribe to our Newsletter</h4>
-        {/* Replace below with your newsletter embed code */}
-        <div className="newsletter-embed-placeholder text-xs text-gray-500 dark:text-gray-400">
-          Newsletter signup form goes here.
-        </div>
-      </div>
-      {/* New custom widget */}
-      {/*<div className="my-6 p-4 bg-green-50">My Custom Widget Here</div>*/}
+    <SidebarB sections={relatedPosts}>
+        <NewsletterForm />
     </SidebarB>
   );
 
@@ -241,7 +229,13 @@ export default function BlogPost({ post }: BlogPostProps) {
           </div>
           {/* Social sharing at the end of the article */}
           <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-8 mt-16">
-            <SocialSharing url={`${window.location.origin}/blog/${slug}`} title={frontmatter.title} summary={frontmatter.summary} />
+            <SocialSharing 
+              url={typeof window !== 'undefined' 
+                ? `${window.location.origin}/blog/${slug}` 
+                : `/blog/${slug}`} 
+              title={frontmatter.title} 
+              summary={frontmatter.summary} 
+            />
           </div>
         </article>
       </SidebarLayout>

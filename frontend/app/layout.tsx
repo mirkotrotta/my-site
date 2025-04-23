@@ -23,7 +23,9 @@ const ibmPlexSans = IBM_Plex_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
+// A safer approach - just use absolute URL objects for better compatibility
 export const metadata: Metadata = {
+  metadataBase: new URL('http://localhost:3000'),
   title: {
     default: 'Full Stack Developer | React, Python, FastAPI, Docker | Mirko Trotta',
     template: '%s | Mirko Trotta'
