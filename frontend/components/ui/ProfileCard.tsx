@@ -138,8 +138,10 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         </div>
         {/* Buttons */}
         <div className="w-full flex flex-col gap-2 mt-auto">
-          <Button variant="primary" className="w-full">Download CV</Button>
-          <Button variant="secondary" className="w-full">Contact Me</Button>
+          <Button variant="primary" className="w-full" href="/pdf/mirko_trotta_lenbenslauf.pdf" download target="_blank" rel="noopener noreferrer">Download CV</Button>
+          <Button variant="secondary" className="w-full" href="/contact">
+            Contact Me
+          </Button>
         </div>
       </div>
     </div>

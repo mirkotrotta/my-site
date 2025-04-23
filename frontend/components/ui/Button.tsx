@@ -2,7 +2,7 @@
 
 import { MoveRight } from 'lucide-react';
 import Link from 'next/link';
-import { ComponentProps, ReactNode } from 'react';
+import { ComponentProps, ReactNode, AnchorHTMLAttributes, ButtonHTMLAttributes } from 'react';
 import clsx from 'clsx';
 
 type ButtonProps = {
@@ -15,16 +15,43 @@ type ButtonProps = {
   showArrow?: boolean;
 } & ComponentProps<'button'>;
 
-export default function Button({
-  children,
-  variant = 'primary',
-  size = 'md',
-  className,
-  href,
-  onClick,
-  showArrow = false,
-  ...props
-}: ButtonProps) {
+type AnchorButtonProps = {
+  href: string;
+  download?: boolean | string;
+  target?: string;
+  rel?: string;
+  onClick?: () => void;
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'type' | 'onClick' | 'className' | 'children' | 'ref'> & {
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'link';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  showArrow?: boolean;
+  children: ReactNode;
+};
+
+type NativeButtonProps = {
+  href?: undefined;
+  onClick?: () => void;
+} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className' | 'children' | 'ref'> & {
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'link';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  showArrow?: boolean;
+  children: ReactNode;
+};
+
+type PolymorphicButtonProps = AnchorButtonProps | NativeButtonProps;
+
+export default function Button(props: PolymorphicButtonProps) {
+  const {
+    children,
+    variant = 'primary',
+    size = 'md',
+    className,
+    showArrow = false,
+    ...rest
+  } = props;
+
   const baseStyles =
     'inline-flex items-start justify-start transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
@@ -59,16 +86,46 @@ export default function Button({
     </>
   );
 
-  if (href) {
+  if ('href' in props && props.href) {
+    const { href, download, target, rel, onClick, ...anchorProps } = rest as AnchorButtonProps;
+    
+    // Check if it's an external link or has special attributes
+    const isExternal = href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || download || target === '_blank';
+    
+    if (isExternal) {
+      // For external links, downloads, or links with special attributes, use <a>
+      return (
+        <a
+          href={href}
+          className={classes}
+          download={download}
+          target={target}
+          rel={rel || (target === '_blank' ? 'noopener noreferrer' : undefined)}
+          onClick={onClick}
+          {...anchorProps}
+        >
+          {content}
+        </a>
+      );
+    }
+
+    // For internal navigation, use Next.js Link
     return (
-      <Link href={href} className={classes}>
+      <Link
+        href={href}
+        className={classes}
+        onClick={onClick}
+        {...anchorProps}
+      >
         {content}
       </Link>
     );
   }
 
+  // Native button
+  const { onClick, ...buttonProps } = rest as NativeButtonProps;
   return (
-    <button className={classes} onClick={onClick} {...props}>
+    <button className={classes} onClick={onClick} {...buttonProps}>
       {content}
     </button>
   );
