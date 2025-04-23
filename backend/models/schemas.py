@@ -40,9 +40,11 @@ class CertificationEntry(BaseModel):
     notes: Optional[List[str]]
 
 class Skills(BaseModel):
-    technologies: List[List[str]]
+    frontend_development    : List[List[str]]
+    backend_systems: List[List[str]]
+    databases_devops: List[List[str]]
     automation_ai: List[List[str]]
-    tools_systems: List[List[str]]
+    developer_environments_tooling: List[List[str]]
 
 class LanguageEntry(BaseModel):
     language: str

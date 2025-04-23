@@ -44,7 +44,7 @@ export default function FeatureNormal({
                 text: primaryCtaText,
                 href: primaryCtaHref,
                 variant: 'primary',
-                arrow: true,
+                arrow: false,
               },
               secondaryCtaText && secondaryCtaHref
                 ? {
