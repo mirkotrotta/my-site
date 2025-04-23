@@ -17,7 +17,7 @@ export default function Home() {
           <HeroWithSidebar
             eyebrowText="React · Python · FastAPI · Docker · AI Workflows"
             title="Full Stack Developer"
-            description="I’m a full stack developer focused on frontend clarity and backend functionality — building web applications, small APIs, and automation tools using React, Python, and FastAPI. My path blends creative experience with real project work and self-taught engineering."
+            description="I'm a full stack developer focused on <strong>frontend</strong> clarity and <strong>backend</strong> integration — building <strong>web applications, APIs, and automation flows</strong> using <strong>React, TypeScript, and Python</strong>. My path blends <strong>product thinking</strong> with hands-on project experience and a systems mindset."
             primaryCta={{ text: "Case Studies", href: "/projects" }}
             secondaryCta={{ text: "Download Resume", href: "/resume" }}
             imageSrc="/images/mirko trotta, metacubo studio, services germany, development.JPG"
@@ -40,7 +40,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-normal mb-4 text-blue-500 dark:text-white">A Different Path Into Development</h2>
             <div className="prose dark:prose-invert">
             <p className="mb-4 text-lg">
-              I didn’t take the traditional path into tech — no degree, no bootcamp. Just real work, curiosity, and persistence.
+              I didn't take the traditional path into tech — no degree, no bootcamp. Just real work, curiosity, and persistence.
             </p>
             <p className="mb-4 text-lg">
               After relocating to Germany with my family, I rebuilt my career from the ground up. Learning new tools, adapting to a new country, and transitioning into development taught me how to problem-solve across more than just code.

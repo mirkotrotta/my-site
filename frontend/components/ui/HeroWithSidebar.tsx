@@ -29,15 +29,16 @@ export default function HeroWithSidebar({
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12">
       <div className="lg:col-span-5">
-        <h2 className="text-sm font-normal text-gray-900 dark:text-white mb-2">
+        <h2 className="text-sm uppercase font-normal text-gray-900 dark:text-white mb-2">
           {eyebrowText}
         </h2>
         <h1 className="text-3xl md:text-5xl font-light text-blue-500 dark:text-white mb-6">
           {title}
         </h1>
-        <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-8">
-          {description}
-        </p>
+        <p
+          className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-8"
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
         <ButtonGroup 
               buttons={[
                 {

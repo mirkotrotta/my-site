@@ -49,15 +49,22 @@ export default function AboutPage() {
             <SocialLinks className="my-10 md:justify-start" />
             <div className="text-lg text-gray-800 dark:text-gray-300 leading-relaxed space-y-4">
               <p>
-                Full stack developer based near Frankfurt, focused on backend logic, automation, and internal tooling. Experienced across APIs, dashboards, and agent workflows — combining frontend delivery with practical backend systems built from real project needs.              </p>
-              <p>
-                Previously led digital production for brands like <strong>Pampers</strong>, <strong>Braun</strong>, and <strong>Nestlé</strong> — coordinating UX, content systems, and delivery workflows. That work shaped my engineering mindset: build with purpose, structure, and clarity.
+                Full stack developer based near Frankfurt, focused on backend systems, automation, and modern tooling.
               </p>
               <p>
-                I didn't start with a CS degree or a bootcamp. I started with problems to solve — automating workflows, writing small APIs, and building tools that helped teams work faster. Over time, those tools became systems — and the work became development.
+                I build software with a strong backend core — from clean APIs to lightweight tools that streamline workflows, support research, or integrate services. My work bridges product thinking with technical delivery.
               </p>
               <p>
-              Currently supporting backend systems and internal tooling at <a href="https://www.santanadigital.de/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 font-semibold">Santana Consulting</a>, a tech partner for fitness brands like <strong>UFC Gym</strong> and <strong>Redfit</strong>.  I also maintain open-source projects like <a href="https://github.com/mirkotrotta/moon-site" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 font-semibold">Moon Site</a> and <a href="https://github.com/mirkotrotta/streamlit_web_scraper" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 font-semibold">Streamlit Scraper</a>, and actively explore AI agent frameworks, cloud automation, and tools that improve developer workflows.
+                At <a href="https://www.santanadigital.de/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 font-semibold">Santana Consulting</a>, I contribute to <strong>product development</strong> for fitness brands like <strong>UFC Gym</strong> and <strong>Redfit</strong> — focusing on <strong>membership systems, frontend enhancements, and low-code platforms</strong>. My work spans from integrating third-party APIs to building UX features and automating flows.
+              </p>
+              <p>
+                I'm hands-on with <strong>cloud platforms (Azure, Vercel, GCP)</strong>, containerization, and dev tools that improve velocity. I actively explore <strong>AI agents, multi-agent frameworks, and scripting automations</strong> to offload repetitive tasks.
+              </p>
+              <p>
+                My toolkit includes <strong>FastAPI, TypeScript, Tailwind, Next.js, and Linux environments</strong> — always aiming to ship clear, scalable solutions.
+              </p>
+              <p>
+                I follow agile delivery practices rooted in <strong>Scrum</strong>, with years of experience coordinating across design, dev, and delivery — always focused on what drives real progress.
               </p>
             </div>
             <div className="mt-8"></div>
