@@ -33,5 +33,8 @@
     "generate": "node scripts/dev.js generate",
     "parse-prd": "node scripts/dev.js parse-prd"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "task-master-ai": "^0.12.1"
+  }
 }

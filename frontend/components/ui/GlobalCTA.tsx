@@ -44,7 +44,7 @@ export default function GlobalCTA({
               text: buttonText,
               href: buttonHref,
               variant: 'primary',
-              arrow: true,
+              arrow: false,
             },
             {
               text: buttonTextSecondary || '',

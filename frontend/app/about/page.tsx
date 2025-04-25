@@ -49,35 +49,38 @@ export default function AboutPage() {
             <SocialLinks className="my-10 md:justify-start" />
             <div className="text-lg text-gray-800 dark:text-gray-300 leading-relaxed space-y-4">
               <p>
-                Full stack developer based near Frankfurt, focused on backend systems, automation, and modern tooling.
+                I’m a full stack developer based near Frankfurt, with a background in design, content, and web development.
               </p>
               <p>
-                I build software with a strong backend core — from clean APIs to lightweight tools that streamline workflows, support research, or integrate services. My work bridges product thinking with technical delivery.
+                I started my career building websites with <strong>HTML, CSS, JavaScript</strong>, and <strong>WordPress</strong>, while running a creative studio. I worked closely with small businesses, helping them build an online presence through design, branding, and hands-on development.
               </p>
               <p>
-                At <a href="https://www.santanadigital.de/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 font-semibold">Santana Consulting</a>, I contribute to <strong>product development</strong> for fitness brands like <strong>UFC Gym</strong> and <strong>Redfit</strong> — focusing on <strong>membership systems, frontend enhancements, and low-code platforms</strong>. My work spans from integrating third-party APIs to building UX features and automating flows.
+                In 2018, I moved to Germany. I began working in content and digital production roles, eventually stepping into art direction for campaigns across major consumer brands. During that time, I kept growing my tech skills — learning how to build smarter tools and systems, not just visuals.
               </p>
               <p>
-                I'm hands-on with <strong>cloud platforms (Azure, Vercel, GCP)</strong>, containerization, and dev tools that improve velocity. I actively explore <strong>AI agents, multi-agent frameworks, and scripting automations</strong> to offload repetitive tasks.
+                Today, I focus on delivering real product features: <strong>frontend interfaces, membership flows, backend APIs, and automation workflows</strong>. I work with technologies like <strong>Next.js, TypeScript, Tailwind CSS</strong> on the frontend and <strong>Python, FastAPI, PostgreSQL, Docker</strong> on the backend.
               </p>
               <p>
-                My toolkit includes <strong>FastAPI, TypeScript, Tailwind, Next.js, and Linux environments</strong> — always aiming to ship clear, scalable solutions.
+                I’m also getting deeper into <strong>cloud platforms like Azure</strong> and using <strong>GitHub Actions</strong> to support CI/CD and DevOps practices.
               </p>
               <p>
-                I follow agile delivery practices rooted in <strong>Scrum</strong>, with years of experience coordinating across design, dev, and delivery — always focused on what drives real progress.
+                Outside of work, I explore <strong>AI agent frameworks</strong> and build tools to reduce repetitive tasks and improve workflows — always learning, always refining my craft.
+              </p>
+              <p>
+                I bring 15+ years of cross-disciplinary experience, a strong learning mindset, and a clear goal: to keep growing in software, cloud, and automation — and to build things that make a real difference.
               </p>
             </div>
             <div className="mt-8"></div>
             <ButtonGroup 
               buttons={[
                 {
-                  text: 'View projects',
+                  text: 'Case Studies',
                   href: '/projects',
                   variant: 'primary',
-                  arrow: true,
+                  arrow: false,
                 },
                 {
-                  text: 'Download resume',
+                  text: 'View Resume',
                   href: '/resume',
                   variant: 'tertiary',
                   arrow: true,
@@ -92,7 +95,7 @@ export default function AboutPage() {
           subtitle="🌍 Multicultural & EU-Eligible"
           title="Italian Citizen, Based in Germany"
           description="Born in Venezuela, now near Frankfurt with Italian citizenship and full EU work rights. Fluent in Spanish, English, and German, and comfortable working across cultures, teams, and systems."
-          primaryCtaText="See my resume"
+          primaryCtaText="View Resume"
           primaryCtaHref="/resume"
          // secondaryCtaText="Download PDF"
          // secondaryCtaHref="/annual-report.pdf"

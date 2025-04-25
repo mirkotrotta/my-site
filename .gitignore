@@ -168,4 +168,4 @@ tasks_backup/*.txt
 /docs/build/
 
 # Specific script outputs (but keep example_prd.txt)
-scripts/task-complexity-report.json
+scripts/

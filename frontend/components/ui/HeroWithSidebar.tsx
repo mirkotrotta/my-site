@@ -45,10 +45,10 @@ export default function HeroWithSidebar({
                   text: 'View Resume',
                   href: '/resume',
                   variant: 'primary',
-                  arrow: true,
+                  arrow: false,
                 },
                 {
-                  text: 'View Projects',
+                  text: 'Case Studies',
                   href: '/projects',
                   variant: 'tertiary',
                   arrow: true,

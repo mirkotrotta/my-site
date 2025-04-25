@@ -17,7 +17,7 @@ export default function Home() {
           <HeroWithSidebar
             eyebrowText="React · Python · FastAPI · Docker · AI Workflows"
             title="Full Stack Developer"
-            description="I'm a full stack developer focused on <strong>frontend</strong> clarity and <strong>backend</strong> integration — building <strong>web applications, APIs, and automation flows</strong> using <strong>React, TypeScript, and Python</strong>. My path blends <strong>product thinking</strong> with hands-on project experience and a systems mindset."
+            description="I build <strong>fast, maintainable</strong> <strong>web apps</strong>, <strong>APIs</strong>, and <strong>automation flows</strong> using modern tools — focused on <strong>clean code</strong>, <strong>real business logic</strong>, and <strong>production-ready delivery</strong>."
             primaryCta={{ text: "Case Studies", href: "/projects" }}
             secondaryCta={{ text: "Download Resume", href: "/resume" }}
             imageSrc="/images/mirko trotta, metacubo studio, services germany, development.JPG"
@@ -40,18 +40,18 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-normal mb-4 text-blue-500 dark:text-white">A Different Path Into Development</h2>
             <div className="prose dark:prose-invert">
             <p className="mb-4 text-lg">
-              I didn't take the traditional path into tech — no degree, no bootcamp. Just real work, curiosity, and persistence.
+              I didn't take the traditional path into tech — no degree, no bootcamp. Just <strong>real work</strong>, curiosity, and persistence.
             </p>
             <p className="mb-4 text-lg">
               After relocating to Germany with my family, I rebuilt my career from the ground up. Learning new tools, adapting to a new country, and transitioning into development taught me how to problem-solve across more than just code.
             </p>
             <p className="mb-4 text-lg">
-              Today, that mindset shapes how I approach software: with structure, clarity, and long-term thinking.
+              Today, that mindset shapes how I approach software: with <strong>structure</strong>, <strong>clarity</strong>, and <strong>long-term thinking</strong>.
             </p>
             </div>
             <div className="mt-6">
-              <Button href="/about" variant="primary" showArrow size="lg">
-                Learn More About My Journey
+              <Button href="/about" variant="link" showArrow size="lg" className="px-0">
+                Read More
               </Button>
             </div>
           </div>
@@ -96,7 +96,7 @@ export default function Home() {
           subtitle="Open to connecting around thoughtful systems, internal tooling, or automation — especially where structure and clarity matter."
           buttonText="Contact Me"
           buttonHref="/contact"
-          buttonTextSecondary="Download Resume"
+          buttonTextSecondary="View Resume"
           buttonHrefSecondary="/resume"
         />
       </div>

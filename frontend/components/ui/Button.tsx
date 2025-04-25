@@ -13,6 +13,7 @@ type ButtonProps = {
   href?: string;
   onClick?: () => void;
   showArrow?: boolean;
+  download?: boolean | string;
 } & ComponentProps<'button'>;
 
 export default function Button({
@@ -23,6 +24,7 @@ export default function Button({
   href,
   onClick,
   showArrow = false,
+  download,
   ...props
 }: ButtonProps) {
   const baseStyles =
@@ -60,6 +62,13 @@ export default function Button({
   );
 
   if (href) {
+    if (download) {
+      return (
+        <a href={href} className={classes} download={download}>
+          {content}
+        </a>
+      );
+    }
     return (
       <Link href={href} className={classes}>
         {content}
