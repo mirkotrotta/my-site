@@ -1,0 +1,114 @@
+{
+  "common": {
+    "navigation": {
+      "home": "Startseite",
+      "about": "Über mich",
+      "projects": "Projekte",
+      "blog": "Blog",
+      "resume": "Lebenslauf",
+      "contact": "Kontakt"
+    },
+    "buttons": {
+      "readMore": "Mehr erfahren",
+      "viewAll": "Alle anzeigen",
+      "download": "Herunterladen",
+      "contact": "Kontaktiere mich",
+      "viewProjects": "Projekte ansehen",
+      "viewResume": "Lebenslauf ansehen"
+    },
+    "footer": {
+      "copyright": "© {{year}} Mirko Trotta. Alle Rechte vorbehalten.",
+      "builtWith": "Erstellt mit Next.js und Tailwind CSS"
+    },
+    "darkMode": {
+      "toggle": "Dunkelmodus umschalten"
+    },
+    "language": {
+      "en": "Englisch",
+      "de": "Deutsch",
+      "switchLanguage": "Zu {{language}} wechseln"
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "React · Python · FastAPI · Docker · AI Workflows",
+      "title": "Full Stack Entwickler",
+      "description": "Ich entwickle <strong>schnelle, wartbare</strong> <strong>Web-Apps</strong>, <strong>APIs</strong> und <strong>Automatisierungs-Workflows</strong> mit modernen Tools — mit Fokus auf <strong>sauberem Code</strong>, <strong>echter Geschäftslogik</strong> und <strong>produktionsreifer Bereitstellung</strong>.",
+      "cta": {
+        "primary": "Fallstudien",
+        "secondary": "Lebenslauf herunterladen"
+      }
+    },
+    "about": {
+      "title": "Ein anderer Weg in die Entwicklung",
+      "paragraph1": "Ich bin keinen traditionellen Weg in die Technikbranche gegangen — kein Studium, kein Bootcamp. Nur <strong>echte Arbeit</strong>, Neugier und Durchhaltevermögen.",
+      "paragraph2": "Nach meinem Umzug nach Deutschland mit meiner Familie baute ich meine Karriere von Grund auf neu auf. Neue Tools zu erlernen, mich an ein neues Land anzupassen und in die Entwicklung zu wechseln, lehrte mich, über den Code hinaus Probleme zu lösen.",
+      "paragraph3": "Heute prägt diese Denkweise meinen Umgang mit Software: mit <strong>Struktur</strong>, <strong>Klarheit</strong> und <strong>langfristigem Denken</strong>.",
+      "readMore": "Mehr erfahren"
+    },
+    "skills": {
+      "title": "Kernkompetenzen & Tools",
+      "description": "Dies sind die Tools und Frameworks, die ich in realen Projekten, internen Tools und Open-Source-Entwicklung eingesetzt habe — mit zunehmendem Fokus auf Automatisierung und Cloud-Architektur."
+    },
+    "projects": {
+      "title": "Ausgewählte Projekte",
+      "viewAll": "Alle Projekte ansehen"
+    },
+    "blog": {
+      "title": "Neueste Artikel",
+      "viewAll": "Alle Artikel ansehen"
+    },
+    "cta": {
+      "title": "Lass uns verbinden",
+      "subtitle": "Offen für Austausch zu durchdachten Systemen, internen Tools oder Automatisierung — besonders dort, wo Struktur und Klarheit wichtig sind.",
+      "primary": "Kontaktiere mich",
+      "secondary": "Lebenslauf ansehen"
+    }
+  },
+  "about": {
+    "title": "Über mich",
+    "subtitle": "Software mit Klarheit und Zweck entwickeln",
+    "intro": "Full-Stack-Entwickler mit Fokus auf die Erstellung durchdachter, wartbarer Systeme für Herausforderungen der realen Welt."
+  },
+  "projects": {
+    "title": "Projekte",
+    "subtitle": "Fallstudien und Kundenarbeiten",
+    "tags": {
+      "all": "Alle",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "fullstack": "Full Stack",
+      "design": "Design"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Gedanken zu Entwicklung, Design und Systemen",
+    "readTime": "{{minutes}} Min. Lesezeit",
+    "viewAll": "Alle Artikel ansehen"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Lass uns ein Gespräch beginnen",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "send": "Nachricht senden",
+      "sending": "Wird gesendet...",
+      "success": "Deine Nachricht wurde gesendet!",
+      "error": "Beim Senden deiner Nachricht ist ein Fehler aufgetreten. Bitte versuche es erneut."
+    }
+  },
+  "resume": {
+    "title": "Lebenslauf",
+    "subtitle": "Beruflicher Hintergrund und Fähigkeiten",
+    "download": "PDF herunterladen",
+    "sections": {
+      "experience": "Erfahrung",
+      "education": "Ausbildung",
+      "skills": "Fähigkeiten",
+      "languages": "Sprachen"
+    }
+  }
+} 

@@ -1,0 +1,114 @@
+{
+  "common": {
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "projects": "Projects",
+      "blog": "Blog",
+      "resume": "Resume",
+      "contact": "Contact"
+    },
+    "buttons": {
+      "readMore": "Read More",
+      "viewAll": "View All",
+      "download": "Download",
+      "contact": "Contact Me",
+      "viewProjects": "View Projects",
+      "viewResume": "View Resume"
+    },
+    "footer": {
+      "copyright": "© {{year}} Mirko Trotta. All rights reserved.",
+      "builtWith": "Built with Next.js and Tailwind CSS"
+    },
+    "darkMode": {
+      "toggle": "Toggle dark mode"
+    },
+    "language": {
+      "en": "English",
+      "de": "German",
+      "switchLanguage": "Switch to {{language}}"
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "React · Python · FastAPI · Docker · AI Workflows",
+      "title": "Full Stack Developer",
+      "description": "I build <strong>fast, maintainable</strong> <strong>web apps</strong>, <strong>APIs</strong>, and <strong>automation flows</strong> using modern tools — focused on <strong>clean code</strong>, <strong>real business logic</strong>, and <strong>production-ready delivery</strong>.",
+      "cta": {
+        "primary": "Case Studies",
+        "secondary": "Download Resume"
+      }
+    },
+    "about": {
+      "title": "A Different Path Into Development",
+      "paragraph1": "I didn't take the traditional path into tech — no degree, no bootcamp. Just <strong>real work</strong>, curiosity, and persistence.",
+      "paragraph2": "After relocating to Germany with my family, I rebuilt my career from the ground up. Learning new tools, adapting to a new country, and transitioning into development taught me how to problem-solve across more than just code.",
+      "paragraph3": "Today, that mindset shapes how I approach software: with <strong>structure</strong>, <strong>clarity</strong>, and <strong>long-term thinking</strong>.",
+      "readMore": "Read More"
+    },
+    "skills": {
+      "title": "Core Skills & Tools",
+      "description": "These are the tools and frameworks I've used across real projects, internal tooling, and open-source development — with a growing focus on automation and cloud architecture."
+    },
+    "projects": {
+      "title": "Featured Projects",
+      "viewAll": "View All Projects"
+    },
+    "blog": {
+      "title": "Latest Articles",
+      "viewAll": "View All Articles"
+    },
+    "cta": {
+      "title": "Let's connect",
+      "subtitle": "Open to connecting around thoughtful systems, internal tooling, or automation — especially where structure and clarity matter.",
+      "primary": "Contact Me",
+      "secondary": "View Resume"
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Building software with clarity and purpose",
+    "intro": "Full-stack developer focused on creating thoughtful, maintainable systems for real-world challenges."
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Case studies and client work",
+    "tags": {
+      "all": "All",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "fullstack": "Full Stack",
+      "design": "Design"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Thoughts on development, design, and systems",
+    "readTime": "{{minutes}} min read",
+    "viewAll": "View All Articles"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's start a conversation",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Your message has been sent!",
+      "error": "There was an error sending your message. Please try again."
+    }
+  },
+  "resume": {
+    "title": "Resume",
+    "subtitle": "Professional background and skills",
+    "download": "Download PDF",
+    "sections": {
+      "experience": "Experience",
+      "education": "Education",
+      "skills": "Skills",
+      "languages": "Languages"
+    }
+  }
+} 

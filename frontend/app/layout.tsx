@@ -46,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable}`}>
+    <html className={`${ibmPlexSans.variable}`}>
       <body>
         <AnalyticsProvider
           // Add your analytics IDs here - these are just examples
