@@ -1,24 +1,29 @@
 import Link from 'next/link';
 
-type CategoryBarProps = {
+export type CategoryBarProps = {
   tags: string[];
   currentTag?: string;
+  lang?: string;
 };
 
-export default function CategoryBar({ tags, currentTag }: CategoryBarProps) {
+export default function CategoryBar({ tags, currentTag, lang = 'en' }: CategoryBarProps) {
   if (!tags || tags.length === 0) {
     return null;
   }
+
+  // Filter text based on language
+  const filterText = lang === 'de' ? 'Nach Kategorie filtern:' : 'Filter by Category:';
+  const allText = lang === 'de' ? 'Alle' : 'All';
 
   return (
     <section className="mb-10 md:mb-14 border-b border-gray-200 dark:border-gray-700">
       <div className="flex flex-wrap gap-0">
         <span className="text-sm font-normal text-gray-500 dark:text-gray-400 mr-6 py-3">
-          Filter by Category:
+          {filterText}
         </span>
         {/* "All" link */}
         <Link 
-          href="/blog"
+          href={`/${lang}/blog`}
           className={`
             py-3 px-4 text-sm font-normal border-b-2 transition-colors
             ${!currentTag 
@@ -27,7 +32,7 @@ export default function CategoryBar({ tags, currentTag }: CategoryBarProps) {
             }
           `}
         >
-          All
+          {allText}
         </Link>
         {/* Individual tag links */}
         {tags.map(tag => {
@@ -35,7 +40,7 @@ export default function CategoryBar({ tags, currentTag }: CategoryBarProps) {
           return (
             <Link 
               key={tag} 
-              href={`/blog?tag=${encodeURIComponent(tag)}`}
+              href={`/${lang}/blog?tag=${encodeURIComponent(tag)}`}
               className={`
                 py-3 px-4 text-sm font-normal border-b-2 transition-colors
                 ${isActive 
