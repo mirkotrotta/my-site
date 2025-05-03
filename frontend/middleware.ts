@@ -50,16 +50,33 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  // Check if we're at the root path
-  if (pathname === '/') {
+  // Handle /blog routes to redirect to /{lang}/blog
+  if (pathname.startsWith('/blog') || pathname === '/blog') {
+    const cookieLanguage = getLanguageFromCookie(request);
+    const headerLanguage = getLanguageFromHeader(request);
+    const language = cookieLanguage || headerLanguage || defaultLanguage;
+    
+    const newPath = pathname.replace(/^\/blog/, `/${language}/blog`);
+    
+    const url = request.nextUrl.clone();
+    url.pathname = newPath;
+    
+    return NextResponse.redirect(url);
+  }
+  
+  // Check if we're at the root path or if the path doesn't start with a language
+  if (pathname === '/' || !supportedLanguages.some(lang => pathname.startsWith(`/${lang}/`) || pathname === `/${lang}`)) {
     // Determine which language to use
     const cookieLanguage = getLanguageFromCookie(request);
     const headerLanguage = getLanguageFromHeader(request);
     const language = cookieLanguage || headerLanguage || defaultLanguage;
     
+    // Build new path with language prefix if it's not just the root
+    const newPath = pathname === '/' ? `/${language}` : `/${language}${pathname}`;
+    
     // Redirect to the appropriate language route
     const url = request.nextUrl.clone();
-    url.pathname = `/${language}`;
+    url.pathname = newPath;
     
     return NextResponse.redirect(url);
   }

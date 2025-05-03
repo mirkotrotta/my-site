@@ -14,11 +14,12 @@
       "download": "Download",
       "contact": "Contact Me",
       "viewProjects": "View Projects",
-      "viewResume": "View Resume"
+      "viewResume": "View Resume",
+      "backToTop": "Scroll back to top"
     },
     "footer": {
       "copyright": "© {{year}} Mirko Trotta. All rights reserved.",
-      "builtWith": "Built with Next.js and Tailwind CSS"
+      "builtWith": "Crafted with Next.js, Tailwind CSS and FastAPI."
     },
     "darkMode": {
       "toggle": "Toggle dark mode"
@@ -27,36 +28,31 @@
       "en": "English",
       "de": "German",
       "switchLanguage": "Switch to {{language}}"
-    }
+    },
+    "loading": "Loading content..."
   },
-  "home": {
+  "homepage": {
     "hero": {
-      "eyebrow": "React · Python · FastAPI · Docker · AI Workflows",
+      "eyebrow": "React · TypeScript · FastAPI · Docker · Azure",
       "title": "Full Stack Developer",
-      "description": "I build <strong>fast, maintainable</strong> <strong>web apps</strong>, <strong>APIs</strong>, and <strong>automation flows</strong> using modern tools — focused on <strong>clean code</strong>, <strong>real business logic</strong>, and <strong>production-ready delivery</strong>.",
-      "cta": {
-        "primary": "Case Studies",
-        "secondary": "Download Resume"
-      }
+      "description": "I build <strong>frontend interfaces</strong> and <strong>backend tools</strong> using <strong>React, Python, and Docker</strong> — focused on <strong>clarity</strong>, <strong>automation</strong>, and <strong>scalable delivery</strong>.",
+      "primaryCta": "View Projects",
+      "secondaryCta": "Download Resume",
+      "sidebarTitle": "Latest news"
     },
     "about": {
       "title": "A Different Path Into Development",
-      "paragraph1": "I didn't take the traditional path into tech — no degree, no bootcamp. Just <strong>real work</strong>, curiosity, and persistence.",
-      "paragraph2": "After relocating to Germany with my family, I rebuilt my career from the ground up. Learning new tools, adapting to a new country, and transitioning into development taught me how to problem-solve across more than just code.",
-      "paragraph3": "Today, that mindset shapes how I approach software: with <strong>structure</strong>, <strong>clarity</strong>, and <strong>long-term thinking</strong>.",
-      "readMore": "Read More"
+      "imageAlt": "Profile Image",
+      "bio1": "I didn't take the traditional path into tech — no degree, no bootcamp. Just <strong>real work</strong>, curiosity, and persistence.",
+      "bio2": "After relocating to Germany with my family, I rebuilt my career from the ground up. Learning new tools, adapting to a new country, and transitioning into development taught me how to problem-solve across more than just code.",
+      "bio3": "Today, that mindset shapes how I approach software: with <strong>structure</strong>, <strong>clarity</strong>, and <strong>long-term thinking</strong>."
     },
     "skills": {
       "title": "Core Skills & Tools",
       "description": "These are the tools and frameworks I've used across real projects, internal tooling, and open-source development — with a growing focus on automation and cloud architecture."
     },
     "projects": {
-      "title": "Featured Projects",
-      "viewAll": "View All Projects"
-    },
-    "blog": {
-      "title": "Latest Articles",
-      "viewAll": "View All Articles"
+      "title": "Featured Projects"
     },
     "cta": {
       "title": "Let's connect",
@@ -66,49 +62,155 @@
     }
   },
   "about": {
+    "name": "Mirko Trotta",
     "title": "About Me",
-    "subtitle": "Building software with clarity and purpose",
-    "intro": "Full-stack developer focused on creating thoughtful, maintainable systems for real-world challenges."
-  },
-  "projects": {
-    "title": "Projects",
-    "subtitle": "Case studies and client work",
-    "tags": {
-      "all": "All",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "fullstack": "Full Stack",
-      "design": "Design"
+    "subtitle": "Full Stack Developer & UI/UX Designer",
+    "intro": "I help businesses transform their ideas into elegant, functional digital products.",
+    "jobTitle": "Full Stack Developer",
+    "imageAlt": "Profile photo of Mirko Trotta",
+    "bio": {
+        "intro": "I'm a <strong>full stack developer based in Germany</strong> with a background in design, content systems, and digital production.",
+        "career1": "I build user-focused frontends and practical backend services using <strong>React, Next.js, TypeScript, Python, and FastAPI</strong> — and I'm currently deepening my infrastructure and automation skills to support cleaner, more scalable systems.",
+        "career2": "My technical journey started at 13, learning MS-DOS from a stack of books my father gave me. I never studied computer science or attended a bootcamp — I learned by building: first websites, then automation tools, and eventually full stack apps.",
+        "career3": "Before becoming a developer, I worked as an art director in digital agencies — producing campaigns, managing delivery, and building websites for small businesses. That shaped how I approach engineering today: with precision, structure, and care for the end user.",
+        "career4": "At Santana Consulting, I support client platforms in the fitness industry — building user flows, solving integration challenges, and managing content logic across tools and services.",
+        "career5": "My side projects include Moon Site, a full stack boilerplate using <strong>Next.js, FastAPI, and Markdown</strong>, and a Streamlit-based web scraper. I'm also exploring AI agent workflows, DevOps tools, and cloud deployment.",
+        "summary": "If you're looking for a developer who understands both frontend and backend systems — and who brings curiosity, discipline, and real-world delivery — I'd be glad to connect."
+    },
+    "buttons": {
+      "caseStudies": "View Projects",
+      "viewResume": "View Resume"
+    },
+    "servicesTitle": "My Services",
+    "skills": {
+      "title": "Skills & Tools",
+      "description": "These are the tools and frameworks I've implemented in real projects, internal tools, and open-source development — with increasing focus on automation and cloud architecture.",
+      "frontend": "Frontend Development",
+      "backend": "Backend Development",
+      "mobile": "Mobile Development",
+      "design": "UI/UX Design",
+      "devops": "DevOps & Deployment"
+    },
+    "services": {
+      "web": {
+        "title": "Web Development",
+        "description": "Creating fast, responsive websites and web applications using modern frameworks and best practices."
+      },
+      "mobile": {
+        "title": "Mobile Apps",
+        "description": "Building cross-platform applications with React Native for iOS and Android."
+      },
+      "design": {
+        "title": "UI/UX Design",
+        "description": "Designing intuitive interfaces and user experiences that focus on usability and aesthetics."
+      },
+      "backend": {
+        "title": "Backend Systems",
+        "description": "Developing robust APIs, database solutions, and server architecture."
+      }
+    },
+    "citizenship": {
+      "subtitle": "🌍 International Profile",
+      "title": "Italian citizen, based in Germany",
+      "description": "Fluent in Spanish (native), English (C1), and German (B2). Comfortable working in international, cross-functional tech teams. Experienced collaborating across languages, cultures, and remote environments."
+    },
+    "cta": {
+      "title": "Let's Connect",
+      "subtitle": "Open for discussions about thoughtful systems, internal tools, or automation — especially where structure and clarity matter.",
+      "primary": "Contact Me",
+      "secondary": "View Resume"
+    },
+    "contact": {
+      "title": "Let's Connect",
+      "description": "Interested in working together or have a question? Feel free to reach out!",
+      "buttonText": "Contact Me",
+      "connect": {
+        "responseTime": "I typically respond within 1-2 business days."
+      }
     }
   },
   "blog": {
-    "title": "Blog",
+    "title": "Latest Articles",
     "subtitle": "Thoughts on development, design, and systems",
     "readTime": "{{minutes}} min read",
-    "viewAll": "View All Articles"
+    "viewAll": "View All Articles",
+    "noPosts": "No blog posts found.",
+    "toc": {
+      "title": "In this article",
+      "noHeadings": "No headings found"
+    }
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "Selected work and case studies",
+    "filters": {
+      "all": "All",
+      "web": "Web",
+      "mobile": "Mobile",
+      "design": "Design"
+    },
+    "cta": {
+      "github": "View on GitHub",
+      "live": "Live Demo",
+      "case": "Case Study"
+    },
+    "moreProjects": "More Projects"
   },
   "contact": {
-    "title": "Contact",
-    "subtitle": "Let's start a conversation",
+    "title": "Get in Touch",
+    "subtitle": "I'd love to hear from you",
     "form": {
-      "name": "Name",
+      "name": "Your Name",
+      "email": "Your Email",
+      "subject": "Subject",
+      "message": "Your Message",
+      "submit": "Send Message"
+    },
+    "success": "Thank you! Your message has been sent.",
+    "error": "Oops! There was an error sending your message. Please try again.",
+    "connect": {
+      "title": "Connect With Me",
+      "subtitle": "Prefer to connect through other channels? Reach out via social media or email.",
       "email": "Email",
-      "message": "Message",
-      "send": "Send Message",
-      "sending": "Sending...",
-      "success": "Your message has been sent!",
-      "error": "There was an error sending your message. Please try again."
+      "phone": "Phone",
+      "social": "Social Media",
+      "responseTime": "I typically respond within 1-2 business days."
     }
   },
   "resume": {
-    "title": "Resume",
-    "subtitle": "Professional background and skills",
+    "title": "My Resume",
     "download": "Download PDF",
+    "present": "Present",
     "sections": {
-      "experience": "Experience",
+      "profile": "Professional Profile",
+      "experience": "Professional Experience",
+      "additionalExperience": "Additional Experience",
       "education": "Education",
-      "skills": "Skills",
-      "languages": "Languages"
+      "certifications": "Certifications & Continuing Education",
+      "skills": "Skills & Competencies",
+      "languages": "Languages",
+      "projects": "Projects"
+    },
+    "skills": {
+      "frontend": "Frontend",
+      "backend": "Backend & Systems",
+      "database": "Database & DevOps",
+      "automation": "Automation & AI",
+      "tools": "Tools & Systems"
+    },
+    "errors": {
+      "fetchFailed": "Failed to fetch resume",
+      "projectsFetchFailed": "Failed to fetch projects"
     }
+  },
+  "newsletter": {
+    "title": "Subscribe to updates",
+    "subtitle": "Get the latest articles delivered to your inbox",
+    "emailPlaceholder": "Your email address",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing...",
+    "success": "Thanks for subscribing!",
+    "invalidEmail": "Please enter a valid email address",
+    "genericError": "An error occurred. Please try again."
   }
 } 

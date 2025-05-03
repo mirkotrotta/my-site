@@ -27,29 +27,33 @@ export default function SidebarLayout({
   let gridTemplateClass = '';
   
   if (sidebarLeft && sidebarRight) {
-    gridTemplateClass = 'lg:grid-cols-[240px_1fr_280px] lg:gap-10';
+    gridTemplateClass = 'lg:grid-cols-[240px_1fr_280px] lg:gap-8 xl:gap-10';
   } else if (sidebarLeft) {
-    gridTemplateClass = 'lg:grid-cols-[240px_1fr] lg:gap-10';
+    gridTemplateClass = 'lg:grid-cols-[240px_1fr] lg:gap-8 xl:gap-10';
   } else if (sidebarRight) {
-    gridTemplateClass = 'lg:grid-cols-[1fr_280px] lg:gap-10';
+    gridTemplateClass = 'lg:grid-cols-[1fr_280px] lg:gap-8 xl:gap-10';
   }
 
   return (
-    <GlobalContainer className={`py-12 ${className}`}>
+    <GlobalContainer className={`py-8 md:py-12 ${className}`}>
       <div className={`grid grid-cols-1 gap-y-8 ${gridTemplateClass}`}>
         {sidebarLeft && (
-          <div className="order-1 lg:order-1">
-            {sidebarLeft}
+          <div className="order-2 lg:order-1 row-span-1 lg:row-span-2">
+            <div className="lg:sticky lg:top-24">
+              {sidebarLeft}
+            </div>
           </div>
         )}
         
-        <div className={`order-2 ${sidebarLeft ? 'lg:order-2' : ''}`}>
+        <main className={`order-1 ${sidebarLeft ? 'lg:order-2' : ''} min-w-0`}>
           {children}
-        </div>
+        </main>
         
         {sidebarRight && (
-          <div className="order-3">
-            {sidebarRight}
+          <div className="order-3 row-span-1 lg:row-span-2">
+            <div className="lg:sticky lg:top-24">
+              {sidebarRight}
+            </div>
           </div>
         )}
       </div>

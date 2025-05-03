@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google"; // Keep this import
 import "./globals.css";
 import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
+import Script from 'next/script';
+// Removed ThemeProvider, Header, Footer imports
 
 // const geistSans = Geist({ // Removed
 //   variable: "--font-geist-sans",
@@ -25,7 +27,7 @@ const ibmPlexSans = IBM_Plex_Sans({
 
 // A safer approach - just use absolute URL objects for better compatibility
 export const metadata: Metadata = {
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL('http://localhost:4000'),
   title: {
     default: 'Full Stack Developer | React, Python, FastAPI, Docker | Mirko Trotta',
     template: '%s | Mirko Trotta'
@@ -46,17 +48,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={`${ibmPlexSans.variable}`}>
-      <body>
-        <AnalyticsProvider
-          // Add your analytics IDs here - these are just examples
-          // googleAnalyticsId="G-XXXXXXXXXX"
-          // fathomSiteId="XXXXXXXXXX"
-          // plausibleDomain="yourdomain.com"
-          // umamiWebsiteId="XXXXXXXXXX"
-        >
-          {children}
-        </AnalyticsProvider>
+    <html lang="en" className={`${ibmPlexSans.variable}`} suppressHydrationWarning>
+      {/* Body tag gets theme classes applied dynamically by components/Layout.tsx */}
+      <body> 
+        {/* Removed ThemeProvider wrapper */}
+        {/* Removed Header and Footer components */}
+        {children} {/* Render children directly */}
+        
+        {/* Analytics Script */}
+        {process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL && process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="lazyOnload"
+          />
+        )}
+        {/* Optional: Other Analytics Providers */}
+        {/* <AnalyticsProvider /> */}
       </body>
     </html>
   );

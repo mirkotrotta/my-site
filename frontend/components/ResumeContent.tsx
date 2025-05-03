@@ -124,16 +124,16 @@ export default function ResumeContent({ language }: ResumeContentProps) {
         const placeholderData: ResumeData = {
           profile: {
             name: "Mirko Trotta",
-            location: "Munich, Germany",
-            phone: "+49 123 456789",
-            email: "contact@mirkotrotta.com",
-            linkedin: "linkedin.com/in/mirkotrotta",
+            location: "Hanau, Germany",
+            phone: "+49 173 940 55 70",
+            email: "mirkotrotta@gmail.com",
+            linkedin: "https://www.linkedin.com/in/mirkotrotta",
             portfolio: "mirkotrotta.com",
-            github: "github.com/mirkotrotta",
-            dob: "01.01.1990",
-            pob: "Munich",
-            marital_status: "Single",
-            nationality: "German"
+            github: "https://github.com/mirkotrotta",
+            dob: "07 October 1981",
+            pob: "Hanau",
+            marital_status: t('resume.profile.marital_status'),
+            nationality: t('resume.profile.nationality')
           },
           professional_profile: language === 'en' ? 
             "Full Stack Developer with expertise in modern web technologies, backend systems, and automation." :
@@ -244,27 +244,7 @@ export default function ResumeContent({ language }: ResumeContentProps) {
             <ProfileCard profile={resume.profile} />
             
             {/* Action Buttons */}
-            <div className="mt-6 flex flex-col space-y-4">
-              <a 
-                href="#" // Update with actual PDF download link when available
-                className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                {t('resume.download')}
-              </a>
-              
-              <Link 
-                href={`/${language}/contact`}
-                className="inline-flex items-center justify-center border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 py-2 px-4 rounded-md transition-colors"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                {t('common.buttons.contact')}
-              </Link>
-            </div>
+            {/* Removed Download and Contact buttons as per requirements */}
           </div>
         </div>
         {/* Right: Resume Sections */}

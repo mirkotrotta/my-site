@@ -17,6 +17,7 @@ import { generateTableOfContents, addHeadingIds } from '@/lib/toc';
 import SocialSharing from './SocialSharing';
 import GlobalCTA from '../ui/GlobalCTA';
 import NewsletterForm from '../forms/NewsletterForm';
+import useTranslation from '@/hooks/useTranslation';
 
 export type Frontmatter = {
   title: string;
@@ -33,6 +34,7 @@ export interface BlogPostProps {
     mdxSource: MDXRemoteSerializeResult;
     slug: string;
     relatedPosts?: SidebarSection[];
+    language?: string;
   };
 }
 
@@ -41,6 +43,8 @@ export default function BlogPost({ post }: BlogPostProps) {
   const [hasError, setHasError] = useState(false);
   const [tableOfContents, setTableOfContents] = useState<NavigationItem[]>([]);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { language, t } = useTranslation();
+  const lang = post.language || language || 'en';
 
   useEffect(() => {
     // Simulate potential MDX rendering delay and provide fallback if needed
@@ -133,7 +137,7 @@ export default function BlogPost({ post }: BlogPostProps) {
   // Generate the cover image URL, or fallback to a placeholder
   const coverImage = frontmatter.coverImage || `https://picsum.photos/seed/${slug}/1200/600`;
 
-  // Prepare structured data
+  // Prepare structured data with correct URL path including language
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -142,15 +146,15 @@ export default function BlogPost({ post }: BlogPostProps) {
     "dateModified": publishDate,
     "description": frontmatter.summary || "",
     "keywords": frontmatter.tags?.join(", ") || "",
-    "url": `/blog/${slug}`,
+    "url": `/${lang}/blog/${slug}`,
     "image": coverImage,
     "author": {
       "@type": "Person",
-      "name": "Site Author"
+      "name": "Mirko Trotta"
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Moon Site",
+      "name": "Mirko Trotta",
       "logo": {
         "@type": "ImageObject",
         "url": "/logo.png"
@@ -158,7 +162,7 @@ export default function BlogPost({ post }: BlogPostProps) {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `/blog/${slug}`
+      "@id": `/${lang}/blog/${slug}`
     }
   };
 
@@ -187,15 +191,17 @@ export default function BlogPost({ post }: BlogPostProps) {
   // Content-based sidebar (table of contents)
   const contentSidebar = (
     <SidebarA
-      title="In this article"
+      title={t('blog.toc.title')}
       items={tableOfContents}
     />
   );
 
-  // Related content sidebar with newsletter at the top, no heading, and 'Connect with me' at the bottom
+  // Related content sidebar with newsletter at the top
   const relatedContentSidebar = (
-    <SidebarB sections={relatedPosts}>
-        <NewsletterForm />
+    <SidebarB 
+      sections={relatedPosts || []}
+    >
+      <NewsletterForm language={lang} />
     </SidebarB>
   );
 
@@ -231,8 +237,8 @@ export default function BlogPost({ post }: BlogPostProps) {
           <div className="border-t border-gray-100 dark:border-gray-800 px-6 py-8 mt-16">
             <SocialSharing 
               url={typeof window !== 'undefined' 
-                ? `${window.location.origin}/blog/${slug}` 
-                : `/blog/${slug}`} 
+                ? `${window.location.origin}/${lang}/blog/${slug}` 
+                : `/${lang}/blog/${slug}`} 
               title={frontmatter.title} 
               summary={frontmatter.summary} 
             />
@@ -242,12 +248,12 @@ export default function BlogPost({ post }: BlogPostProps) {
 
       <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 mb-16">
         <GlobalCTA
-          title="Let's connect"
-          subtitle="Open to connecting around thoughtful systems, internal tooling, or automation — especially where structure and clarity matter."
-          buttonText="Contact Me"
-          buttonHref="/contact"
-          buttonTextSecondary="Download Resume"
-          buttonHrefSecondary="/resume"
+          title={t('about.cta.title')}
+          subtitle={t('about.cta.subtitle')}
+          buttonText={t('about.cta.primary')}
+          buttonHref={`/${lang}/contact`}
+          buttonTextSecondary={t('about.cta.secondary')}
+          buttonHrefSecondary={`/${lang}/resume`}
         />
       </div>
     </>

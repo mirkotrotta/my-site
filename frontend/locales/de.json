@@ -14,7 +14,8 @@
       "download": "Herunterladen",
       "contact": "Kontaktiere mich",
       "viewProjects": "Projekte ansehen",
-      "viewResume": "Lebenslauf ansehen"
+      "viewResume": "Lebenslauf ansehen",
+      "backToTop": "Nach oben scrollen"
     },
     "footer": {
       "copyright": "© {{year}} Mirko Trotta. Alle Rechte vorbehalten.",
@@ -27,88 +28,136 @@
       "en": "Englisch",
       "de": "Deutsch",
       "switchLanguage": "Zu {{language}} wechseln"
-    }
+    },
+    "loading": "Inhalte werden geladen..."
   },
-  "home": {
+  "homepage": {
     "hero": {
-      "eyebrow": "React · Python · FastAPI · Docker · AI Workflows",
+      "eyebrow": "React · TypeScript · FastAPI · Docker · Azure",
       "title": "Full Stack Entwickler",
-      "description": "Ich entwickle <strong>schnelle, wartbare</strong> <strong>Web-Apps</strong>, <strong>APIs</strong> und <strong>Automatisierungs-Workflows</strong> mit modernen Tools — mit Fokus auf <strong>sauberem Code</strong>, <strong>echter Geschäftslogik</strong> und <strong>produktionsreifer Bereitstellung</strong>.",
-      "cta": {
-        "primary": "Fallstudien",
-        "secondary": "Lebenslauf herunterladen"
-      }
+      "description": "Ich entwickle <strong>Frontend-Oberflächen</strong> und <strong>Backend-Tools</strong> mit <strong>React, Python und Docker</strong> – mit Fokus auf <strong>Klarheit</strong>, <strong>Automatisierung</strong> und <strong>skalierbare Umsetzung</strong>.",
+      "primaryCta": "Projekte ansehen",
+      "secondaryCta": "Lebenslauf herunterladen",
+      "sidebarTitle": "Aktuelle Neuigkeiten"
     },
     "about": {
       "title": "Ein anderer Weg in die Entwicklung",
-      "paragraph1": "Ich bin keinen traditionellen Weg in die Technikbranche gegangen — kein Studium, kein Bootcamp. Nur <strong>echte Arbeit</strong>, Neugier und Durchhaltevermögen.",
-      "paragraph2": "Nach meinem Umzug nach Deutschland mit meiner Familie baute ich meine Karriere von Grund auf neu auf. Neue Tools zu erlernen, mich an ein neues Land anzupassen und in die Entwicklung zu wechseln, lehrte mich, über den Code hinaus Probleme zu lösen.",
-      "paragraph3": "Heute prägt diese Denkweise meinen Umgang mit Software: mit <strong>Struktur</strong>, <strong>Klarheit</strong> und <strong>langfristigem Denken</strong>.",
-      "readMore": "Mehr erfahren"
+      "imageAlt": "Profilbild",
+      "bio1": "Ich habe nicht den traditionellen Weg in die Technik gewählt – kein Studium, kein Bootcamp. Nur <strong>echte Arbeit</strong>, Neugier und Ausdauer.",
+      "bio2": "Nach meinem Umzug nach Deutschland mit meiner Familie habe ich meine Karriere von Grund auf neu aufgebaut. Neue Werkzeuge zu lernen, mich an ein neues Land anzupassen und der Übergang in die Entwicklung haben mich gelehrt, Probleme über den reinen Code hinaus zu lösen.",
+      "bio3": "Heute prägt diese Denkweise meinen Umgang mit Software: mit <strong>Struktur</strong>, <strong>Klarheit</strong> und <strong>langfristigem Denken</strong>."
     },
     "skills": {
-      "title": "Kernkompetenzen & Tools",
-      "description": "Dies sind die Tools und Frameworks, die ich in realen Projekten, internen Tools und Open-Source-Entwicklung eingesetzt habe — mit zunehmendem Fokus auf Automatisierung und Cloud-Architektur."
+      "title": "Kernkompetenzen & Werkzeuge",
+      "description": "Dies sind die Werkzeuge und Frameworks, die ich in echten Projekten, internen Tools und Open-Source-Entwicklungen eingesetzt habe – mit einem wachsenden Fokus auf Automatisierung und Cloud-Architektur."
     },
     "projects": {
-      "title": "Ausgewählte Projekte",
-      "viewAll": "Alle Projekte ansehen"
-    },
-    "blog": {
-      "title": "Neueste Artikel",
-      "viewAll": "Alle Artikel ansehen"
+      "title": "Ausgewählte Projekte"
     },
     "cta": {
       "title": "Lass uns verbinden",
-      "subtitle": "Offen für Austausch zu durchdachten Systemen, internen Tools oder Automatisierung — besonders dort, wo Struktur und Klarheit wichtig sind.",
+      "subtitle": "Offen für Verbindungen rund um durchdachte Systeme, interne Tools oder Automatisierung – besonders dort, wo Struktur und Klarheit wichtig sind.",
       "primary": "Kontaktiere mich",
       "secondary": "Lebenslauf ansehen"
     }
   },
   "about": {
-    "title": "Über mich",
-    "subtitle": "Software mit Klarheit und Zweck entwickeln",
-    "intro": "Full-Stack-Entwickler mit Fokus auf die Erstellung durchdachter, wartbarer Systeme für Herausforderungen der realen Welt."
+    "imageAlt": "Profilbild von Mirko Trotta",
+    "name": "Mirko Trotta",
+    "jobTitle": "Full Stack Entwickler & Automatisierungsspezialist",
+    "bio": {
+      "intro": "Ich erstelle <strong>robuste Webanwendungen</strong>, <strong>effiziente APIs</strong> und <strong>intelligente Automatisierungs-Workflows</strong>.",
+      "career1": "Mein Weg in die Technik war nicht typisch. Ich habe Jahre damit verbracht, operative und kreative Projekte zu leiten, bevor ich tief in den Code eingetaucht bin. Dieser Hintergrund gibt mir eine praktische Perspektive: Ich konzentriere mich darauf, <strong>echte Geschäftsprobleme zu lösen</strong> und Systeme zu bauen, die <strong>wartbar und skalierbar</strong> sind.",
+      "career2": "Der Umzug nach Deutschland zwang mich, mich anzupassen und neu aufzubauen. Ich habe mir die Entwicklung selbst beigebracht, beginnend mit Python für Automatisierung und Backend, dann erweitert auf JavaScript/TypeScript mit React und Node.js für Full-Stack-Fähigkeiten.",
+      "career3": "Ich fühle mich zur Struktur und Logik der Backend-Entwicklung hingezogen (Python, FastAPI, Datenbanken), genieße aber ebenso die Gestaltung von Benutzeroberflächen mit modernen Frontend-Tools (React, Next.js, Tailwind CSS). Diese Brücke ermöglicht es mir, kohärente End-to-End-Lösungen zu bauen.",
+      "career4": "In letzter Zeit konzentriere ich mich verstärkt auf den Einsatz von KI-Werkzeugen und Large Language Models (LLMs), um intelligente Workflows zu erstellen und Anwendungsfunktionen zu verbessern. Besonders interessiere ich mich für agentenbasierte Systeme und Retrieval-Augmented Generation (RAG).",
+      "career5": "Ich lege Wert auf klare Kommunikation, strukturierten Code und die Bereitstellung von Lösungen, die einen greifbaren Mehrwert bieten. Egal ob es darum geht, eine Full-Stack-Anwendung zu bauen, einen Prozess durch Automatisierung zu optimieren oder KI-Integrationen zu erkunden, ich bringe eine Mischung aus technischem Können und pragmatischem, geschäftsorientiertem Denken mit.",
+      "summary": "Auf der Suche nach Möglichkeiten, zu Projekten beizutragen, die sich auf <strong>gut konzipierte Systeme</strong>, <strong>Automatisierung</strong> oder <strong>angewandte KI</strong> konzentrieren."
+    },
+    "buttons": {
+      "caseStudies": "Fallstudien ansehen",
+      "viewResume": "Lebenslauf ansehen"
+    },
+    "citizenship": {
+      "subtitle": "Arbeitserlaubnis & Standort",
+      "title": "EU-Staatsbürgerschaft & Sitz in Deutschland",
+      "description": "Ich besitze die italienische (EU-)Staatsbürgerschaft, die mir das uneingeschränkte Recht gibt, in der gesamten Europäischen Union zu leben und zu arbeiten, einschließlich Deutschland, wo ich derzeit ansässig bin. Ich stehe für Remote-Arbeit oder hybride Positionen in Pendelentfernung zur Verfügung.",
+      "primaryCtaText": "Lebenslauf für Details ansehen"
+    },
+    "skills": {
+      "title": "Mein technischer Werkzeugkasten",
+      "description": "Von Frontend-Oberflächen über Backend-Logik bis hin zur Cloud-Infrastruktur – dies sind die Haupttechnologien, mit denen ich arbeite:"
+    },
+    "cta": {
+      "title": "Interesse an einer Zusammenarbeit?",
+      "subtitle": "Lassen Sie uns besprechen, wie meine Fähigkeiten in Entwicklung und Automatisierung Ihrem Projekt zum Erfolg verhelfen können.",
+      "primary": "Kontakt aufnehmen",
+      "secondary": "Meinen Lebenslauf ansehen"
+    }
   },
   "projects": {
     "title": "Projekte",
-    "subtitle": "Fallstudien und Kundenarbeiten",
-    "tags": {
-      "all": "Alle",
-      "frontend": "Frontend",
-      "backend": "Backend",
-      "fullstack": "Full Stack",
-      "design": "Design"
-    }
+    "description": "Eine Auswahl von Projekten, die meine Fähigkeiten in Full-Stack-Entwicklung, Automatisierung und API-Integration zeigen.",
+    "featured": "Ausgewählte Projekte",
+    "viewProject": "Projekt ansehen",
+    "viewCode": "Code ansehen",
+    "technologies": "Verwendete Technologien",
+    "visitSite": "Seite besuchen"
   },
   "blog": {
-    "title": "Blog",
+    "title": "Neueste Artikel",
     "subtitle": "Gedanken zu Entwicklung, Design und Systemen",
     "readTime": "{{minutes}} Min. Lesezeit",
-    "viewAll": "Alle Artikel ansehen"
-  },
-  "contact": {
-    "title": "Kontakt",
-    "subtitle": "Lass uns ein Gespräch beginnen",
-    "form": {
-      "name": "Name",
-      "email": "E-Mail",
-      "message": "Nachricht",
-      "send": "Nachricht senden",
-      "sending": "Wird gesendet...",
-      "success": "Deine Nachricht wurde gesendet!",
-      "error": "Beim Senden deiner Nachricht ist ein Fehler aufgetreten. Bitte versuche es erneut."
-    }
+    "viewAll": "Alle Artikel ansehen",
+    "noPosts": "Keine Blogbeiträge gefunden.",
+    "backToBlog": "Zurück zum Blog"
   },
   "resume": {
     "title": "Lebenslauf",
-    "subtitle": "Beruflicher Hintergrund und Fähigkeiten",
-    "download": "PDF herunterladen",
-    "sections": {
-      "experience": "Erfahrung",
-      "education": "Ausbildung",
-      "skills": "Fähigkeiten",
-      "languages": "Sprachen"
+    "description": "Mirko Trotta - Full Stack Entwickler & Automatisierungsspezialist. Kenntnisse in React, Python, FastAPI, Docker und KI-Workflows.",
+    "download": "PDF-Lebenslauf herunterladen",
+    "contact": {
+      "title": "Kontaktinformationen"
+    },
+    "summary": {
+      "title": "Zusammenfassung"
+    },
+    "experience": {
+      "title": "Berufserfahrung"
+    },
+    "education": {
+      "title": "Ausbildung & Zertifikate"
+    },
+    "skills": {
+      "title": "Fähigkeiten",
+      "languages": "Sprachen",
+      "frontend": "Frontend-Entwicklung",
+      "backend": "Backend-Entwicklung",
+      "database": "Datenbanken & Caching",
+      "devops": "DevOps & Cloud",
+      "testing": "Testen",
+      "tools": "Tools & Plattformen",
+      "methodologies": "Methoden & Konzepte"
+    },
+    "projects": {
+      "title": "Ausgewählte Projekte"
+    }
+  },
+  "contact": {
+    "title": "Kontaktiere mich",
+    "subtitle": "Offen für Zusammenarbeit und neue Möglichkeiten. Erreichen Sie mich per E-Mail oder vernetzen Sie sich über soziale Medien.",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail-Adresse",
+      "message": "Nachricht",
+      "submit": "Nachricht senden",
+      "success": "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.",
+      "error": "Entschuldigung, beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie mich direkt per E-Mail."
+    },
+    "details": {
+      "email": "E-Mail",
+      "linkedin": "LinkedIn",
+      "github": "GitHub"
     }
   }
 } 

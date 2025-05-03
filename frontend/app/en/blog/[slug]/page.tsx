@@ -11,13 +11,15 @@ import LanguageNotice from '@/components/blog/LanguageNotice';
 interface PageParams {
   params: {
     slug: string;
-    lang: string;
   };
 }
 
 // Generate metadata for the page
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
-  const { slug, lang } = params;
+  // Important: await the params object to avoid NextJS errors
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
+  const lang = 'en'; // Fixed to English for this route
   const dictionary = await getDictionary(lang);
   
   // Get post data with language fallback if needed
@@ -59,15 +61,20 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
 }
 
 export default async function BlogPostPage({ params }: PageParams) {
-  const { slug, lang } = params;
+  // Important: await the params object to avoid NextJS errors
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams.slug;
+  
+  // Use the language from the route segment (this file is in /en/ directory)
+  const lang = 'en';
   const dictionary = await getDictionary(lang);
   
   // Check if the post exists in the requested language
-  const existsInCurrentLang = isValidPostSlug(slug, lang);
+  const existsInCurrentLang = await isValidPostSlug(slug, lang);
   
   // Check if the post exists in the other language
-  const otherLang = lang === 'en' ? 'de' : 'en';
-  const existsInOtherLang = isValidPostSlug(slug, otherLang);
+  const otherLang = 'de';
+  const existsInOtherLang = await isValidPostSlug(slug, otherLang);
   
   // If not found in either language, show 404
   if (!existsInCurrentLang && !existsInOtherLang) {
@@ -96,7 +103,7 @@ export default async function BlogPostPage({ params }: PageParams) {
           />
         )}
         
-        <BlogPost post={postData} />
+        <BlogPost post={{...postData, language: lang}} />
       </Suspense>
     </div>
   );

@@ -2,18 +2,32 @@ import { getAllPosts } from './mdx';
 import { SidebarSection } from '@/components/ui/SidebarB';
 import { Frontmatter } from '@/components/blog/BlogPost';
 
+// Define static translations for server component
+const translations = {
+  en: {
+    relatedPosts: 'Related Posts',
+    recentPosts: 'Recent Posts',
+  },
+  de: {
+    relatedPosts: 'Ähnliche Beiträge',
+    recentPosts: 'Neueste Beiträge',
+  }
+};
+
 /**
  * Get related posts based on matching tags
  * 
  * @param currentSlug - Slug of the current post (to exclude)
  * @param currentTags - Tags of the current post to match against
  * @param count - Maximum number of related posts to return (default: 3)
+ * @param language - The language code to use for translations and URLs (default: 'en')
  * @returns A SidebarSection containing related posts
  */
 export async function getRelatedPosts(
   currentSlug: string,
   currentTags: string[] = [],
-  count: number = 3
+  count: number = 3,
+  language: string = 'en'
 ): Promise<SidebarSection[]> {
   // Get all posts
   const allPosts = await getAllPosts();
@@ -62,34 +76,37 @@ export async function getRelatedPosts(
       .slice(0, count - relatedPosts.length);
   }
   
+  // Get translations for the current language or fall back to English
+  const t = translations[language as keyof typeof translations] || translations.en;
+  
   // Format the related posts for SidebarB
   const sections: SidebarSection[] = [];
   
   if (relatedPosts.length > 0) {
     sections.push({
-      title: 'Related Posts',
+      title: t.relatedPosts,
       items: relatedPosts.map(post => ({
         title: post.frontmatter.title,
-        href: `/blog/${post.slug}`,
+        href: `/${language}/blog/${post.slug}`,
         date: post.frontmatter.date,
         summary: post.frontmatter.summary,
         tags: post.frontmatter.tags
       })),
-      viewAllLink: '/blog'
+      viewAllLink: `/${language}/blog`
     });
   }
   
   if (recentPosts.length > 0) {
     sections.push({
-      title: 'Recent Posts',
+      title: t.recentPosts,
       items: recentPosts.map(post => ({
         title: post.frontmatter.title,
-        href: `/blog/${post.slug}`,
+        href: `/${language}/blog/${post.slug}`,
         date: post.frontmatter.date,
         summary: post.frontmatter.summary,
         tags: post.frontmatter.tags
       })),
-      viewAllLink: '/blog'
+      viewAllLink: `/${language}/blog`
     });
   }
   

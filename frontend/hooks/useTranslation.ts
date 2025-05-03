@@ -1,84 +1,109 @@
-'use client';
+"use client";
 
+import { useCallback, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import enTranslations from '@/locales/en.json';
-import deTranslations from '@/locales/de.json';
-import { useMemo } from 'react';
+import enTranslations from '../locales/en.json';
+import deTranslations from '../locales/de.json';
 
-// Define a type for language codes
-type LanguageCode = 'en' | 'de';
+type TranslationKey = string;
 
-// Define a map of translations
-const translations = {
-  en: enTranslations,
-  de: deTranslations,
+// Define basic translations to use before JSON loads
+const baseTranslations: Record<string, Record<string, string>> = {
+  en: {
+    // Common
+    'common.navigation.home': 'Home',
+    'common.navigation.about': 'About',
+    'common.navigation.projects': 'Projects',
+    'common.navigation.blog': 'Blog',
+    'common.navigation.resume': 'Resume',
+    'common.navigation.contact': 'Contact',
+    'common.buttons.readMore': 'Read More',
+    'common.buttons.viewAll': 'View All',
+    'common.buttons.download': 'Download',
+    'common.buttons.contact': 'Contact Me',
+    'common.buttons.viewProjects': 'View Projects',
+    'common.buttons.viewResume': 'View Resume',
+    'common.footer.copyright': '© {{year}} Mirko Trotta. All rights reserved.',
+    'common.footer.builtWith': 'Built with Next.js and Tailwind CSS',
+    'common.darkMode.toggle': 'Toggle dark mode',
+    'common.language.en': 'English',
+    'common.language.de': 'German',
+    'common.language.switchLanguage': 'Switch to {{language}}',
+    'common.loading': 'Loading content...',
+    // Blog
+    'blog.title': 'Latest Articles',
+    'blog.subtitle': 'Thoughts on development, design, and systems',
+    'blog.readTime': '{{minutes}} min read',
+    'blog.viewAll': 'View All Articles',
+    'blog.noPosts': 'No blog posts found.'
+  },
+  de: {
+    // Common
+    'common.navigation.home': 'Startseite',
+    'common.navigation.about': 'Über mich',
+    'common.navigation.projects': 'Projekte',
+    'common.navigation.blog': 'Blog',
+    'common.navigation.resume': 'Lebenslauf',
+    'common.navigation.contact': 'Kontakt',
+    'common.buttons.readMore': 'Mehr erfahren',
+    'common.buttons.viewAll': 'Alle anzeigen',
+    'common.buttons.download': 'Herunterladen',
+    'common.buttons.contact': 'Kontaktiere mich',
+    'common.buttons.viewProjects': 'Projekte ansehen',
+    'common.buttons.viewResume': 'Lebenslauf ansehen',
+    'common.footer.copyright': '© {{year}} Mirko Trotta. Alle Rechte vorbehalten.',
+    'common.footer.builtWith': 'Erstellt mit Next.js und Tailwind CSS',
+    'common.darkMode.toggle': 'Dunkelmodus umschalten',
+    'common.language.en': 'Englisch',
+    'common.language.de': 'Deutsch',
+    'common.language.switchLanguage': 'Zu {{language}} wechseln',
+    'common.loading': 'Inhalte werden geladen...',
+    // Blog
+    'blog.title': 'Neueste Artikel',
+    'blog.subtitle': 'Gedanken zu Entwicklung, Design und Systemen',
+    'blog.readTime': '{{minutes}} Min. Lesezeit',
+    'blog.viewAll': 'Alle Artikel ansehen',
+    'blog.noPosts': 'Keine Blogbeiträge gefunden.'
+  }
 };
 
-// Define a type for the entire translations object
-type Translations = typeof enTranslations;
+// Convert nested JSON structure to flat key-value pairs
+function flattenMessages(nestedMessages: any, prefix = ''): Record<string, string> {
+  return Object.keys(nestedMessages).reduce((messages: Record<string, string>, key) => {
+    const value = nestedMessages[key];
+    const prefixedKey = prefix ? `${prefix}.${key}` : key;
+    
+    if (typeof value === 'string') {
+      messages[prefixedKey] = value;
+    } else {
+      Object.assign(messages, flattenMessages(value, prefixedKey));
+    }
+    
+    return messages;
+  }, {});
+}
 
-// Helper function to get nested values using dot notation
-const getNestedValue = (obj: any, path: string) => {
-  const keys = path.split('.');
-  return keys.reduce((acc, key) => {
-    return acc && acc[key] !== undefined ? acc[key] : undefined;
-  }, obj);
-};
-
-// Helper function to interpolate variables in strings
-const interpolate = (text: string, variables?: Record<string, string | number>): string => {
-  if (!variables) return text;
-  
-  return text.replace(/\{\{(\w+)\}\}/g, (_, key) => {
-    return variables[key]?.toString() || `{{${key}}}`;
-  });
+// Load translations from imported JSON files
+const loadedTranslations = {
+  en: flattenMessages(enTranslations),
+  de: flattenMessages(deTranslations),
 };
 
 export default function useTranslation() {
-  // Get the pathname from Next.js hooks
   const pathname = usePathname();
+  const locale = pathname ? pathname.split('/')[1] : 'en';
   
-  // Determine the current language
-  // Default to 'de' if we can't determine the language from the URL
-  const language = useMemo(() => {
-    // Check for language prefix in the pathname
-    if (pathname?.startsWith('/de')) {
-      return 'de';
-    }
-    if (pathname?.startsWith('/en')) {
-      return 'en';
-    }
-    
-    // Default fallback
-    return 'de' as LanguageCode;
-  }, [pathname]);
+  const messages = locale === 'de' ? loadedTranslations.de : loadedTranslations.en;
 
-  // Translation function with fallback to English
-  const t = (key: string, variables?: Record<string, string | number>): string => {
-    // Get the translation from the current language
-    const translation = getNestedValue(translations[language], key);
-    
-    // If translation exists, interpolate variables and return
-    if (translation) {
-      return interpolate(translation, variables);
+  const t = useCallback((key: TranslationKey): string => {
+    const translation = messages[key];
+    if (!translation) {
+      // Return the last part of the key as fallback
+      const parts = key.split('.');
+      return parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1);
     }
-    
-    // Fallback to English
-    const fallbackTranslation = getNestedValue(translations.en, key);
-    
-    // If fallback exists, interpolate variables and return
-    if (fallbackTranslation) {
-      return interpolate(fallbackTranslation, variables);
-    }
-    
-    // Return the key as a last resort to avoid displaying nothing
-    return key;
-  };
-
-  return {
-    t,
-    language,
-    isEN: language === 'en',
-    isDE: language === 'de',
-  };
-} 
+    return translation;
+  }, [messages]);
+  
+  return { t, language: locale };
+}
