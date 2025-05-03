@@ -15,7 +15,6 @@ import { VscAzure } from 'react-icons/vsc'; // Azure alt
 import { BsStack } from 'react-icons/bs'; // Next Stack Goals
 import { TbDatabaseCog } from 'react-icons/tb'; // Advanced DB icon
 
-
 // Define the Project interface locally to avoid import issues
 export interface Project {
   name: string;
@@ -34,85 +33,210 @@ export type SkillOrService = {
   url: string;
 };
 
-// CUSTOMIZE: Update these skills with your own expertise and descriptions
-export const skillsData: SkillOrService[] = [
-  {
-    title: 'Frontend Development',
-    description: 'Build accessible, component-based UIs using React, Next.js, Tailwind CSS, and TypeScript — focused on clarity, performance, and reuse.',
-    icon: <SiReact size={36} />,
-    url: '/resume'
+// Define translations for client and server use
+const translations = {
+  en: {
+    skills: {
+      frontend: {
+        title: 'Frontend Development',
+        description: 'Building responsive web applications using React, Next.js, and modern CSS frameworks'
+      },
+      backend: {
+        title: 'Backend Development',
+        description: 'Creating robust APIs with Python, FastAPI, and Node.js'
+      },
+      database: {
+        title: 'Database Design',
+        description: 'Designing efficient database schemas and query optimization'
+      },
+      ai: {
+        title: 'AI Integration',
+        description: 'Implementing AI features using OpenAI, Hugging Face, and custom models'
+      },
+      containerization: {
+        title: 'Containerization',
+        description: 'Docker and container orchestration for reliable deployments'
+      },
+      cicd: {
+        title: 'CI/CD',
+        description: 'Automated testing and deployment pipelines with GitHub Actions'
+      },
+      versionControl: {
+        title: 'Version Control',
+        description: 'Git workflow management and collaboration strategies'
+      },
+      nextGoals: {
+        title: 'Cloud Services',
+        description: 'Azure, AWS, and other cloud infrastructure management'
+      }
+    },
+    projects: {
+      moonSite: {
+        name: 'Moon Site Template',
+        description: 'A Next.js and FastAPI boilerplate for creating modern web applications'
+      },
+      webScraper: {
+        name: 'Streamlit Web Scraper',
+        description: 'A user-friendly tool for scraping websites and converting content to markdown'
+      },
+      dropboxConverter: {
+        name: 'Dropbox URL Converter',
+        description: 'Utility for converting Dropbox links to direct download URLs'
+      }
+    }
   },
-  {
-    title: 'Backend Development',
-    description: 'Create async APIs with FastAPI, Python, and Pydantic — used in web projects, data flows, and microservices.',
-    icon: <SiPython size={36} />,
-    url: '/resume'
-  },
-  {
-    title: 'Database & Storage',
-    description: 'Use PostgreSQL and SQLite for structured persistence — applied in dashboards, content tools, and automation pipelines.',
-    icon: <TbDatabaseCog size={36} />,
-    url: '/resume'
-  },
-  {
-    title: 'AI & Automation',
-    description: 'Build agent workflows using CrewAI, LangChain, OpenAI, and MCP servers — applied in research tools and workplace automations.',
-    icon: <SiOpenai size={36} />,
-    url: '/resume'
-  },
-  {
-    title: 'Containerization',
-    description: 'Set up consistent environments with Docker for reproducible dev and small-scale deployment.',
-    icon: <SiDocker size={36} />,
-    url: '/resume'
-  },
-  {
-    title: 'CI/CD & Deployment',
-    description: 'Automate builds using GitHub Actions and deploy to Vercel or Azure Static Web Apps (in progress).',
-    icon: <SiGithub size={36} />,
-    url: '/resume'
-  },
-  {
-    title: 'Version Control',
-    description: 'Apply structured Git workflows with semantic commits, branching, and PR reviews — used in team and solo projects.',
-    icon: <FaGitAlt size={36} />,
-    url: '/resume'
-  },
-  {
-    title: 'Next Stack Goals',
-    description: 'Expanding into cloud infrastructure, CI/CD pipelines, and planning next certifications beyond AZ-900.',
-    icon: <VscAzure size={36} />,
-    url: '/resume'
+  de: {
+    skills: {
+      frontend: {
+        title: 'Frontend-Entwicklung',
+        description: 'Entwicklung responsiver Webanwendungen mit React, Next.js und modernen CSS-Frameworks'
+      },
+      backend: {
+        title: 'Backend-Entwicklung',
+        description: 'Erstellung robuster APIs mit Python, FastAPI und Node.js'
+      },
+      database: {
+        title: 'Datenbankdesign',
+        description: 'Entwurf effizienter Datenbankschemata und Optimierung von Abfragen'
+      },
+      ai: {
+        title: 'KI-Integration',
+        description: 'Implementierung von KI-Funktionen mit OpenAI, Hugging Face und benutzerdefinierten Modellen'
+      },
+      containerization: {
+        title: 'Containerisierung',
+        description: 'Docker und Container-Orchestrierung für zuverlässige Bereitstellungen'
+      },
+      cicd: {
+        title: 'CI/CD',
+        description: 'Automatisierte Test- und Deployment-Pipelines mit GitHub Actions'
+      },
+      versionControl: {
+        title: 'Versionskontrolle',
+        description: 'Git-Workflow-Management und Kollaborationsstrategien'
+      },
+      nextGoals: {
+        title: 'Cloud-Dienste',
+        description: 'Azure, AWS und andere Cloud-Infrastrukturverwaltung'
+      }
+    },
+    projects: {
+      moonSite: {
+        name: 'Moon Site Vorlage',
+        description: 'Eine Next.js- und FastAPI-Vorlage für die Erstellung moderner Webanwendungen'
+      },
+      webScraper: {
+        name: 'Streamlit Web Scraper',
+        description: 'Ein benutzerfreundliches Tool zum Scrapen von Websites und Konvertieren von Inhalten in Markdown'
+      },
+      dropboxConverter: {
+        name: 'Dropbox URL Konverter',
+        description: 'Dienstprogramm zum Konvertieren von Dropbox-Links in direkte Download-URLs'
+      }
+    }
   }
-];
+};
 
-// Projects will also be populated from the GitHub API if you set up the backend, for now are just feature examples
-export const featuredProjects: Project[] = [
+// Client-side translation function that accepts a language parameter
+export const getSkillsData = (lang: 'en' | 'de' = 'en'): SkillOrService[] => {
+  // Use the language parameter to select the appropriate translations
+  const currentTranslations = translations[lang];
+  
+  return [
     {
-      name: 'Moon Site — Full Stack Portfolio Boilerplate',
-      description: 'A monorepo boilerplate for full stack portfolios using Next.js, Tailwind CSS, MDX, and a lightweight FastAPI backend — supports GitHub API integration, Markdown-first publishing, and Dockerized deployment.',
+      title: currentTranslations.skills.frontend.title,
+      description: currentTranslations.skills.frontend.description,
+      icon: <SiReact size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.backend.title,
+      description: currentTranslations.skills.backend.description,
+      icon: <SiPython size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.database.title,
+      description: currentTranslations.skills.database.description,
+      icon: <TbDatabaseCog size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.ai.title,
+      description: currentTranslations.skills.ai.description,
+      icon: <SiOpenai size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.containerization.title,
+      description: currentTranslations.skills.containerization.description,
+      icon: <SiDocker size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.cicd.title,
+      description: currentTranslations.skills.cicd.description,
+      icon: <SiGithub size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.versionControl.title,
+      description: currentTranslations.skills.versionControl.description,
+      icon: <FaGitAlt size={36} />,
+      url: '/resume'
+    },
+    {
+      title: currentTranslations.skills.nextGoals.title,
+      description: currentTranslations.skills.nextGoals.description,
+      icon: <VscAzure size={36} />,
+      url: '/resume'
+    }
+  ];
+};
+
+// Client-side function to get translated featured projects with language parameter
+export const getFeaturedProjects = (lang: 'en' | 'de' = 'en'): Project[] => {
+  // Use the language parameter to select the appropriate translations
+  const currentTranslations = translations[lang];
+  
+  return [
+    {
+      name: currentTranslations.projects.moonSite.name,
+      description: currentTranslations.projects.moonSite.description,
       url: 'https://github.com/mirkotrotta/moon-site',
-      stars: 87, // update if needed
-      updated: '2024-12-01T12:00:00Z', // adjust to real updated_at if available
+      stars: 87,
+      updated: '2024-12-01T12:00:00Z',
       language: 'TypeScript',
       topics: ['next.js', 'fastapi', 'portfolio', 'boilerplate', 'docker']
     },
     {
-      name: 'Streamlit Web Scraper — Markdown Research Tool',
-      description: 'Python-based tool that extracts web content into clean Markdown — using Streamlit, Selenium, and BeautifulSoup. Includes SQLite logging and Slack integration (WIP). Built for structured research capture.',
+      name: currentTranslations.projects.webScraper.name,
+      description: currentTranslations.projects.webScraper.description,
       url: 'https://github.com/mirkotrotta/streamlit_web_scraper',
-      stars: 68, // estimate or use real value
+      stars: 68,
       updated: '2023-11-15T09:15:00Z',
       language: 'Python',
       topics: ['streamlit', 'scraper', 'markdown', 'selenium', 'sqlite']
     },
     {
-      name: 'Dropbox URL Converter — Embeddable Video Links',
-      description: 'A small utility to convert Dropbox URLs into embeddable formats for markdown publishing. Built with Next.js, deployed to Vercel, and designed to simplify content workflows.',
+      name: currentTranslations.projects.dropboxConverter.name,
+      description: currentTranslations.projects.dropboxConverter.description,
       url: 'https://github.com/mirkotrotta/dropbox-url-converter',
-      stars: 24, // estimated or fetch live
+      stars: 24,
       updated: '2024-07-20T10:00:00Z',
       language: 'TypeScript',
       topics: ['next.js', 'dropbox', 'markdown', 'vercel', 'utility']
     }
-]; 
+  ];
+};
+
+// Multilingual data exports
+export const skillsData = {
+  en: getSkillsData('en'),
+  de: getSkillsData('de'),
+};
+
+export const featuredProjects = {
+  en: getFeaturedProjects('en'),
+  de: getFeaturedProjects('de'),
+}; 

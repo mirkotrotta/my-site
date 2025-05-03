@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin, Globe, Phone, Mail, Calendar, Flag } from "lucide-react";  
 import { SiLinkedin, SiGithub } from "react-icons/si";
 import Button from "./Button";
+import useTranslation from "@/hooks/useTranslation";
 
 export interface Profile {
   name: string;
@@ -23,6 +24,8 @@ interface ProfileCardProps {
 }
 
 export default function ProfileCard({ profile }: ProfileCardProps) {
+  const { t, language } = useTranslation();
+  
   // Fallbacks for demo/development
   const location = profile?.location || "Hanau, Germany";
   const phone = profile?.phone || "+49 173 940 55 70";
@@ -30,7 +33,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   const linkedin = profile?.linkedin || "https://www.linkedin.com/in/mirkotrotta";
   const github = profile?.github || "https://github.com/mirkotrotta";
   const dob = profile?.dob || "07 October 1981";
-  const nationality = profile?.nationality || "Italian";
+  const nationality = profile?.nationality || t('resume.profile.nationality') || "Italian";
 
   return (
     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 overflow-hidden w-full flex flex-col items-center mx-auto">
@@ -54,7 +57,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         <div className="w-full flex items-center mb-2">
           <span className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full px-3 py-1 text-sm">
             <span className="w-3 h-3 bg-green-500 rounded-full mr-2 inline-block"></span>
-            Available for work
+            {t('resume.profile.available') || "Available for work"}
           </span>
         </div>
         {/* Location */}
@@ -64,19 +67,6 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         </div>
         {/* Contact Info */}
         <div className="w-full space-y-2 mb-4">
-          {/* Website */}
-          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
-            <a
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Website"
-              className="flex items-center hover:underline"
-            >
-              <span className="mr-2 text-gray-400 dark:text-gray-500">🌐</span>
-              Website
-            </a>
-          </div>*/}
           {/* LinkedIn */}
           <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <a
@@ -138,8 +128,8 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         </div>
         {/* Buttons */}
         <div className="w-full flex flex-col gap-2 mt-auto">
-          <Button variant="primary" className="w-full" href="/pdf/Lebenslauf_Mirko_Trotta.pdf" download={true}>Download CV</Button>
-          <Button variant="secondary" className="w-full" href="/contact">Contact Me</Button>
+          <Button variant="primary" className="w-full" href="/pdf/Lebenslauf_Mirko_Trotta.pdf" download={true}>{t('resume.download') || "Download CV"}</Button>
+          <Button variant="secondary" className="w-full" href={`/${language}/contact`}>{t('common.buttons.contact') || "Contact Me"}</Button>
         </div>
       </div>
     </div>

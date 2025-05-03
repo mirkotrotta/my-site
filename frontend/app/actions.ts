@@ -3,9 +3,10 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { i18n } from '../i18n.config';
 
 // Define a constant for the blog directory path
-const BLOG_DIR = path.join(process.cwd(), "content/blog");
+const BLOG_BASE_DIR = path.join(process.cwd(), "content/blog");
 
 // Interface definitions
 export interface Frontmatter {
@@ -19,6 +20,7 @@ export interface Frontmatter {
 export interface PostData {
   slug: string;
   frontmatter: Frontmatter;
+  language: string;
 }
 
 /**
@@ -31,35 +33,44 @@ function getSlugFromFilename(filename: string): string {
 /**
  * Server action to get all blog posts
  */
-export async function fetchAllPosts(): Promise<PostData[]> {
-  // Ensure the blog directory exists
-  if (!fs.existsSync(BLOG_DIR)) {
-    console.warn(`Blog directory not found: ${BLOG_DIR}`);
-    return [];
-  }
-
+export async function fetchAllPosts(language?: string): Promise<PostData[]> {
   try {
-    const files = fs.readdirSync(BLOG_DIR);
     const posts: PostData[] = [];
-
-    for (const file of files) {
-      if (!file.endsWith('.mdx')) continue;
+    
+    // If language is specified, only fetch posts for that language
+    const languages = language ? [language] : i18n.locales;
+    
+    for (const lang of languages) {
+      const langDir = path.join(BLOG_BASE_DIR, lang);
       
-      // Derive slug directly from filename
-      const slug = getSlugFromFilename(file);
-      const filePath = path.join(BLOG_DIR, file);
+      // Skip if the language directory doesn't exist
+      if (!fs.existsSync(langDir)) {
+        console.warn(`Blog directory not found for language ${lang}: ${langDir}`);
+        continue;
+      }
       
-      try {
-        const raw = fs.readFileSync(filePath, "utf-8");
-        const { data } = matter(raw);
+      const files = fs.readdirSync(langDir);
+      
+      for (const file of files) {
+        if (!file.endsWith('.mdx')) continue;
         
-        posts.push({
-          slug,
-          frontmatter: data as Frontmatter
-        });
-      } catch (error) {
-        console.error(`Error processing ${file}:`, error);
-        // Skip this file on error
+        // Derive slug directly from filename
+        const slug = getSlugFromFilename(file);
+        const filePath = path.join(langDir, file);
+        
+        try {
+          const raw = fs.readFileSync(filePath, "utf-8");
+          const { data } = matter(raw);
+          
+          posts.push({
+            slug,
+            frontmatter: data as Frontmatter,
+            language: lang
+          });
+        } catch (error) {
+          console.error(`Error processing ${file}:`, error);
+          // Skip this file on error
+        }
       }
     }
     
@@ -68,7 +79,14 @@ export async function fetchAllPosts(): Promise<PostData[]> {
       b.frontmatter.date.localeCompare(a.frontmatter.date)
     );
   } catch (error) {
-    console.error("Error reading blog directory:", error);
+    console.error("Error reading blog directories:", error);
     return [];
   }
+}
+
+/**
+ * Server action to get blog posts for a specific language
+ */
+export async function fetchPostsByLanguage(language: string): Promise<PostData[]> {
+  return fetchAllPosts(language);
 } 

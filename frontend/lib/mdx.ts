@@ -4,8 +4,15 @@ import matter from "gray-matter";
 import { serialize } from "next-mdx-remote/serialize";
 import { cache } from "react";
 
-// Define a constant for the blog directory path
-const BLOG_DIR = path.join(process.cwd(), "content/blog");
+// Define constants for the blog directory paths
+const BASE_BLOG_DIR = path.join(process.cwd(), "content/blog");
+const BLOG_DIR = {
+  en: path.join(BASE_BLOG_DIR, "en"),
+  de: path.join(BASE_BLOG_DIR, "de")
+};
+
+// Default language to fall back to
+const DEFAULT_LANGUAGE = 'en';
 
 export interface Frontmatter {
   title: string;
@@ -18,6 +25,7 @@ export interface Frontmatter {
 export interface PostData {
   slug: string;
   frontmatter: Frontmatter;
+  language?: string;
 }
 
 /**
@@ -39,23 +47,28 @@ export function sanitizeSlug(slug: string): string {
 /**
  * Validate that a given slug corresponds to a valid MDX file
  */
-export function isValidPostSlug(slug: string): boolean {
+export function isValidPostSlug(slug: string, language: string = DEFAULT_LANGUAGE): boolean {
   if (!slug || typeof slug !== 'string') return false;
   
   // Clean the slug to ensure consistent file access
   const sanitized = sanitizeSlug(slug);
   if (!sanitized) return false;
   
+  // Get the blog directory for the specified language, falling back to default
+  const blogDir = BLOG_DIR[language as keyof typeof BLOG_DIR] || BLOG_DIR[DEFAULT_LANGUAGE];
+  
   // Check if the corresponding MDX file exists
-  const filePath = path.join(BLOG_DIR, `${sanitized}.mdx`);
+  const filePath = path.join(blogDir, `${sanitized}.mdx`);
   return fs.existsSync(filePath);
 }
 
 /**
  * Get the absolute file path for a blog post by its slug
  */
-export function getPostFilePath(slug: string): string {
-  return path.join(BLOG_DIR, `${slug}.mdx`);
+export function getPostFilePath(slug: string, language: string = DEFAULT_LANGUAGE): string {
+  // Get the blog directory for the specified language, falling back to default
+  const blogDir = BLOG_DIR[language as keyof typeof BLOG_DIR] || BLOG_DIR[DEFAULT_LANGUAGE];
+  return path.join(blogDir, `${slug}.mdx`);
 }
 
 /**
@@ -65,12 +78,21 @@ export function getSlugFromFilename(filename: string): string {
   return filename.replace(/\.mdx$/, '');
 }
 
+/**
+ * Check if the content directory for a language exists
+ */
+export function languageHasContent(language: string): boolean {
+  const langDir = BLOG_DIR[language as keyof typeof BLOG_DIR];
+  return Boolean(langDir && fs.existsSync(langDir));
+}
+
 // Cache the post data results using React's cache function
-export const getPostData = cache(async (slug: string): Promise<{
+export const getPostData = cache(async (slug: string, language: string = DEFAULT_LANGUAGE): Promise<{
   slug: string;
   frontmatter: Frontmatter;
   content: string;
   mdxSource: any;
+  language: string;
 } | null> => {
   try {
     // Validate slug input
@@ -79,10 +101,16 @@ export const getPostData = cache(async (slug: string): Promise<{
       return null;
     }
 
+    // If the post doesn't exist in the requested language but exists in the default language,
+    // fallback to the default language
+    if (!isValidPostSlug(slug, language) && isValidPostSlug(slug, DEFAULT_LANGUAGE)) {
+      language = DEFAULT_LANGUAGE;
+    }
+
     // Build file path and check existence
-    const filePath = getPostFilePath(slug);
+    const filePath = getPostFilePath(slug, language);
     if (!fs.existsSync(filePath)) {
-      console.error(`Post not found: ${slug}`);
+      console.error(`Post not found: ${slug} in language ${language}`);
       return null;
     }
 
@@ -139,6 +167,7 @@ export const getPostData = cache(async (slug: string): Promise<{
       frontmatter: data as Frontmatter,
       content,
       mdxSource,
+      language,
     };
   } catch (error) {
     console.error(`Unexpected error processing post ${slug}:`, error);
@@ -147,15 +176,24 @@ export const getPostData = cache(async (slug: string): Promise<{
 });
 
 export async function getPostBySlug(
-  slug: string
+  slug: string,
+  language: string = DEFAULT_LANGUAGE
 ): Promise<{
   slug: string;
   frontmatter: Frontmatter;
   content: string;
+  language: string;
 } | null> {
-  if (!isValidPostSlug(slug)) return null;
+  // If the post doesn't exist in the requested language but exists in the default language,
+  // fallback to the default language
+  if (!isValidPostSlug(slug, language) && isValidPostSlug(slug, DEFAULT_LANGUAGE)) {
+    language = DEFAULT_LANGUAGE;
+  }
+  
+  // Final validation
+  if (!isValidPostSlug(slug, language)) return null;
 
-  const filePath = getPostFilePath(slug);
+  const filePath = getPostFilePath(slug, language);
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
@@ -163,21 +201,24 @@ export async function getPostBySlug(
     slug,
     frontmatter: data as Frontmatter,
     content,
+    language,
   };
 }
 
 /**
- * Get all blog posts with consistent slug handling
+ * Get all blog posts for a specific language with consistent slug handling
  */
-export function getAllPosts(): PostData[] {
-  // Ensure the blog directory exists
-  if (!fs.existsSync(BLOG_DIR)) {
-    console.warn(`Blog directory not found: ${BLOG_DIR}`);
-    return [];
+export function getAllPosts(language: string = DEFAULT_LANGUAGE): PostData[] {
+  // Get the blog directory for the specified language, falling back to default if not available
+  const langDir = BLOG_DIR[language as keyof typeof BLOG_DIR];
+  
+  if (!langDir || !fs.existsSync(langDir)) {
+    console.warn(`Blog directory not found for language ${language}, falling back to ${DEFAULT_LANGUAGE}`);
+    return getAllPosts(DEFAULT_LANGUAGE);
   }
 
   try {
-    const files = fs.readdirSync(BLOG_DIR);
+    const files = fs.readdirSync(langDir);
     const posts: PostData[] = [];
 
     for (const file of files) {
@@ -185,15 +226,22 @@ export function getAllPosts(): PostData[] {
       
       // Derive slug directly from filename
       const slug = getSlugFromFilename(file);
-      const filePath = path.join(BLOG_DIR, file);
+      const filePath = path.join(langDir, file);
       
       try {
         const raw = fs.readFileSync(filePath, "utf-8");
         const { data } = matter(raw);
         
+        // Skip posts that explicitly specify a different language in frontmatter
+        const postLang = data.lang as string;
+        if (postLang && postLang !== language) {
+          continue;
+        }
+        
         posts.push({
           slug,
-          frontmatter: data as Frontmatter
+          frontmatter: data as Frontmatter,
+          language
         });
       } catch (error) {
         console.error(`Error processing ${file}:`, error);
@@ -206,7 +254,15 @@ export function getAllPosts(): PostData[] {
       b.frontmatter.date.localeCompare(a.frontmatter.date)
     );
   } catch (error) {
-    console.error("Error reading blog directory:", error);
+    console.error(`Error reading blog directory for language ${language}:`, error);
+    
+    // If there was an error with the requested language and it's not already the default,
+    // try falling back to the default language
+    if (language !== DEFAULT_LANGUAGE) {
+      console.warn(`Falling back to ${DEFAULT_LANGUAGE} language for blog posts`);
+      return getAllPosts(DEFAULT_LANGUAGE);
+    }
+    
     return [];
   }
 }

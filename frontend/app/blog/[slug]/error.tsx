@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import GlobalContainer from '@/components/ui/GlobalContainer'
+import useTranslation from '@/hooks/useTranslation'
 
 export default function BlogError({
   error,
@@ -11,6 +12,8 @@ export default function BlogError({
   error: Error & { digest?: string }
   reset: () => void
 }) {
+  const { language: lang, t } = useTranslation()
+
   useEffect(() => {
     // Log the error to an error reporting service
     console.error('Blog post error:', error)
@@ -35,36 +38,36 @@ export default function BlogError({
             />
           </svg>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-            Something went wrong!
+            {t('blog.error.title') || 'Something went wrong!'}
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            We couldn't load this blog post. Please try again.
+            {t('blog.error.message') || "We couldn't load this blog post. Please try again."}
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
               onClick={() => reset()}
               className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition"
             >
-              Try again
+              {t('blog.error.tryAgain') || 'Try again'}
             </button>
             <Link
-              href="/blog"
+              href={`/${lang}/blog`}
               className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white rounded transition"
             >
-              Back to blog
+              {t('blog.error.backToBlog') || 'Back to blog'}
             </Link>
           </div>
         </div>
 
         {process.env.NODE_ENV === 'development' && (
           <div className="mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg text-left overflow-auto">
-            <h2 className="text-lg font-semibold mb-2">Error details:</h2>
+            <h2 className="text-lg font-semibold mb-2">{t('blog.error.details') || 'Error details'}</h2>
             <p className="font-mono text-sm overflow-x-auto">
-              {error?.message || 'Unknown error occurred'}
+              {error?.message || t('blog.error.unknown') || 'Unknown error occurred'}
             </p>
             {error?.digest && (
               <p className="font-mono text-sm mt-2 text-gray-500">
-                Error ID: {error.digest}
+                {t('blog.error.errorId') || 'Error ID'}: {error.digest}
               </p>
             )}
           </div>

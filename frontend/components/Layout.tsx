@@ -6,6 +6,9 @@ import { ReactNode, useEffect, useState } from 'react'
 import { Sun, Moon, Menu, X } from 'lucide-react'
 import SocialLinks from '@/components/SocialLinks'
 import GlobalContainer from '@/components/ui/GlobalContainer'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
+import useTranslation from '@/hooks/useTranslation'
+import Footer from '@/components/ui/Footer'
 
 interface LayoutProps {
   children: ReactNode
@@ -15,13 +18,14 @@ export default function Layout({ children }: LayoutProps) {
   const [darkMode, setDarkMode] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname()
+  const { t, language } = useTranslation()
 
   const navItems = [
-    { href: '/about', label: 'About' },
-    { href: '/resume', label: 'Resume' },
-    { href: '/projects', label: 'Projects' },
-    { href: '/blog', label: 'Blog' },
-    { href: '/contact', label: 'Contact' },
+    { href: `/${language}/about`, label: t('common.navigation.about') },
+    { href: `/${language}/resume`, label: t('common.navigation.resume') },
+    { href: `/${language}/projects`, label: t('common.navigation.projects') },
+    { href: `/${language}/blog`, label: t('common.navigation.blog') },
+    { href: `/${language}/contact`, label: t('common.navigation.contact') },
   ]
 
   const updateHeaderHeight = () => {
@@ -57,13 +61,25 @@ export default function Layout({ children }: LayoutProps) {
     document.documentElement.classList.toggle('dark', isDark)
   }
 
+  useEffect(() => {
+    const bodyClass = document.body.classList;
+    if (darkMode) {
+      bodyClass.add('dark:bg-gray-900');
+      bodyClass.remove('bg-white');
+    } else {
+      bodyClass.add('bg-white');
+      bodyClass.remove('dark:bg-gray-900');
+    }
+    bodyClass.add('text-gray-900', 'dark:text-gray-100');
+  }, [darkMode]);
+
   return (
-    <div className="font-sans text-sm text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 min-h-screen flex flex-col">
+    <>
       <header className="sticky-header border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-900">
         <GlobalContainer>
           <div className="flex justify-between items-center h-14">
             <div className="flex items-center space-x-6">
-              <Link href="/">
+              <Link href={`/${language}`}>
                 <span className="font-medium text-lg text-blue-500 dark:text-gray-100 hover:text-blue-600 dark:hover:text-gray-200">
                   Mirko Trotta
                 </span>
@@ -88,10 +104,11 @@ export default function Layout({ children }: LayoutProps) {
               </nav>
             </div>
             <div className="flex items-center gap-2">
+              <LanguageSwitcher className="mr-2" />
               <button
                 onClick={toggleDarkMode}
                 className="border border-gray-400 dark:border-gray-600 p-2 w-8 h-8 text-xs hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center"
-                aria-label="Toggle theme"
+                aria-label={t('common.darkMode.toggle')}
               >
                 {darkMode ? <Sun size={16} /> : <Moon size={16} />}
               </button>
@@ -123,6 +140,9 @@ export default function Layout({ children }: LayoutProps) {
                 </Link>
               )
             })}
+            <div className="px-4 py-2">
+              <LanguageSwitcher />
+            </div>
           </GlobalContainer>
         )}
       </header>
@@ -130,16 +150,8 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex-grow w-full py-0">
         <GlobalContainer>{children}</GlobalContainer>
       </main>
-      <footer className="bg-white dark:bg-gray-900 text-xs py-16 text-gray-600 dark:text-gray-400">
-        <GlobalContainer className="text-center">
-          <p className="font-semibold text-lg">Mirko Trotta – Full Stack Developer</p>
-          <p className="mt-1">Open Source Contributor</p>
-          <SocialLinks className="mt-3 justify-center" />
-          <p className="mt-4 text-gray-400">
-            © {new Date().getFullYear()} All rights reserved. Built with Next.js & FastAPI.
-          </p>
-        </GlobalContainer>
-      </footer>
-    </div>
+      
+      <Footer />
+    </>
   )
 }

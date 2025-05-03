@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button'; // Import the Button component
 type BlogHeroProps = {
   heroPost: PostData;
   featuredPosts: PostData[];
+  lang: string; // Add language parameter
 };
 
 // Helper to format date
@@ -17,7 +18,7 @@ const formatDate = (dateString: string) => {
   });
 };
 
-export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
+export default function BlogHero({ heroPost, featuredPosts, lang }: BlogHeroProps) {
   const heroCoverImage = heroPost.frontmatter.coverImage || `https://picsum.photos/seed/${heroPost.slug}-hero/1200/600`;
 
   return (
@@ -25,7 +26,7 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
         {/* Main Hero Post */}
         <div className="md:col-span-6 bg-white dark:bg-gray-800">
-          <Link href={`/blog/${heroPost.slug}`} className="block group">
+          <Link href={`/${lang}/blog/${heroPost.slug}`} className="block group">
             <div className="relative aspect-[3/2] w-full overflow-hidden">
               <Image 
                 src={heroCoverImage}
@@ -63,8 +64,8 @@ export default function BlogHero({ heroPost, featuredPosts }: BlogHeroProps) {
               {featuredPosts.map((post, index) => {
                 const featuredCoverImage = post.frontmatter.coverImage || `https://picsum.photos/seed/${post.slug}-featured/400/200`;
                 return (
-                  <li key={post.slug} className={`group grid grid-cols-12 gap-4 py-7 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 ${index === 0 ? 'border-t-0' : 'border-t border-gray-100 dark:border-gray-700'} ${index === featuredPosts.length - 1 ? 'border-b-0' : 'border-b border-gray-100 dark:border-gray-700'}`}>
-                    <Link href={`/blog/${post.slug}`} className="col-span-8 flex flex-col justify-between no-underline">
+                  <li key={`${lang}-${post.slug}`} className={`group grid grid-cols-12 gap-4 py-7 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 ${index === 0 ? 'border-t-0' : 'border-t border-gray-100 dark:border-gray-700'} ${index === featuredPosts.length - 1 ? 'border-b-0' : 'border-b border-gray-100 dark:border-gray-700'}`}>
+                    <Link href={`/${lang}/blog/${post.slug}`} className="col-span-8 flex flex-col justify-between no-underline">
                       {/* Tag and Date */}
                       <div className="flex items-center text-base text-gray-500 dark:text-gray-400 mb-1">
                         {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (

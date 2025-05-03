@@ -16,6 +16,7 @@ type HeroWithSidebarProps = {
     href: string;
   };
   imageSrc: string;
+  sidebarTitle?: string;
   children?: ReactNode;
 };
 
@@ -23,7 +24,10 @@ export default function HeroWithSidebar({
   title,
   eyebrowText,
   description,
+  primaryCta,
+  secondaryCta,
   imageSrc,
+  sidebarTitle = "Latest news",
   children,
 }: HeroWithSidebarProps) {
   return (
@@ -42,14 +46,14 @@ export default function HeroWithSidebar({
         <ButtonGroup 
               buttons={[
                 {
-                  text: 'View Resume',
-                  href: '/resume',
+                  text: primaryCta.text,
+                  href: primaryCta.href,
                   variant: 'primary',
                   arrow: false,
                 },
                 {
-                  text: 'Case Studies',
-                  href: '/projects',
+                  text: secondaryCta.text,
+                  href: secondaryCta.href,
                   variant: 'tertiary',
                   arrow: true,
                 },
@@ -67,7 +71,7 @@ export default function HeroWithSidebar({
       </div>
 
       <div className="lg:col-span-2 p-4 text-sm">
-        <h4 className="text-gray-900 dark:text-white font-normal mb-4">Latest news</h4>
+        <h4 className="text-gray-900 dark:text-white font-normal mb-4">{sidebarTitle}</h4>
         <div className="space-y-4 max-h-[400px] overflow-y-auto">
           <ClientHeroNews />
         </div>
