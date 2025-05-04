@@ -1,0 +1,574 @@
+{
+  "basics": {
+    "name": "Mirko Trotta",
+    "headline": "Full Stack Developer",
+    "email": "mirkotrottac@gmail.com",
+    "phone": "+49 173 9405570",
+    "location": "Hanau, Germany",
+    "url": {
+      "label": "Portfolio & Projects",
+      "href": "https://www.mirkotrotta.com/"
+    },
+    "customFields": [
+      {
+        "id": "jue3jvoqkhtatow9b5pcpqqf",
+        "icon": "flag",
+        "name": "Nationality",
+        "value": "Italian"
+      },
+      {
+        "id": "bnq7il20m5ifjzbdzj5jfi6k",
+        "icon": "calendar",
+        "name": "Date of Birth",
+        "value": "07 October 1981"
+      }
+    ],
+    "picture": {
+      "url": "https://storage.rxresu.me/cma8dueyo3cn8q9p3qnlgm4xi/pictures/sp2411eako11482zhcsjp4jh.jpg",
+      "size": 150,
+      "aspectRatio": 1,
+      "borderRadius": 0,
+      "effects": {
+        "hidden": false,
+        "border": false,
+        "grayscale": false
+      }
+    }
+  },
+  "sections": {
+    "summary": {
+      "name": "Summary",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "summary",
+      "content": "<p>Full stack developer with strengths in frontend engineering and growing backend and DevOps expertise. Skilled in <strong>React, Next.js, TypeScript, Python, FastAPI, Docker</strong>, and <strong>GitHub Actions</strong>, with practical experience across APIs, automation workflows, and platform integration. Self-taught, delivery-focused, and effective in distributed teams. Currently expanding cloud skills with <strong>Azure</strong> and building toward scalable, production-ready systems.</p>"
+    },
+    "awards": {
+      "name": "Awards",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": false,
+      "id": "awards",
+      "items": []
+    },
+    "certifications": {
+      "name": "Certifications",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "certifications",
+      "items": [
+        {
+          "id": "w10cz0nv44sk2ss31v98i11a",
+          "visible": true,
+          "name": "AZ-900 – Azure Fundamentals",
+          "issuer": "Microsoft",
+          "date": "In progress",
+          "summary": "<p>Currently preparing via Microsoft Learn and labs. Covers cloud concepts, Azure services, and basic administration.</p>",
+          "url": {
+            "label": "",
+            "href": ""
+          }
+        },
+        {
+          "id": "d9ogfoa80v64xqc2c17t1dmj",
+          "visible": true,
+          "name": "AZ-104 – Azure Administrator",
+          "issuer": "Microsoft",
+          "date": "Planned 2025",
+          "summary": "<p>Self-study in progress and lab simulations. Focus on identity, compute, networking, and monitoring.</p>",
+          "url": {
+            "label": "",
+            "href": ""
+          }
+        }
+      ]
+    },
+    "education": {
+      "name": "Education",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "education",
+      "items": [
+        {
+          "id": "njzn1bkwhjfudjd5wvkf2g4r",
+          "visible": true,
+          "institution": "Universidad Santa María",
+          "studyType": "Undergraduate (Non-degree)",
+          "area": "Media Studies – Journalism & Audiovisual Production",
+          "score": "",
+          "date": "September 2002 – July 2007",
+          "summary": "<p>Completed core studies in journalism, audiovisual media, and digital content production. Left prior to thesis.</p>",
+          "url": {
+            "label": "",
+            "href": "https://usm.edu.ve/"
+          }
+        },
+        {
+          "id": "qh4u2lbwnm6pk1ttpm8x0qfs",
+          "visible": true,
+          "institution": "UE Lino de Clemente",
+          "studyType": "Secondary Education",
+          "area": "General Sciences",
+          "score": "Completed",
+          "date": "September 1994 – July 1999",
+          "summary": "<p>Equivalent to German Hochschulreife (A-levels) with general science focus.</p>",
+          "url": {
+            "label": "",
+            "href": ""
+          }
+        }
+      ]
+    },
+    "experience": {
+      "name": "Experience",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "experience",
+      "items": [
+        {
+          "id": "ds6kajwh47nm207rnttwy6im",
+          "visible": true,
+          "company": "Santana Consulting GmbH",
+          "position": "Full Stack Developer",
+          "location": "Aschaffenburg, Germany",
+          "date": "October 2024 – Present",
+          "summary": "<ul><li><p>Developed membership funnels and platform integrations for fitness clients such as UFC Gym and Redfit</p></li><li><p>Delivered API integrations, internal tools, and UI system enhancements</p></li><li><p>Supported low-code product delivery</p></li></ul>",
+          "url": {
+            "label": "",
+            "href": "https://www.santanadigital.de/"
+          }
+        },
+        {
+          "id": "w7bp54h04bbex721y9o19be3",
+          "visible": true,
+          "company": "Freelance",
+          "position": "Independent Technology Consultant",
+          "location": "Hanau, Germany",
+          "date": "October 2023 - Present",
+          "summary": "<ul><li><p>Built and maintained personal full stack projects using <strong>Next.js</strong>, <strong>Python</strong>, and <strong>FastAPI</strong></p></li><li><p>Gained hands-on experience with <strong>Docker</strong>, <strong>GitHub Actions</strong>, and cloud-oriented workflows</p></li><li><p>Focused on transitioning into backend development and DevOps foundations</p></li></ul>",
+          "url": {
+            "label": "",
+            "href": ""
+          }
+        },
+        {
+          "id": "dpkrtq1v666cx530vcgxj0lc",
+          "visible": true,
+          "company": "ARTUS interactive GmbH",
+          "position": "Art Director",
+          "location": "Frankfurt am Main, Germany",
+          "date": "July 2022 - September 2023",
+          "summary": "<ul><li><p>Designed UI components and campaign visuals for Braun and Gillette eCommerce platforms.</p></li><li><p>Led digital creative execution with a focus on motion design and consistent brand delivery.</p></li></ul>",
+          "url": {
+            "label": "",
+            "href": "https://www.artus.com/de/"
+          }
+        },
+        {
+          "id": "vyswghv0jxqcep3hbmpewi1c",
+          "visible": true,
+          "company": "Fitvia GmbH",
+          "position": "Art Director",
+          "location": "Wiesbaden, Germany",
+          "date": "January 2022 – June 2022",
+          "summary": "<ul><li><p>Led a small creative team delivering branding, packaging, and digital content for ecommerce campaigns</p></li></ul>",
+          "url": {
+            "label": "",
+            "href": ""
+          }
+        },
+        {
+          "id": "s3qdw4rmkte0yd3p3zwuxj5q",
+          "visible": true,
+          "company": "Cocomore AG",
+          "position": "Content Manager → Art Director (Motion & Web)",
+          "location": "Frankfurt am Main, Germany",
+          "date": "January 2019 – June 2022",
+          "summary": "<ul><li><p>Managed enterprise content operations in <strong>Sitecore CMS</strong> for global brands (Pampers, Nestlé, Oral-B)</p></li><li><p>Led production of <strong>web-ready UI assets</strong>, campaign materials, and multilingual content delivery</p></li><li><p>Promoted to Art Director role with focus on <strong>digital workflows</strong>, motion design, and <strong>automation tooling</strong></p></li><li><p>Supported coordination between development, design, and content teams in agile delivery setups</p></li></ul>",
+          "url": {
+            "label": "",
+            "href": "https://www.cocomore.de/"
+          }
+        },
+        {
+          "id": "t55qni666h08snsrev700chf",
+          "visible": true,
+          "company": "Pantomima Studio",
+          "position": "Founder / Web Developer & Consultant",
+          "location": "Caracas, Venezuela",
+          "date": "2011 – 2018",
+          "summary": "<ul><li><p>Delivered client-facing websites using <strong>WordPress</strong>, <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong></p></li><li><p>Implemented <strong>custom themes</strong>, content structures, and ecommerce setups with <strong>WooCommerce</strong></p></li><li><p>Managed full development lifecycle — from UI prototyping to technical deployment and hosting</p></li><li><p>Advised small business clients on <strong>digital strategy</strong>, platform maintenance, and SEO foundations</p></li></ul>",
+          "url": {
+            "label": "",
+            "href": ""
+          }
+        }
+      ]
+    },
+    "volunteer": {
+      "name": "Volunteering",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": false,
+      "id": "volunteer",
+      "items": []
+    },
+    "interests": {
+      "name": "Interests",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "interests",
+      "items": [
+        {
+          "id": "aqruvyk340ff9a7j4urmjzs4",
+          "visible": true,
+          "name": "Tennis & Outdoor Sports",
+          "keywords": [
+            "tennis",
+            "fitness",
+            "teamwork"
+          ]
+        },
+        {
+          "id": "v77pmkgvmgtlwrcbzzywwf6x",
+          "visible": true,
+          "name": "Cooking & Mediterranean Cuisine",
+          "keywords": [
+            "food",
+            "Italian culture",
+            "creativity"
+          ]
+        },
+        {
+          "id": "f79s43fo7sesc5lwdqxiv8xj",
+          "visible": true,
+          "name": "Linux & Terminal Tinkering",
+          "keywords": [
+            "WSL",
+            "CLI tools",
+            "customization"
+          ]
+        },
+        {
+          "id": "xle3p03t0c5vtzj2iguc2hib",
+          "visible": true,
+          "name": "Reading Nonfiction & Tech Books",
+          "keywords": [
+            "learning",
+            "software culture",
+            "systems thinking"
+          ]
+        },
+        {
+          "id": "zklasgfq4jcbi3ppboep3pac",
+          "visible": true,
+          "name": "Family Life & Parenting",
+          "keywords": [
+            "balance",
+            "responsibility",
+            "empathy"
+          ]
+        }
+      ]
+    },
+    "languages": {
+      "name": "Languages",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "languages",
+      "items": [
+        {
+          "id": "e3zqzwxizft32kmhnsdd8rtk",
+          "visible": true,
+          "name": "Spanish",
+          "description": "Native",
+          "level": 5
+        },
+        {
+          "id": "k2ohv9rbazaw8ggsdkxvnldx",
+          "visible": true,
+          "name": "English",
+          "description": "Fluent (C1)",
+          "level": 4
+        },
+        {
+          "id": "k908t7nc83h8qibtztnciudg",
+          "visible": true,
+          "name": "German",
+          "description": "Advanced (B2)",
+          "level": 3
+        },
+        {
+          "id": "a9blabazxd2rxdnqqnqsw3u7",
+          "visible": true,
+          "name": "Italian",
+          "description": "Basic (A2)",
+          "level": 1
+        }
+      ]
+    },
+    "profiles": {
+      "name": "Profiles",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "profiles",
+      "items": [
+        {
+          "id": "itdhlqz16fjah34ap1k8v9va",
+          "visible": true,
+          "network": "GitHub",
+          "username": "mirkotrotta",
+          "icon": "github",
+          "url": {
+            "label": "Code & Contributions",
+            "href": "https://github.com/mirkotrotta"
+          }
+        },
+        {
+          "id": "c2x8ete1rijvbmwz9ib1cth9",
+          "visible": true,
+          "network": "LinkedIn",
+          "username": "mirkotrotta",
+          "icon": "linkedin",
+          "url": {
+            "label": "Professional Network",
+            "href": "https://www.linkedin.com/in/mirkotrotta"
+          }
+        }
+      ]
+    },
+    "projects": {
+      "name": "Projects",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "projects",
+      "items": [
+        {
+          "id": "uufa6t4gow841cz2sbr013gf",
+          "visible": true,
+          "name": "Moon Site",
+          "description": "",
+          "date": "April 2025 - Present",
+          "summary": "<p>Monorepo boilerplate using Next.js 14, FastAPI, and Markdown. Built for developer-focused publishing and portfolio needs.</p>",
+          "keywords": [
+            "Next.js 14",
+            "FastAPI",
+            "Markdown",
+            "React",
+            "Python",
+            "MDX"
+          ],
+          "url": {
+            "label": "",
+            "href": "https://github.com/mirkotrotta/moon-site"
+          }
+        },
+        {
+          "id": "mw0eh4kwp33j6bljsjo9ma8z",
+          "visible": true,
+          "name": "Web Scraper",
+          "description": "",
+          "date": "2024",
+          "summary": "<p>Web-based markdown extraction tool using Python, Streamlit, and BeautifulSoup. Features SQLite persistence and Slack API notifications.</p>",
+          "keywords": [],
+          "url": {
+            "label": "",
+            "href": "https://github.com/mirkotrotta/streamlit_web_scraper"
+          }
+        }
+      ]
+    },
+    "publications": {
+      "name": "Publications",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": false,
+      "id": "publications",
+      "items": []
+    },
+    "references": {
+      "name": "References",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": false,
+      "id": "references",
+      "items": []
+    },
+    "skills": {
+      "name": "Skills",
+      "columns": 1,
+      "separateLinks": true,
+      "visible": true,
+      "id": "skills",
+      "items": [
+        {
+          "id": "ydub5xoqaullrljkgwa6c500",
+          "visible": true,
+          "name": "React",
+          "description": "",
+          "level": 5,
+          "keywords": [
+            "React",
+            "JSX",
+            "Frontend",
+            "UI Development",
+            "Components"
+          ]
+        },
+        {
+          "id": "n63ywcdiomch7h666c75q3a4",
+          "visible": true,
+          "name": "Next.js",
+          "description": "",
+          "level": 4,
+          "keywords": [
+            "Next.js",
+            "React Framework",
+            "SSR",
+            "Full Stack",
+            "App Routing"
+          ]
+        },
+        {
+          "id": "kjv5f71aufhwug8si4j2ofi7",
+          "visible": true,
+          "name": "TypeScript",
+          "description": "",
+          "level": 4,
+          "keywords": [
+            "TypeScript",
+            "Static Typing",
+            "TS",
+            "Frontend Logic",
+            "JS"
+          ]
+        },
+        {
+          "id": "vqmmt51y644iuq0f9gld0ayj",
+          "visible": true,
+          "name": "Python",
+          "description": "",
+          "level": 4,
+          "keywords": [
+            "Python",
+            "Scripting",
+            "CLI",
+            "Backend",
+            "Automation"
+          ]
+        },
+        {
+          "id": "l8z05higtyi5hamdjguoaoqu",
+          "visible": true,
+          "name": "FastAPI",
+          "description": "",
+          "level": 3,
+          "keywords": [
+            "FastAPI",
+            "APIs",
+            "Backend",
+            "Pydantic",
+            "Python"
+          ]
+        },
+        {
+          "id": "di36zxb3o8f9vwq2r9d8z2eb",
+          "visible": true,
+          "name": "Docker",
+          "description": "",
+          "level": 3,
+          "keywords": [
+            "Docker",
+            "Containers",
+            "DevOps",
+            "CI/CD",
+            "Docker Compose"
+          ]
+        },
+        {
+          "id": "lpfy39iv6yac9esd0s3pjir7",
+          "visible": true,
+          "name": "Azure",
+          "description": "",
+          "level": 2,
+          "keywords": [
+            "Azure",
+            "Cloud",
+            "Deployment",
+            "DevOps"
+          ]
+        }
+      ]
+    },
+    "custom": {}
+  },
+  "metadata": {
+    "template": "gengar",
+    "layout": [
+      [
+        [
+          "experience",
+          "volunteer",
+          "references"
+        ],
+        [
+          "summary",
+          "profiles",
+          "languages",
+          "publications",
+          "awards"
+        ]
+      ],
+      [
+        [
+          "education",
+          "certifications",
+          "projects"
+        ],
+        [
+          "skills",
+          "interests"
+        ]
+      ]
+    ],
+    "css": {
+      "value": "* {\n\toutline: 1px solid #000;\n\toutline-offset: 4px;\n}",
+      "visible": false
+    },
+    "page": {
+      "margin": 18,
+      "format": "a4",
+      "options": {
+        "breakLine": false,
+        "pageNumbers": true
+      }
+    },
+    "theme": {
+      "background": "#ffffff",
+      "text": "#000000",
+      "primary": "#0284c7"
+    },
+    "typography": {
+      "font": {
+        "family": "IBM Plex Sans",
+        "subset": "latin",
+        "variants": [
+          "regular"
+        ],
+        "size": 12
+      },
+      "lineHeight": 1.2,
+      "hideIcons": false,
+      "underlineLinks": true
+    },
+    "notes": ""
+  }
+}

@@ -30,13 +30,6 @@ interface ExperienceEntry {
   location: string;
 }
 
-interface AdditionalExperienceEntry {
-  company: string;
-  title: string;
-  years: string;
-  description?: string[];
-}
-
 interface EducationEntry {
   institution: string;
   degree: string;
@@ -74,7 +67,6 @@ interface ResumeData {
   profile: Profile;
   professional_profile: string;
   professional_experience: ExperienceEntry[];
-  additional_experience: AdditionalExperienceEntry[];
   education: EducationEntry[];
   certifications: CertificationEntry[];
   skills: Skills;
@@ -170,22 +162,6 @@ export default function ResumePage() {
                 </div>
               ))}
             </div>
-          </section>
-          {/* 3. Additional Experience */}
-          <section>
-            <h2 className="text-lg font-normal mb-2">Additional Experience</h2>
-            <ul className="list-disc pl-6">
-              {resume.additional_experience.map((entry, idx) => (
-                <li key={idx}>
-                  <span className="font-semibold">{entry.title}</span>{entry.company} {entry.years}
-                  {entry.description && (
-                    <ul className="list-disc pl-5 mt-2 text-sm text-gray-700 dark:text-gray-200">
-                      {entry.description.map((point, i) => <li key={i}>{point}</li>)}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
           </section>
           {/* 4. Education */}
           <section>

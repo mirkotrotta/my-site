@@ -34,16 +34,21 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   const github = profile?.github || "https://github.com/mirkotrotta";
   const dob = profile?.dob || "07 October 1981";
   const nationality = profile?.nationality || t('resume.profile.nationality') || "Italian";
+  
+  // For PDF downloads in Next.js with i18n, we need to break out of the locale-prefixed URL structure
+  // by forcing an absolute URL path that starts with the root domain
+  const siteUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const resumePdfPath = `${siteUrl}/pdf/resume-${language}.pdf`;
 
   return (
-    <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 overflow-hidden w-full flex flex-col items-center mx-auto">
+    <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 overflow-auto w-full max-w-xs md:max-w-sm lg:max-w-md max-h-[90vh] flex flex-col items-center mx-auto">
       {/* Profile Image*/}
-      <div className="w-full aspect-square relative">
+      <div className="w-full h-56 md:h-64 relative">
         <Image
           src="/images/mirko-trotta-profile-resume-2025.jpg"
           alt="Profile"
           fill
-          className="object-fill w-full h-full"
+          className="object-cover w-full h-full"
           sizes="320px"
         />
       </div>
@@ -128,7 +133,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
         </div>
         {/* Buttons */}
         <div className="w-full flex flex-col gap-2 mt-auto">
-          <Button variant="primary" className="w-full" href="/pdf/Lebenslauf_Mirko_Trotta.pdf" download={true}>{t('resume.download') || "Download CV"}</Button>
+          <Button variant="primary" className="w-full" href={resumePdfPath} download={true}>{t('resume.download') || "Download CV"}</Button>
           <Button variant="secondary" className="w-full" href={`/${language}/contact`}>{t('common.buttons.contact') || "Contact Me"}</Button>
         </div>
       </div>

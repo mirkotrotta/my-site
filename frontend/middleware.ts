@@ -12,7 +12,8 @@ const excludedPaths = [
   '/robots.txt',
   '/sitemap.xml',
   '/images/',
-  '/fonts/'
+  '/fonts/',
+  '/pdf/'
 ];
 
 function getLanguageFromCookie(request: NextRequest): string | null {

@@ -3,6 +3,7 @@ from typing import List, Optional
 
 class Profile(BaseModel):
     name: str
+    title: str
     location: str
     phone: str
     email: str
@@ -21,12 +22,6 @@ class ExperienceEntry(BaseModel):
     end_date: Optional[str]
     description: List[str]
     location: str
-
-class AdditionalExperienceEntry(BaseModel):
-    company: str
-    title: str
-    years: str
-    description: Optional[List[str]]
 
 class EducationEntry(BaseModel):
     institution: str
@@ -60,7 +55,6 @@ class Resume(BaseModel):
     profile: Profile
     professional_profile: str
     professional_experience: List[ExperienceEntry]
-    additional_experience: List[AdditionalExperienceEntry]
     education: List[EducationEntry]
     certifications: List[CertificationEntry]
     skills: Skills

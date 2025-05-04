@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 import httpx
 import os
 from dotenv import load_dotenv
+import logging
 
 router = APIRouter()
 
@@ -10,11 +11,36 @@ load_dotenv()
 GITHUB_API_URL = "https://api.github.com/user/repos"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
-if not GITHUB_TOKEN:
-    raise RuntimeError("Missing GITHUB_TOKEN in environment")
+# Get logger
+logger = logging.getLogger(__name__)
 
 @router.get("/")
 async def get_projects():
+    # Check if token is available
+    if not GITHUB_TOKEN:
+        logger.warning("Missing GITHUB_TOKEN in environment, returning fallback data")
+        # Return fallback projects data if no token is available
+        return [
+            {
+                "name": "moon-site",
+                "description": "Full Stack Portfolio Boilerplate",
+                "url": "https://github.com/mirkotrotta/moon-site",
+                "stars": 0,
+                "updated": "2023-12-01T12:00:00Z",
+                "language": "TypeScript",
+                "topics": ["showcase", "nextjs", "fastapi", "portfolio"]
+            },
+            {
+                "name": "automation-tool",
+                "description": "Slack-integrated automation system using Python and FastAPI",
+                "url": "https://github.com/mirkotrotta/automation-tool",
+                "stars": 0,
+                "updated": "2023-11-15T10:30:00Z",
+                "language": "Python", 
+                "topics": ["showcase", "automation", "fastapi", "slackapi"]
+            }
+        ]
+
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.mercy-preview+json"  # for 'topics'
@@ -45,4 +71,25 @@ async def get_projects():
         return projects
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        logger.error(f"GitHub API error: {str(e)}")
+        # Return fallback data in case of any error
+        return [
+            {
+                "name": "moon-site",
+                "description": "Full Stack Portfolio Boilerplate",
+                "url": "https://github.com/mirkotrotta/moon-site",
+                "stars": 0,
+                "updated": "2023-12-01T12:00:00Z",
+                "language": "TypeScript",
+                "topics": ["showcase", "nextjs", "fastapi", "portfolio"]
+            },
+            {
+                "name": "automation-tool",
+                "description": "Slack-integrated automation system using Python and FastAPI",
+                "url": "https://github.com/mirkotrotta/automation-tool",
+                "stars": 0,
+                "updated": "2023-11-15T10:30:00Z",
+                "language": "Python", 
+                "topics": ["showcase", "automation", "fastapi", "slackapi"]
+            }
+        ]

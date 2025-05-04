@@ -189,7 +189,8 @@
       "certifications": "Certifications & Continuing Education",
       "skills": "Skills & Competencies",
       "languages": "Languages",
-      "projects": "Projects"
+      "projects": "Projects",
+      "githubProjects": "GitHub Projects"
     },
     "skills": {
       "frontend": "Frontend",

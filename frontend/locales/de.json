@@ -115,7 +115,30 @@
   "resume": {
     "title": "Lebenslauf",
     "description": "Mirko Trotta - Full Stack Entwickler & Automatisierungsspezialist. Kenntnisse in React, Python, FastAPI, Docker und KI-Workflows.",
-    "download": "PDF-Lebenslauf herunterladen",
+    "download": "PDF herunterladen",
+    "present": "Gegenwärtig",
+    "sections": {
+      "profile": "Berufsprofil",
+      "experience": "Berufserfahrung",
+      "additionalExperience": "Weitere Erfahrung",
+      "education": "Ausbildung",
+      "certifications": "Zertifikate & Weiterbildung",
+      "skills": "Fähigkeiten & Kompetenzen",
+      "languages": "Sprachen",
+      "projects": "Projekte",
+      "githubProjects": "GitHub Projekte"
+    },
+    "skills": {
+      "frontend": "Frontend",
+      "backend": "Backend & Systeme",
+      "database": "Datenbanken & DevOps",
+      "automation": "Automatisierung & KI",
+      "tools": "Tools & Systeme"
+    },
+    "errors": {
+      "fetchFailed": "Lebenslauf konnte nicht geladen werden",
+      "projectsFetchFailed": "Projekte konnten nicht geladen werden"
+    },
     "contact": {
       "title": "Kontaktinformationen"
     },
@@ -127,17 +150,6 @@
     },
     "education": {
       "title": "Ausbildung & Zertifikate"
-    },
-    "skills": {
-      "title": "Fähigkeiten",
-      "languages": "Sprachen",
-      "frontend": "Frontend-Entwicklung",
-      "backend": "Backend-Entwicklung",
-      "database": "Datenbanken & Caching",
-      "devops": "DevOps & Cloud",
-      "testing": "Testen",
-      "tools": "Tools & Plattformen",
-      "methodologies": "Methoden & Konzepte"
     },
     "projects": {
       "title": "Ausgewählte Projekte"
