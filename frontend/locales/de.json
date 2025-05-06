@@ -19,7 +19,7 @@
     },
     "footer": {
       "copyright": "© {{year}} Mirko Trotta. Alle Rechte vorbehalten.",
-      "builtWith": "Erstellt mit Next.js und Tailwind CSS"
+      "builtWith": "Erstellt mit Next.js, Tailwind CSS und FastAPI."
     },
     "darkMode": {
       "toggle": "Dunkelmodus umschalten"
@@ -62,47 +62,72 @@
     }
   },
   "about": {
-    "imageAlt": "Profilbild von Mirko Trotta",
     "name": "Mirko Trotta",
-    "jobTitle": "Full Stack Entwickler & Automatisierungsspezialist",
+    "title": "Über mich",
+    "subtitle": "Full Stack Entwickler & UI/UX Designer",
+    "intro": "Ich helfe Unternehmen, ihre Ideen in elegante, funktionale digitale Produkte umzusetzen.",
+    "jobTitle": "Full Stack Entwickler",
+    "imageAlt": "Profilbild von Mirko Trotta",
     "bio": {
-      "intro": "Ich erstelle <strong>robuste Webanwendungen</strong>, <strong>effiziente APIs</strong> und <strong>intelligente Automatisierungs-Workflows</strong>.",
-      "career1": "Mein Weg in die Technik war nicht typisch. Ich habe Jahre damit verbracht, operative und kreative Projekte zu leiten, bevor ich tief in den Code eingetaucht bin. Dieser Hintergrund gibt mir eine praktische Perspektive: Ich konzentriere mich darauf, <strong>echte Geschäftsprobleme zu lösen</strong> und Systeme zu bauen, die <strong>wartbar und skalierbar</strong> sind.",
-      "career2": "Der Umzug nach Deutschland zwang mich, mich anzupassen und neu aufzubauen. Ich habe mir die Entwicklung selbst beigebracht, beginnend mit Python für Automatisierung und Backend, dann erweitert auf JavaScript/TypeScript mit React und Node.js für Full-Stack-Fähigkeiten.",
-      "career3": "Ich fühle mich zur Struktur und Logik der Backend-Entwicklung hingezogen (Python, FastAPI, Datenbanken), genieße aber ebenso die Gestaltung von Benutzeroberflächen mit modernen Frontend-Tools (React, Next.js, Tailwind CSS). Diese Brücke ermöglicht es mir, kohärente End-to-End-Lösungen zu bauen.",
-      "career4": "In letzter Zeit konzentriere ich mich verstärkt auf den Einsatz von KI-Werkzeugen und Large Language Models (LLMs), um intelligente Workflows zu erstellen und Anwendungsfunktionen zu verbessern. Besonders interessiere ich mich für agentenbasierte Systeme und Retrieval-Augmented Generation (RAG).",
-      "career5": "Ich lege Wert auf klare Kommunikation, strukturierten Code und die Bereitstellung von Lösungen, die einen greifbaren Mehrwert bieten. Egal ob es darum geht, eine Full-Stack-Anwendung zu bauen, einen Prozess durch Automatisierung zu optimieren oder KI-Integrationen zu erkunden, ich bringe eine Mischung aus technischem Können und pragmatischem, geschäftsorientiertem Denken mit.",
-      "summary": "Auf der Suche nach Möglichkeiten, zu Projekten beizutragen, die sich auf <strong>gut konzipierte Systeme</strong>, <strong>Automatisierung</strong> oder <strong>angewandte KI</strong> konzentrieren."
+      "intro": "Ich bin ein <strong>Full Stack Entwickler mit Sitz in Deutschland</strong> mit Hintergrund in Design, Content-Systemen und digitaler Produktion.",
+      "career1": "Ich entwickle nutzerorientierte Frontends und praktische Backend-Dienste mit <strong>React, Next.js, TypeScript, Python und FastAPI</strong> – und vertiefe derzeit meine Infrastruktur- und Automatisierungskenntnisse für sauberere, besser skalierbare Systeme.",
+      "career2": "Meine technische Reise begann mit 13 Jahren, als ich MS-DOS aus einem Stapel Bücher lernte, die mir mein Vater gab. Ich habe nie Informatik studiert oder ein Bootcamp besucht – ich habe durch Bauen gelernt: zuerst Websites, dann Automatisierungstools und schließlich Full-Stack-Anwendungen.",
+      "career3": "Bevor ich Entwickler wurde, arbeitete ich als Art Director in digitalen Agenturen – produzierte Kampagnen, managte Lieferungen und baute Websites für kleine Unternehmen. Das hat geprägt, wie ich heute an die Entwicklung herangehe: mit Präzision, Struktur und Sorgfalt für den Endbenutzer.",
+      "career4": "Bei Santana Consulting unterstütze ich Kundenplattformen in der Fitnessbranche – entwickle Benutzerflüsse, löse Integrationsherausforderungen und verwalte Content-Logik über verschiedene Tools und Dienste hinweg.",
+      "career5": "Zu meinen Nebenprojekten gehören Moon Site, ein Full-Stack-Boilerplate mit <strong>Next.js, FastAPI und Markdown</strong>, und ein Streamlit-basierter Web-Scraper. Ich erkunde auch KI-Agenten-Workflows, DevOps-Tools und Cloud-Deployment.",
+      "summary": "Wenn Sie einen Entwickler suchen, der sowohl Frontend- als auch Backend-Systeme versteht – und der Neugier, Disziplin und praktische Umsetzung mitbringt – würde ich mich freuen, in Kontakt zu treten."
     },
     "buttons": {
       "caseStudies": "Fallstudien ansehen",
       "viewResume": "Lebenslauf ansehen"
     },
-    "citizenship": {
-      "subtitle": "Arbeitserlaubnis & Standort",
-      "title": "EU-Staatsbürgerschaft & Sitz in Deutschland",
-      "description": "Ich besitze die italienische (EU-)Staatsbürgerschaft, die mir das uneingeschränkte Recht gibt, in der gesamten Europäischen Union zu leben und zu arbeiten, einschließlich Deutschland, wo ich derzeit ansässig bin. Ich stehe für Remote-Arbeit oder hybride Positionen in Pendelentfernung zur Verfügung.",
-      "primaryCtaText": "Lebenslauf für Details ansehen"
-    },
+    "servicesTitle": "Meine Dienstleistungen",
     "skills": {
-      "title": "Mein technischer Werkzeugkasten",
-      "description": "Von Frontend-Oberflächen über Backend-Logik bis hin zur Cloud-Infrastruktur – dies sind die Haupttechnologien, mit denen ich arbeite:"
+      "title": "Fähigkeiten & Werkzeuge",
+      "description": "Dies sind die Werkzeuge und Frameworks, die ich in echten Projekten, internen Tools und Open-Source-Entwicklungen eingesetzt habe – mit wachsendem Fokus auf Automatisierung und Cloud-Architektur.",
+      "frontend": "Frontend-Entwicklung",
+      "backend": "Backend-Entwicklung",
+      "mobile": "Mobile-Entwicklung",
+      "design": "UI/UX Design",
+      "devops": "DevOps & Deployment"
+    },
+    "services": {
+      "web": {
+        "title": "Webentwicklung",
+        "description": "Erstellung schneller, responsiver Websites und Webanwendungen mit modernen Frameworks und Best Practices."
+      },
+      "mobile": {
+        "title": "Mobile Apps",
+        "description": "Entwicklung plattformübergreifender Anwendungen mit React Native für iOS und Android."
+      },
+      "design": {
+        "title": "UI/UX Design",
+        "description": "Gestaltung intuitiver Benutzeroberflächen und Benutzererfahrungen mit Fokus auf Benutzerfreundlichkeit und Ästhetik."
+      },
+      "backend": {
+        "title": "Backend-Systeme",
+        "description": "Entwicklung robuster APIs, Datenbanklösungen und Server-Architekturen."
+      }
+    },
+    "citizenship": {
+      "subtitle": "🌍 Internationales Profil",
+      "title": "Italienischer Staatsbürger mit Sitz in Deutschland",
+      "description": "Fließend in Spanisch (Muttersprache), Englisch (C1) und Deutsch (B2). Gewohnt an die Arbeit in internationalen, funktionsübergreifenden Tech-Teams. Erfahrung in der Zusammenarbeit über Sprachen, Kulturen und remote Umgebungen hinweg."
     },
     "cta": {
       "title": "Interesse an einer Zusammenarbeit?",
       "subtitle": "Lassen Sie uns besprechen, wie meine Fähigkeiten in Entwicklung und Automatisierung Ihrem Projekt zum Erfolg verhelfen können.",
       "primary": "Kontakt aufnehmen",
       "secondary": "Meinen Lebenslauf ansehen"
+    },
+    "contact": {
+      "title": "Lass uns verbinden",
+      "description": "Interesse an einer Zusammenarbeit oder Fragen? Zögern Sie nicht, mich zu kontaktieren!",
+      "buttonText": "Kontaktiere mich",
+      "connect": {
+        "responseTime": "Ich antworte üblicherweise innerhalb von 1-2 Werktagen."
+      }
     }
-  },
-  "projects": {
-    "title": "Projekte",
-    "description": "Eine Auswahl von Projekten, die meine Fähigkeiten in Full-Stack-Entwicklung, Automatisierung und API-Integration zeigen.",
-    "featured": "Ausgewählte Projekte",
-    "viewProject": "Projekt ansehen",
-    "viewCode": "Code ansehen",
-    "technologies": "Verwendete Technologien",
-    "visitSite": "Seite besuchen"
   },
   "blog": {
     "title": "Neueste Artikel",
@@ -110,10 +135,36 @@
     "readTime": "{{minutes}} Min. Lesezeit",
     "viewAll": "Alle Artikel ansehen",
     "noPosts": "Keine Blogbeiträge gefunden.",
-    "backToBlog": "Zurück zum Blog"
+    "backToBlog": "Zurück zum Blog",
+    "toc": {
+      "title": "In diesem Artikel",
+      "noHeadings": "Keine Überschriften gefunden"
+    }
+  },
+  "projects": {
+    "title": "Meine Projekte",
+    "subtitle": "Ausgewählte Arbeiten und Fallstudien",
+    "description": "Eine Auswahl von Projekten, die meine Fähigkeiten in Full-Stack-Entwicklung, Automatisierung und API-Integration zeigen.",
+    "featured": "Ausgewählte Projekte",
+    "filters": {
+      "all": "Alle",
+      "web": "Web",
+      "mobile": "Mobile",
+      "design": "Design"
+    },
+    "cta": {
+      "github": "Auf GitHub ansehen",
+      "live": "Live Demo",
+      "case": "Fallstudie"
+    },
+    "viewProject": "Projekt ansehen",
+    "viewCode": "Code ansehen",
+    "technologies": "Verwendete Technologien",
+    "visitSite": "Seite besuchen",
+    "moreProjects": "Weitere Projekte"
   },
   "resume": {
-    "title": "Lebenslauf",
+    "title": "Mein Lebenslauf",
     "description": "Mirko Trotta - Full Stack Entwickler & Automatisierungsspezialist. Kenntnisse in React, Python, FastAPI, Docker und KI-Workflows.",
     "download": "PDF herunterladen",
     "present": "Gegenwärtig",
@@ -157,19 +208,33 @@
   },
   "contact": {
     "title": "Kontaktiere mich",
-    "subtitle": "Offen für Zusammenarbeit und neue Möglichkeiten. Erreichen Sie mich per E-Mail oder vernetzen Sie sich über soziale Medien.",
+    "subtitle": "Ich freue mich, von Ihnen zu hören.",
     "form": {
-      "name": "Name",
-      "email": "E-Mail-Adresse",
-      "message": "Nachricht",
-      "submit": "Nachricht senden",
-      "success": "Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.",
-      "error": "Entschuldigung, beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut oder kontaktieren Sie mich direkt per E-Mail."
+      "name": "Ihr Name",
+      "email": "Ihre E-Mail-Adresse",
+      "subject": "Betreff",
+      "message": "Ihre Nachricht",
+      "submit": "Nachricht senden"
     },
-    "details": {
+    "success": "Vielen Dank! Ihre Nachricht wurde gesendet.",
+    "error": "Hoppla! Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "connect": {
+      "title": "Mit mir verbinden",
+      "subtitle": "Lieber über andere Kanäle verbinden? Kontaktieren Sie mich über Social Media oder E-Mail.",
       "email": "E-Mail",
-      "linkedin": "LinkedIn",
-      "github": "GitHub"
+      "phone": "Telefon",
+      "social": "Social Media",
+      "responseTime": "Ich antworte üblicherweise innerhalb von 1-2 Werktagen."
     }
+  },
+  "newsletter": {
+    "title": "Newsletter abonnieren",
+    "subtitle": "Erhalten Sie die neuesten Artikel direkt in Ihren Posteingang",
+    "emailPlaceholder": "Ihre E-Mail-Adresse",
+    "subscribe": "Abonnieren",
+    "subscribing": "Wird abonniert...",
+    "success": "Danke für Ihr Abonnement!",
+    "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
   }
 } 

@@ -175,3 +175,10 @@ README-task-master.md
 scripts/
 README-task-master.md
 
+# Other files
+*.txt
+*.md
+*.json
+*.yaml
+*.yml
+project-audit.md
