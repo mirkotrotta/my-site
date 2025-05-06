@@ -83,26 +83,17 @@ next-env.d.ts
 *.sqlite
 *.db
 
-# Added by Claude Task Master
+# Task Master specific files
 logs
 dev-debug.log
-# Dependency directories
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-# OS specific
-# Task files
 tasks.json
 tasks/ 
 tasks_backup/
 README-task-master.md
-
-# Additional items to ignore
+.windsurfrules
+i18n-audit.md
+scripts/
+project-audit.md
 
 # Python virtual environment
 backend/env/
@@ -167,18 +158,19 @@ tasks_backup/*.txt
 /api-docs/
 /docs/build/
 
-# Specific script outputs (but keep example_prd.txt)
-scripts/
-README-task-master.md
-
-# Specific script outputs (but keep example_prd.txt)
-scripts/
-README-task-master.md
-
-# Other files
+# Allow specific documentation files only
 *.txt
 *.md
 *.json
 *.yaml
 *.yml
-project-audit.md
+!README.md
+!LICENSE.md
+!CONTRIBUTING.md
+!CHANGELOG.md
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.js
+!jest.config.js
+!.eslintrc.json
