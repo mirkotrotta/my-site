@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main, feature/*]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build containers
+        run: docker-compose -f compose.test.yaml build
+
+      - name: Start containers
+        run: docker-compose -f compose.test.yaml up -d
+
+      - name: Wait for containers to be ready
+        run: sleep 10
+
+      - name: Run smoke tests
+        run: |
+          curl -k -f https://localhost/
+          curl -k -f https://localhost/api/test
+
+      - name: Show container logs if tests failed
+        if: failure()
+        run: docker-compose -f compose.test.yaml logs
+
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f compose.test.yaml down 
