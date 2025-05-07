@@ -47,6 +47,8 @@ yarn-error.log*
 .env.production.local
 .env*
 !.env.example # Ensure example env files are NOT ignored
+.env
+.env.production
 
 # Temporary files
 tmp/
