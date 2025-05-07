@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main, feature/*]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build containers
+        run: docker compose -f compose.test.yaml build
+
+      - name: Start containers
+        run: docker compose -f compose.test.yaml up -d
+
+      - name: Wait for containers to be ready
+        run: sleep 20
+
+      - name: Debug - Check container status
+        run: docker compose -f compose.test.yaml ps
+
+      - name: Debug - Check container logs
+        run: docker compose -f compose.test.yaml logs
+
+      - name: Debug - Check network ports
+        run: |
+          netstat -tulpn | grep LISTEN
+          curl -v http://localhost:4000 || true
+          curl -v http://localhost:8000/api/test || true
+
+      - name: Run smoke tests
+        run: |
+          curl -f http://localhost:4000/
+          curl -f http://localhost:8000/api/test
+
+      - name: Show container logs if tests failed
+        if: failure()
+        run: docker compose -f compose.test.yaml logs --tail 100
+
+      - name: Stop containers
+        if: always()
+        run: docker compose -f compose.test.yaml down 

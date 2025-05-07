@@ -27,7 +27,9 @@ DE_RESUME_PATH = os.path.join(DATA_DIR, "resume_de.json")
 
 # --- API Routes ---
 
-@router.get("/", response_model=Resume)
+# Register both routes (with and without trailing slash)
+@router.get("")
+@router.get("/")
 def get_resume(lang: Optional[str] = Query("en", description="Language code for the resume (en, de)")):
     # Default to English if specified language is not supported
     language = lang if lang in ["en", "de"] else "en"

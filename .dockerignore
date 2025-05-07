@@ -1,0 +1,82 @@
+# Version Control
+.git
+.gitignore
+.github
+
+# Node.js (Frontend)
+**/node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.pnpm-debug.log
+**/.npm
+**/.pnp
+**/.pnp.js
+**/.yarn-integrity
+**/coverage
+**/.next/
+**/out/
+**/.cache/
+**/dist
+**/build
+
+# Python (Backend)
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.Python
+**/env/
+**/venv/
+**/ENV/
+**/.env
+**/.venv
+**/.pytest_cache/
+**/.coverage
+**/htmlcov/
+**/.tox/
+**/.nox/
+**/.hypothesis/
+**/.egg-info/
+**/.egg/
+**/*.so
+**/*.egg-info/
+**/*.egg
+
+# Editor/IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.code-workspace
+
+# OS specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Project specific
+.dockerignore
+docker-compose*.yml
+Dockerfile*
+README.md
+LICENSE
+
+# Other
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+**/tmp/
+**/temp/
+**/.eslintcache
+**/logs
+**/*.log 

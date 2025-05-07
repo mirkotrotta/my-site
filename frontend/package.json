@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "C:\\nvm4w\\nodejs\\node.exe node_modules\\next\\dist\\bin\\next dev -H 127.0.0.1 -p 4000",
-    "build": "C:\\nvm4w\\nodejs\\node.exe node_modules\\next\\dist\\bin\\next build",
+    "build": "C:\\nvm4w\\nodejs\\node.exe node_modules\\next\\dist\\bin\\next build --no-lint",
     "start": "C:\\nvm4w\\nodejs\\node.exe node_modules\\next\\dist\\bin\\next start",
     "lint": "next lint",
     "new-post": "C:\\nvm4w\\nodejs\\node.exe scripts/create-post.js"

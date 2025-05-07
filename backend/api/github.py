@@ -14,6 +14,8 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 # Get logger
 logger = logging.getLogger(__name__)
 
+# Register both routes (with and without trailing slash)
+@router.get("")
 @router.get("/")
 async def get_projects():
     # Check if token is available
@@ -49,7 +51,7 @@ async def get_projects():
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(GITHUB_API_URL, headers=headers, timeout=10)
-        response.raise_for_status()
+            response.raise_for_status()
         data = response.json()
 
         projects = [
