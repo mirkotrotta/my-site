@@ -1,6 +1,7 @@
 // next.config.ts
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -20,9 +21,21 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8000/api/:path*', // Proxy to Backend (Corrected Port)
+        destination: 'http://api:8000/api/:path*', // Use Docker service name instead of localhost
       },
     ]
+  },
+  // Configure fetch options to follow redirects
+  serverRuntimeConfig: {
+    fetchOptions: {
+      redirect: 'follow',
+    },
+  },
+  // This ensures that the client also follows redirects
+  publicRuntimeConfig: {
+    fetchOptions: {
+      redirect: 'follow',
+    },
   },
 };
 

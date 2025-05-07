@@ -4,7 +4,8 @@ from api import github, resume
 from dotenv import load_dotenv
 load_dotenv()
 
-app = FastAPI()
+# Disable automatic redirect for trailing slashes to prevent 307 redirects
+app = FastAPI(redirect_slashes=False)
 
 # CORS setup
 app.add_middleware(
@@ -19,6 +20,11 @@ app.add_middleware(
 @app.get("/health")
 def health():
     return {"status": "OK"}
+
+# Test endpoint
+@app.get("/api/test")
+def test():
+    return {"message": "API test endpoint is working"}
 
 # Routers
 app.include_router(github.router, prefix="/api/github")
