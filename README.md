@@ -1,3 +1,5 @@
+![Build & Push](https://github.com/mirkotrotta/my-site/actions/workflows/build.yml/badge.svg)
+
 # my-site
 
 This is my private personal website repository. Built using the [Moon Site](https://github.com/mirkotrotta/moon-site) template, it's used to power my portfolio, blog, and resume at [https://my-domain.com](https://my-domain.com).
@@ -9,8 +11,8 @@ For the open-source template version, visit:
 
 ---
 
-Note: compose.test.yaml is CI‑only (no Traefik, HTTP on ports 4000/8000).
-Production stack still uses compose.yaml with Traefik on 80/443.
+Note: compose.test.yaml is CI-only (no Traefik, HTTP on ports 4000/8000).
+Production stack still uses compose.yaml with Traefik on 80/443.
 
 
 ## Environment Variables
