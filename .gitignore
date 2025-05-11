@@ -166,6 +166,8 @@ tasks_backup/*.txt
 *.json
 *.yaml
 *.yml
+!docker-compose.yml
+!compose.yaml
 !README.md
 !LICENSE.md
 !CONTRIBUTING.md
