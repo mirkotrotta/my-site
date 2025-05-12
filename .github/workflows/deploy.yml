@@ -19,7 +19,7 @@ jobs:
     - name: Install SSH key
       uses: webfactory/ssh-agent@v0.9.0
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{ secrets.SSH_KEY_PASSPHRASE }}
 
     # 3) Add server to known hosts
     - name: Add known hosts
@@ -31,7 +31,7 @@ jobs:
       with:
         host: ${{ secrets.SERVER_IP }}
         username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: ${{ secrets.SSH_KEY_PASSPHRASE }}
         script: |
           set -e
           cd ~/my-site
