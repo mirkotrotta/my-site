@@ -34,7 +34,6 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
-        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}   # comment this out if using no-pass key
         script: |
           set -e
           cd ~/my-site
