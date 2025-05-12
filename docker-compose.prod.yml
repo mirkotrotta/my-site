@@ -14,9 +14,10 @@ services:
     depends_on:
       - api
     labels:
+      - traefik.enable=true
       - traefik.http.routers.web.rule=Host(`mirkotrotta.com`,`www.mirkotrotta.com`)
       - traefik.http.routers.web.entrypoints=websecure
-      - traefik.http.routers.web.tls.certresolver=default
+      - traefik.http.routers.web.tls.certresolver=letsencrypt
       - traefik.http.services.web.loadbalancer.server.port=4000
 
   api:
@@ -33,9 +34,10 @@ services:
       - PORT=8000
       - FRONTEND_URL=https://${DOMAIN:-localhost}
     labels:
+      - traefik.enable=true
       - traefik.http.routers.api.rule=Host(`mirkotrotta.com`) && PathPrefix(`/api`)
       - traefik.http.routers.api.entrypoints=websecure
-      - traefik.http.routers.api.tls.certresolver=default
+      - traefik.http.routers.api.tls.certresolver=letsencrypt
       - traefik.http.services.api.loadbalancer.server.port=8000
 
   traefik:
