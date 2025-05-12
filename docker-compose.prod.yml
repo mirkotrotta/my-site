@@ -6,7 +6,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: runner
-    image: ${DOCKER_REGISTRY:-ghcr.io}/${GITHUB_REPOSITORY:-username/my-site}/web:${TAG:-latest}
+    image: ${DOCKER_REGISTRY:-ghcr.io}/${GITHUB_REPOSITORY:-username/my-site}/my-site-web:${TAG:-latest}
     restart: unless-stopped
     expose:
       - 4000
@@ -27,7 +27,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       target: runtime
-    image: ${DOCKER_REGISTRY:-ghcr.io}/${GITHUB_REPOSITORY:-username/my-site}/api:${TAG:-latest}
+    image: ${DOCKER_REGISTRY:-ghcr.io}/${GITHUB_REPOSITORY:-username/my-site}/my-site-api:${TAG:-latest}
     restart: unless-stopped
     expose:
       - 8000
