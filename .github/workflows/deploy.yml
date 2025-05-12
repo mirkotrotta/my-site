@@ -25,7 +25,7 @@ jobs:
     - name: Add known hosts
       run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-    # 4) SSH and run the deployment commands
+    # 4) SSH and run the deployment commands using appleboy/ssh-action
     - name: Deploy
       uses: appleboy/ssh-action@v1.0.3
       with:
