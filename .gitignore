@@ -187,9 +187,9 @@ data/traefik/acme/*
 !compose*.yml
 
 # ───────── Ignore other YAML at project root (but NOT workflows) ─────────
-# (Adjust this to your real folder layout if you have other YAML you want.)
+# Replace the generic YAML ignore rules with more specific ones
 /*.yml
 /*.yaml
 
-# Never ignore workflow files
+# Keep workflows
 !.github/workflows/*.yml

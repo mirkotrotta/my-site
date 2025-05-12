@@ -4,7 +4,7 @@ name: Deploy to Oracle VM
 on:
   push:
     branches: [main]        # auto-deploy every successful push to main
-  workflow_dispatch:        # allow a manual “Run workflow” button
+  workflow_dispatch:        # allow a manual "Run workflow" button
 
 jobs:
   deploy:
@@ -21,7 +21,7 @@ jobs:
       with:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         name: id_rsa          # writes to ~/.ssh/id_rsa
-        known_hosts: 'none'   # we’ll add it in the next step
+        known_hosts: 'none'   # we'll add it in the next step
 
     - name: Add host to known_hosts
       run: |
@@ -34,6 +34,7 @@ jobs:
         host: ${{ secrets.SERVER_IP }}
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}   # comment this out if using no-pass key
         script: |
           set -e
           cd ~/my-site
