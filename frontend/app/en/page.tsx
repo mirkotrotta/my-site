@@ -34,7 +34,7 @@ export default function Home() {
           description={t('homepage.hero.description')}
           primaryCta={{ text: t('homepage.hero.primaryCta'), href: '/projects' }}
           secondaryCta={{ text: t('homepage.hero.secondaryCta'), href: '/resume' }}
-          imageSrc="/images/mirko-trotta-metacubo-studio-services-germany-development.jpg"
+          imageSrc="/hero-image.jpg"
           sidebarTitle={t('homepage.hero.sidebarTitle')}
         />
       </section>

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import ButtonGroup from "@/components/ui/ButtonGroup";
 import ClientHeroNews from "./ClientHeroNews";
+import Image from "next/image";
 
 type HeroWithSidebarProps = {
   title: string;
@@ -61,11 +62,14 @@ export default function HeroWithSidebar({
         {children}
       </div>
 
-      <div className="lg:col-span-5 w-full h-full">
-        <img
+      <div className="lg:col-span-5 w-full h-full relative aspect-[4/3]">
+        <Image
           src={imageSrc}
           alt="Hero Image"
-          className="w-full h-auto object-cover"
+          fill
+          priority
+          sizes="(max-width: 1024px) 100vw, 50vw"
+          className="object-cover"
         />
       </div>
 
