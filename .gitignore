@@ -177,3 +177,7 @@ tasks_backup/*.txt
 !next.config.js
 !jest.config.js
 !.eslintrc.json
+
+# Traefik ACME specific
+data/traefik/acme/*
+!data/traefik/acme/.gitkeep
