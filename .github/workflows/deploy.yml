@@ -1,0 +1,46 @@
+# .github/workflows/deploy.yml
+name: Deploy to Oracle VM
+
+on:
+  push:
+    branches: [main]        # auto-deploy every successful push to main
+  workflow_dispatch:        # allow a manual “Run workflow” button
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20     # prevent hung jobs
+
+    steps:
+    # 1) check out repo (for the SSH action to copy known_hosts, etc.)
+    - uses: actions/checkout@v4
+
+    # 2) Inject the private key and IP into a known SSH config
+    - name: Add SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        name: id_rsa          # writes to ~/.ssh/id_rsa
+        known_hosts: 'none'   # we’ll add it in the next step
+
+    - name: Add host to known_hosts
+      run: |
+        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+    # 3) SSH and run the deployment commands atomically
+    - name: Deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          set -e
+          cd ~/my-site
+          echo "▶ pulling latest code…"
+          git pull origin main
+          echo "▶ pulling latest images…"
+          docker compose -f docker-compose.prod.yml pull
+          echo "▶ recreating stack…"
+          docker compose -f docker-compose.prod.yml up -d
+          echo "✅ deploy complete"

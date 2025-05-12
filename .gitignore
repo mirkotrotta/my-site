@@ -181,3 +181,15 @@ tasks_backup/*.txt
 # Traefik ACME specific
 data/traefik/acme/*
 !data/traefik/acme/.gitkeep
+
+# ───────── Compose files we DO track ─────────
+!docker-compose*.yml
+!compose*.yml
+
+# ───────── Ignore other YAML at project root (but NOT workflows) ─────────
+# (Adjust this to your real folder layout if you have other YAML you want.)
+/*.yml
+/*.yaml
+
+# Never ignore workflow files
+!.github/workflows/*.yml
