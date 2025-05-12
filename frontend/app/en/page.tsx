@@ -31,10 +31,10 @@ export default function Home() {
         <HeroWithSidebar
           eyebrowText={t('homepage.hero.eyebrow')}
           title={t('homepage.hero.title')}
-          description={t('homepage.hero.description')} // Assuming description might contain HTML
-          primaryCta={{ text: t('homepage.hero.primaryCta'), href: `/${language}/projects` }}
-          secondaryCta={{ text: t('homepage.hero.secondaryCta'), href: `/${language}/resume` }}
-          imageSrc="/images/mirko trotta, metacubo studio, services germany, development.JPG"
+          description={t('homepage.hero.description')}
+          primaryCta={{ text: t('homepage.hero.primaryCta'), href: '/projects' }}
+          secondaryCta={{ text: t('homepage.hero.secondaryCta'), href: '/resume' }}
+          imageSrc="/images/mirko-trotta-metacubo-studio-services-germany-development.jpg"
           sidebarTitle={t('homepage.hero.sidebarTitle')}
         />
       </section>
