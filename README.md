@@ -12,7 +12,7 @@ For the open-source template version, visit:
 ---
 
 Note: compose.test.yaml is CI-only (no Traefik, HTTP on ports 4000/8000).
-Production stack still uses compose.yaml with Traefik on 80/443.
+Production stack still uses docker-compose.prod.yml with Traefik on 80/443.
 
 
 ## Environment Variables
