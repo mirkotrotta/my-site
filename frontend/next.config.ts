@@ -17,6 +17,11 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
+    // Set to false to properly use the Next.js Image optimization
+    unoptimized: false,
+    // Increase image sizes to handle larger images
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   webpack(config: any) {
     config.resolve.alias['@'] = __dirname;
@@ -44,6 +49,41 @@ const nextConfig = {
     fetchOptions: {
       redirect: 'follow',
     },
+  },
+  // Enhance caching for development and reduce cache duration for production
+  experimental: {
+    serverComponentsExternalPackages: ['sharp'],
+    // Enable optimistic updates
+    optimisticClientCache: true,
+  },
+  // Add explicit output caching configuration
+  async headers() {
+    return [
+      {
+        // Apply these headers to all routes
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, must-revalidate', // Set to 5 minutes
+          },
+        ],
+      },
+      {
+        // Specific for image files
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=60, stale-while-revalidate=300', // Short cache with revalidation
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*', // Allow image access from any origin
+          },
+        ],
+      },
+    ]
   },
 };
 

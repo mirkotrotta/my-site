@@ -34,7 +34,7 @@ export default function Home() {
           description={t('homepage.hero.description')}
           primaryCta={{ text: t('homepage.hero.primaryCta'), href: '/projects' }}
           secondaryCta={{ text: t('homepage.hero.secondaryCta'), href: '/resume' }}
-          imageSrc="/hero-image.jpg"
+          imageSrc="/images/mirko-trotta-profile-aboutpage.jpg"
           sidebarTitle={t('homepage.hero.sidebarTitle')}
         />
       </section>
