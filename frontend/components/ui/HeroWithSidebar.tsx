@@ -30,53 +30,55 @@ export default function HeroWithSidebar({
   sidebarTitle = "Latest news",
   children,
 }: HeroWithSidebarProps) {
+  const cleanImagePath = imageSrc.replace(/ /g, '-').toLowerCase();
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12">
-      <div className="lg:col-span-5">
-        <h2 className="text-sm uppercase font-normal text-gray-900 dark:text-white mb-2">
-          {eyebrowText}
-        </h2>
-        <h1 className="text-3xl md:text-5xl font-light text-blue-500 dark:text-white mb-6">
-          {title}
-        </h1>
-        <p
-          className="text-base md:text-lg text-gray-700 dark:text-gray-300 mb-8"
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
-        <ButtonGroup 
-              buttons={[
-                {
-                  text: primaryCta.text,
-                  href: primaryCta.href,
-                  variant: 'primary',
-                  arrow: false,
-                },
-                {
-                  text: secondaryCta.text,
-                  href: secondaryCta.href,
-                  variant: 'tertiary',
-                  arrow: true,
-                },
-              ]}
-        />
-        {children}
+    <div className="grid grid-cols-1 lg:grid-cols-8 min-h-[calc(90vh)] pb-16 lg:pb-20 pt-4 lg:pt-6 gap-4 lg:gap-8">
+      <div className="lg:col-span-5 lg:row-span-2 max-w-4xl mx-auto lg:mx-0">
+        <div className="flex flex-col h-full justify-center">
+          <div className="space-y-6 max-w-prose">
+            <p className="text-purple-600 font-semibold tracking-wide uppercase">
+              {eyebrowText}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 lg:leading-tight">
+              {title}
+            </h1>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl">
+              {description}
+            </p>
+            <ButtonGroup
+              primaryButton={primaryCta}
+              secondaryButton={secondaryCta}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="lg:col-span-5 w-full h-full relative aspect-[4/3]">
-        <Image
-          src={imageSrc}
-          alt="Hero Image"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 50vw"
-          className="object-cover"
-        />
+      <div className="lg:col-span-3 w-full h-full">
+        <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-2xl">
+          <picture>
+            <source srcSet={cleanImagePath} type="image/jpeg" />
+            <source srcSet={cleanImagePath.replace('/images/', '/')} type="image/jpeg" />
+            <source srcSet="/hero-image.jpg" type="image/jpeg" />
+            <img
+              src={cleanImagePath}
+              alt="Hero image"
+              className="w-full h-full object-cover object-center"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.src !== '/hero-image.jpg') {
+                  target.src = '/hero-image.jpg';
+                }
+              }}
+            />
+          </picture>
+        </div>
       </div>
 
-      <div className="lg:col-span-2 p-4 text-sm">
-        <h4 className="text-gray-900 dark:text-white font-normal mb-4">{sidebarTitle}</h4>
-        <div className="space-y-4 max-h-[400px] overflow-y-auto">
-          <ClientHeroNews />
+      <div className="lg:col-span-5 lg:row-start-3 max-w-4xl mx-auto lg:mx-0">
+        <div className="bg-gray-50 rounded-2xl p-6 shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">{sidebarTitle}</h2>
+          {children ? children : <ClientHeroNews />}
         </div>
       </div>
     </div>
