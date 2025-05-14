@@ -17,7 +17,9 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
-    // Improve image sizes configuration
+    // Set to false to properly use the Next.js Image optimization
+    unoptimized: false,
+    // Increase image sizes to handle larger images
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
@@ -48,38 +50,40 @@ const nextConfig = {
       redirect: 'follow',
     },
   },
-  // Add cache control headers for better image loading
+  // Enhance caching for development and reduce cache duration for production
+  experimental: {
+    serverComponentsExternalPackages: ['sharp'],
+    // Enable optimistic updates
+    optimisticClientCache: true,
+  },
+  // Add explicit output caching configuration
   async headers() {
     return [
+      {
+        // Apply these headers to all routes
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, must-revalidate', // Set to 5 minutes
+          },
+        ],
+      },
       {
         // Specific for image files
         source: '/images/:path*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=300, stale-while-revalidate=86400',
+            value: 'public, max-age=60, stale-while-revalidate=300', // Short cache with revalidation
           },
           {
             key: 'Access-Control-Allow-Origin',
-            value: '*',
+            value: '*', // Allow image access from any origin
           },
         ],
       },
-      {
-        // Root images
-        source: '/:path*.jpg',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=300, stale-while-revalidate=86400',
-          },
-          {
-            key: 'Access-Control-Allow-Origin',
-            value: '*',
-          },
-        ],
-      },
-    ];
+    ]
   },
 };
 
