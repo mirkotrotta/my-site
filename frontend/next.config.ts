@@ -17,6 +17,9 @@ const nextConfig = {
         hostname: 'picsum.photos',
       },
     ],
+    // Improve image sizes configuration
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   webpack(config: any) {
     config.resolve.alias['@'] = __dirname;
@@ -44,6 +47,39 @@ const nextConfig = {
     fetchOptions: {
       redirect: 'follow',
     },
+  },
+  // Add cache control headers for better image loading
+  async headers() {
+    return [
+      {
+        // Specific for image files
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, stale-while-revalidate=86400',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+      {
+        // Root images
+        source: '/:path*.jpg',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, stale-while-revalidate=86400',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+        ],
+      },
+    ];
   },
 };
 
