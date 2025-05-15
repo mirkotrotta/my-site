@@ -22,6 +22,8 @@ const nextConfig = {
     // Increase image sizes to handle larger images
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 3600,
   },
   webpack(config: any) {
     config.resolve.alias['@'] = __dirname;
@@ -31,10 +33,14 @@ const nextConfig = {
   
   // Add rewrites for development to proxy API requests to the backend
   async rewrites() {
+    // Use environment to determine which API URL to use
+    const isDocker = process.env.RUNNING_IN_DOCKER === 'true';
+    
     return [
       {
         source: '/api/:path*',
-        destination: 'http://api:8000/api/:path*', // Use Docker service name instead of localhost
+        // Use Docker service name in containers, localhost for local development
+        destination: isDocker ? 'http://api:8000/api/:path*' : 'http://localhost:8000/api/:path*',
       },
     ]
   },
@@ -75,11 +81,47 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=60, stale-while-revalidate=300', // Short cache with revalidation
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
           },
           {
             key: 'Access-Control-Allow-Origin',
             value: '*', // Allow image access from any origin
+          },
+        ],
+      },
+      {
+        source: '/:path*.jpg',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/:path*.JPG',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/:path*.png',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
+          },
+        ],
+      },
+      {
+        source: '/:path*.webp',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, stale-while-revalidate=86400',
           },
         ],
       },
