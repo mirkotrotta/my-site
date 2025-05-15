@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import ButtonGroup from "@/components/ui/ButtonGroup";
 import ClientHeroNews from "./ClientHeroNews";
 import Image from "next/image";
@@ -30,6 +30,11 @@ export default function HeroWithSidebar({
   sidebarTitle = "Latest news",
   children,
 }: HeroWithSidebarProps) {
+  const [imgError, setImgError] = useState(false);
+  
+  // Use a fallback image if primary image fails to load
+  const imageSource = imgError ? "/images/mirko-trotta-profile-aboutpage.jpg" : imageSrc;
+  
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center py-12">
       <div className="lg:col-span-5">
@@ -64,12 +69,14 @@ export default function HeroWithSidebar({
 
       <div className="lg:col-span-5 w-full h-full relative aspect-[4/3]">
         <Image
-          src={imageSrc}
+          src={imageSource}
           alt="Hero Image"
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover"
+          onError={() => setImgError(true)}
+          unoptimized={false} // Let Next.js optimize the image
         />
       </div>
 
