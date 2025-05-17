@@ -29,7 +29,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://api:8000/api/:path*', // Use Docker service name instead of localhost
+        destination: 'http://api:8000/api/:path*', // Change back to Docker service name
       },
     ]
   },
