@@ -1,11 +1,4 @@
 import { Metadata } from 'next';
-import { getAllPosts } from '@/lib/mdx';
-import BlogHero from '@/components/blog/BlogHero';
-import CategoryBar from '@/components/blog/CategoryBar';
-import BlogCard from '@/components/blog/BlogCard';
-import CallToAction from '@/components/blog/CallToAction';
-import Link from 'next/link';
-import GlobalCTA from '@/components/ui/GlobalCTA';
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
@@ -19,7 +12,7 @@ export const metadata: Metadata = {
     locale: 'en_DE',
     images: [
       {
-        url: '/images/Latest Trends, Guides, and Reviews in Digital Innovation, Mirko Trotta Blog.jpg',
+        url: '/images/mirko-trotta-blog-latest-trends.jpg',
         width: 1200,
         height: 630,
         alt: 'Blog Posts',
@@ -30,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'System Logs – Developer Blog by Mirko Trotta',
     description: 'Explore tutorials, backend insights, and real-world developer workflows on System Logs — the blog of Mirko Trotta, full stack engineer based in Germany.',
-    images: ['/images/Latest Trends, Guides, and Reviews in Digital Innovation, Mirko Trotta Blog.jpg'],
+    images: ['/images/mirko-trotta-blog-latest-trends.jpg'],
   },
 };
 
