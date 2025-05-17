@@ -28,9 +28,13 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'http://api:8000/api/:path*', // Change back to Docker service name
+        source: '/api/health',
+        destination: 'http://api:8000/health', // Map /api/health to backend /health
       },
+      {
+        source: '/api/:path*',
+        destination: 'http://api:8000/api/:path*', // Use Docker service name for production
+      }
     ]
   },
   // Configure fetch options to follow redirects
