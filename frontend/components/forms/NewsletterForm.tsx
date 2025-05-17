@@ -62,14 +62,6 @@ export default function NewsletterForm({ language: parentLanguage }: NewsletterF
     }
   };
 
-  console.log({
-    hookLanguage,
-    parentLanguage,
-    title:             t('newsletter.title'),
-    subtitle:          t('newsletter.subtitle'),
-    emailPlaceholder:  t('newsletter.emailPlaceholder'),
-  });
-
   return (
     <div className="p-4 bg-gray-50 dark:bg-gray-800/50 mb-4">
       <h4 className="text-base font-medium text-gray-900 dark:text-gray-100 mb-2">
