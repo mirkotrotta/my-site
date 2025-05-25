@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     locale: 'en_DE',
     images: [
       {
-        url: '/images/Latest Trends, Guides, and Reviews in Digital Innovation, Mirko Trotta Blog.jpg',
+        url: '/images/trends-blog-mirko-trotta.jpg',
         width: 1200,
         height: 630,
         alt: 'Blog Posts',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'System Logs – Developer Blog by Mirko Trotta',
     description: 'Explore tutorials, backend insights, and real-world developer workflows on System Logs — the blog of Mirko Trotta, full stack engineer based in Germany.',
-    images: ['/images/Latest Trends, Guides, and Reviews in Digital Innovation, Mirko Trotta Blog.jpg'],
+    images: ['/images/trends-blog-mirko-trotta.jpg'],
   },
 };
 

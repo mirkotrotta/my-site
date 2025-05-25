@@ -17,9 +17,6 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copy application source
 COPY . .
 
-# Fix the build script to use node directly instead of a Windows path
-RUN sed -i 's/C:\\\\nvm4w\\\\nodejs\\\\node.exe node_modules\\\\next\\\\dist\\\\bin\\\\next build/next build/' package.json
-
 # Tell Next.js to skip the ESLint check and TypeScript type checking during build
 ENV NEXT_DISABLE_ESLINT_DURING_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1

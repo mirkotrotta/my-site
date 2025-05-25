@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  backend:
+  api:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -32,13 +32,12 @@ services:
       - "4000:4000"
     environment:
       - NODE_ENV=production
-      - BACKEND_URL=http://backend:8000
+      - NEXT_PUBLIC_API_BASE_URL=http://api:8000
     depends_on:
-      backend:
+      api:
         condition: service_healthy
     volumes:
       - ./frontend/public:/app/public
-      - ./frontend/.next/static:/app/.next/static
     restart: unless-stopped
 
 networks:

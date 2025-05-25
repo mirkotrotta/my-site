@@ -26,10 +26,15 @@ const nextConfig = {
   
   // Add rewrites for development to proxy API requests to the backend
   async rewrites() {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const apiBaseUrl = isDevelopment 
+      ? 'http://localhost:8000' 
+      : (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api:8000');
+
     return [
       {
         source: '/api/:path*',
-        destination: 'http://api:8000/api/:path*', // Use Docker service name instead of localhost
+        destination: `${apiBaseUrl}/api/:path*`,
       },
     ]
   },
