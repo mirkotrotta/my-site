@@ -1,0 +1,4 @@
+# Trigger rebuild with correct NEXT_PUBLIC_API_URL
+# This file forces GitHub Actions to rebuild the frontend with the production API URL
+# Created: 2025-01-25 15:30 UTC
+# Reason: Fix frontend environment variable issue - was using localhost:8000 instead of https://mirkotrotta.com/api 
