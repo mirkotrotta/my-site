@@ -27,5 +27,5 @@ def test():
     return {"message": "API test endpoint is working"}
 
 # Routers
-app.include_router(github.router, prefix="/github")
-app.include_router(resume.router, prefix="/resume")
+app.include_router(github.router, prefix="/api/github")
+app.include_router(resume.router, prefix="/api/resume")
