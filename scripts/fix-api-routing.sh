@@ -1,3 +1,49 @@
+#!/bin/bash
+
+# Fix API Routing Script
+# This script fixes the Traefik routing issue by adding path stripping middleware
+
+set -e
+
+echo "🔧 Fixing API Routing Configuration"
+echo "==================================="
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+print_status() {
+    echo -e "${BLUE}[INFO]${NC} $1"
+}
+
+print_warning() {
+    echo -e "${YELLOW}[WARNING]${NC} $1"
+}
+
+print_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+print_success() {
+    echo -e "${GREEN}[SUCCESS]${NC} $1"
+}
+
+# Check if we're in the right directory
+if [ ! -f "docker-compose.prod.yml" ]; then
+    print_error "docker-compose.prod.yml not found. Are you in ~/my-site?"
+    exit 1
+fi
+
+print_status "Creating backup of current configuration..."
+cp docker-compose.prod.yml docker-compose.prod.yml.backup
+
+print_status "Updating Traefik configuration to strip /api prefix..."
+
+# Create the updated docker-compose.prod.yml with path stripping
+cat > docker-compose.prod.yml << 'EOF'
 # docker-compose.prod.yml  – production stack (no local builds)
 
 services:
@@ -87,3 +133,25 @@ networks:
   default:
     name: app-network
     driver: bridge
+EOF
+
+print_success "Configuration updated successfully!"
+
+print_status "Restarting services to apply changes..."
+docker compose -f docker-compose.prod.yml up -d
+
+print_status "Waiting for services to start..."
+sleep 10
+
+print_status "Testing API endpoints..."
+echo ""
+echo "Testing health endpoint:"
+curl -s https://mirkotrotta.com/api/health | jq . || echo "Health endpoint test failed"
+
+echo ""
+echo "Testing GitHub API endpoint:"
+curl -s https://mirkotrotta.com/api/github | jq . || echo "GitHub API test failed"
+
+echo ""
+print_success "API routing fix completed!"
+print_status "Your GitHub projects should now load correctly on the website." 
