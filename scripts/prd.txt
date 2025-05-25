@@ -1,0 +1,201 @@
+<context>
+# Overview  
+This PRD defines the scope and strategy to deliver the next major release of Mirko Trotta's personal portfolio website. The project is built on a stable production-grade stack (Next.js 15 with App Router and FastAPI backend). The release will focus on introducing lightweight multilingual support (German default, English fallback), dual-language resume support (PDF + API-based), minimal CI/CD integration, and foundational infrastructure improvements in preparation for full production launch. The current content of the website is in English and will serve as the foundation for the `/en` route. The `/de` route will become the default landing page due to primary audience being DACH-based.
+
+# Core Features  
+- **Static Pages (Home, About)**  
+  Implemented as route groups (`/(de)/`, `/(en)/`) with language detection and translation files. Supports German and English with priority translation for high-value conversion pages.
+
+- **Blog (MDX-based)**  
+  MDX posts will be filtered by a new `lang` field in the frontmatter. Language routing and tag filtering will be preserved. Initial phase will mark existing posts as English; new posts can be created in either language.
+
+- **Resume (PDF & API-based)**  
+  Resume will be supported in both German and English via:
+  - PDF download (language-specific)
+  - API (`/api/resume?lang=de|en`) to return structured JSON
+  - Language-specific resume rendering on frontend
+  - Single source of truth for professional data with language-specific formatting
+
+- **Minimal I18n Setup**  
+  JSON files per locale (`/i18n/de.json`, `/i18n/en.json`) and a hook/context to inject strings. No third-party libraries. Includes fallback mechanism for missing translations.
+
+- **CI/CD & Deployment**  
+  Basic GitHub Actions for linting, type-checking, and build verification. Vercel for primary deployment with GitHub integration. Optional Docker configuration for local development and Azure fallback deployment.
+
+# User Experience  
+- **User Personas**
+  - Recruiters and hiring managers (DE and EN)
+  - Technical collaborators and readers
+  - Potential clients from German-speaking regions
+
+- **Key Flows**
+  - Auto-redirect from `/` to `/de` with language detection from browser settings
+  - Language preference is remembered between sessions (via cookie)
+  - Language switcher toggles URL and content
+  - Blog posts filtered by language with clear indication when limited content is available
+  - Resume downloads based on current language
+
+- **UI/UX Considerations**
+  - `/[lang]/` route structure
+  - Persistent language switcher in header/footer
+  - Fallbacks for untranslated content (e.g., EN resume if DE missing)
+  - Visual indicators for language-specific content
+  - Screen reader and accessibility support for language switching
+</context>
+
+<PRD>
+# Technical Architecture  
+- **Frontend**
+  - Next.js 15 with App Router
+  - Route groups: `/de`, `/en`
+  - Translation maps in `/i18n/`
+  - Blog via MDX with frontmatter
+  - Resume rendering and PDF download buttons localized
+  - Language context provider with hook for component access
+
+- **Routing**
+  - Middleware to redirect `/` to `/de` with browser language detection
+  - Dynamic `lang` injection in `<html lang="">`
+  - SEO-friendly URLs with language parameter
+  - Canonical URL handling for language alternates
+
+- **Backend**
+  - FastAPI with endpoint `/api/resume`
+  - Accepts `lang` query param (default: de)
+  - Unified schema for both languages
+  - Caching mechanism for language-specific responses
+
+- **CI/CD**
+  - GitHub Actions with lint/type-check/build jobs
+  - Deployed to Vercel via GitHub integration
+  - Branch previews for content review
+  - Optional Dockerfile and Azure fallback
+
+- **Infrastructure**
+  - Vercel as default
+  - Azure App Service container fallback
+  - Multi-stage Dockerfile for frontend/backend (staged)
+  - Static content caching with language-specific cache keys
+
+# Development Roadmap  
+## MVP Requirements
+- Setup route groups: `/de`, `/en`
+- Add middleware redirect `/` to `/de` with language detection
+- Create JSON translation maps with priority for critical UI elements
+- Wire translations into layout/pages with custom hook and fallback mechanism
+- Blog posts updated with `lang` frontmatter (default existing to "en")
+- Filter blog at build time by language
+- Add `resume_en.pdf`, localize download logic
+- Update `/api/resume` to support `?lang=` param
+- CI/CD GitHub Actions workflow (lint + build)
+- Connect repo to Vercel + configure environment
+- Implement language preference persistence
+
+## Future Enhancements
+- Add Spanish, Italian locales
+- Integrate CMS for blog content (e.g., Sanity, MDX editor)
+- Admin panel for updating resume
+- Enhanced language detection via browser header
+- Enhanced preview deploys for PRs
+- Image CDN optimization with language-specific alt text
+- Automated translation workflow for new content
+
+# Logical Dependency Chain  
+### Phase 1 – Multilingual Foundation
+- Create route groups + middleware
+- Setup translation files and access hooks
+- Add language detection and preference storage
+- Translate static pages (Home, About)
+- Add language filtering for blog
+
+### Phase 2 – Resume Localization
+- Add PDF for EN + wire frontend logic
+- Update API to serve DE/EN content with caching
+- Render localized resume UI with fallback strategy
+
+### Phase 3 – CI/CD & Deployment
+- GitHub Actions config
+- Vercel domain + preview deploys
+- Docker build for Azure fallback
+
+### Phase 4 – Final Polish
+- Add sitemap.xml + robots.txt per locale
+- Localized metadata for pages
+- Language alternates for SEO
+- Final SEO + performance audit
+- Accessibility validation for multilingual UI
+
+# Risks and Mitigations  
+- **Multilingual Complexity**  
+  → Keep i18n manual and flat (no next-intl)  
+  → Implement fallback for missing translations
+
+- **Content Parity**  
+  → Define content translation priority  
+  → Clear indicators when content is only available in one language
+
+- **Resume Translation**  
+  → Separate files + API param avoid schema conflicts  
+  → Single source of truth with language-specific attributes
+
+- **CI/CD Breakage**  
+  → Minimal actions, type/lint only for now  
+  → Regular local verification before pushes
+
+- **Deployment Variance**  
+  → Use Vercel first; Azure only if needed with Docker  
+  → Document deployment differences for team reference
+
+- **Performance Impact**  
+  → Monitor page size increase from translations  
+  → Use code-splitting for language-specific bundles
+
+# Appendix  
+- **i18n Structure**
+  ```
+  /i18n
+    └── de.json
+    └── en.json
+  /public/pdf
+    └── resume_de.pdf
+    └── resume_en.pdf
+  ```
+
+- **Blog Post Frontmatter Example**
+  ```mdx
+  ---
+  title: "Mein Artikel"
+  date: "2024-01-01"
+  lang: "de"
+  ---
+  ```
+
+- **Translation Hook Example**
+  ```ts
+  // Pseudocode
+  function useTranslation(key: string) {
+    const { locale } = useContext(LanguageContext);
+    return translations[locale][key] || translations['en'][key] || key;
+  }
+  ```
+
+- **CI Example**
+  ```yaml
+  name: CI
+
+  on:
+    push:
+      branches: [main]
+    pull_request:
+      branches: [main]
+
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - run: npm install
+        - run: npm run lint
+        - run: npm run build
+  ```
+</PRD>

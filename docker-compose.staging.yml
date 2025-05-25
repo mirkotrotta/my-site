@@ -1,0 +1,65 @@
+# docker-compose.staging.yml - staging environment for testing before production
+# Uses different ports and volumes to avoid conflicts with production
+
+services:
+  web-staging:
+    image: ghcr.io/mirkotrotta/my-site/my-site-web:${TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "4001:4000"  # Different port to avoid conflicts
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:8001/api  # Point to staging API
+    depends_on:
+      - api-staging
+    container_name: my-site-web-staging
+
+  api-staging:
+    image: ghcr.io/mirkotrotta/my-site/my-site-api:${TAG:-latest}
+    restart: unless-stopped
+    ports:
+      - "8001:8000"  # Different port to avoid conflicts
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PORT=8000
+      - FRONTEND_URL=http://localhost:4001
+    container_name: my-site-api-staging
+
+  # Optional: Traefik for staging with different domain/ports
+  traefik-staging:
+    image: traefik:v2.10
+    restart: unless-stopped
+    ports:
+      - "8080:80"   # Different ports for staging
+      - "8443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data/traefik-staging/acme:/etc/traefik/acme  # Separate ACME storage
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"  # Enable dashboard for staging
+
+      # entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+
+      # ACME (staging)
+      - "--certificatesresolvers.letsencrypt-staging.acme.email=${ACME_EMAIL:-admin@example.com}"
+      - "--certificatesresolvers.letsencrypt-staging.acme.storage=/etc/traefik/acme/acme-staging.json"
+      - "--certificatesresolvers.letsencrypt-staging.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.letsencrypt-staging.acme.tlschallenge=true"
+
+    labels:
+      - "traefik.enable=true"
+      # Dashboard
+      - "traefik.http.routers.dashboard.rule=Host(`staging.${DOMAIN:-localhost}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=web"
+    container_name: my-site-traefik-staging
+
+networks:
+  default:
+    name: app-network-staging
+    driver: bridge 
