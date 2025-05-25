@@ -12,6 +12,9 @@ RUN npm ci
 FROM node:22-slim AS builder
 WORKDIR /app
 
+# Accept build arguments
+ARG NEXT_PUBLIC_API_URL=http://localhost:8000/api
+
 # Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 # Copy application source
@@ -21,6 +24,9 @@ COPY . .
 ENV NEXT_DISABLE_ESLINT_DURING_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_SKIP_TYPECHECKING=true
+
+# Set the API URL for the build
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
 # Build the application
 RUN npm run build

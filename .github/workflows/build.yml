@@ -82,6 +82,9 @@ jobs:
           # Make cache handling conditional/safe
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:cache
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:cache,mode=max
+          # Set build args for frontend environment variables
+          build-args: |
+            NEXT_PUBLIC_API_URL=https://mirkotrotta.com/api
 
       # Run language-specific tests based on service type
       - name: Set up Node.js (Web)
