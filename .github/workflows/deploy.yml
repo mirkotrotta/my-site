@@ -140,7 +140,7 @@ jobs:
             
             echo ".env.production created successfully"
 
-      - name: "Stop existing services"
+      - name: "Stop existing services and clean NPM data"
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: "${{ secrets.HETZNER_SERVER_IP }}"
@@ -150,15 +150,17 @@ jobs:
             set -e
             cd /opt/mirkotrotta
             
-            echo "Stopping existing services..."
+            echo "Stopping existing services and cleaning NPM data..."
             
             if [ -f compose.production.yaml ]; then
-              docker compose -f compose.production.yaml down --remove-orphans 2>/dev/null || true
+              # Stop services and remove NPM volumes for fresh initialization
+              docker compose -f compose.production.yaml down --remove-orphans -v 2>/dev/null || true
             fi
             
             docker container prune -f 2>/dev/null || true
+            docker volume prune -f 2>/dev/null || true
             
-            echo "Services stopped successfully"
+            echo "Services stopped and NPM data cleared successfully"
 
       - name: "Pull latest container images"
         uses: appleboy/ssh-action@v1.0.3
