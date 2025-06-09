@@ -2,8 +2,6 @@
 # Assumes pre-built images are available (e.g., from a CI/CD pipeline)
 # Environment variables (secrets, domain, etc.) should be provided by the host environment.
 
-version: '3.8'
-
 services:
   web: # Renamed from frontend for consistency with compose.yaml if we decide that
     image: ${DOCKER_REGISTRY:-ghcr.io/mirkotrotta/my-site}/my-site-web:${TAG:-latest}
