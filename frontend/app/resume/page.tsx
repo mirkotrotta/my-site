@@ -95,7 +95,7 @@ export default function ResumePage() {
   }, [darkMode]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/resume/")
+    fetch("/api/resume/")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch resume");
         return res.json();
@@ -106,7 +106,7 @@ export default function ResumePage() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/github/")
+    fetch("/api/github/")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch projects");
         return res.json();

@@ -12,7 +12,7 @@ export default function ProjectsPage() {
 
   useEffect(() => {
     setDarkMode(localStorage.theme === "dark");
-    fetch("http://localhost:8000/api/github/")
+    fetch("/api/github/")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch projects");
         return res.json();
