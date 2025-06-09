@@ -59,4 +59,4 @@ USER $APP_USER
 
 EXPOSE ${PORT}
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "${PORT}", "--workers", "${WORKERS}"]
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT} --workers ${WORKERS}
