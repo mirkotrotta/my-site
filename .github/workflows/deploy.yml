@@ -17,14 +17,17 @@
 name: "Deploy to Hetzner"
 
 on:
-  push:
-    branches: ["main"]
+  workflow_run:
+    workflows: ["Build & Push"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch: {}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: "Checkout code"
