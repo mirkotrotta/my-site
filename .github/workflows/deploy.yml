@@ -120,7 +120,7 @@ jobs:
             
             PROD_DOMAIN="${{ secrets.PROD_DOMAIN }}"
             NEXT_PUBLIC_SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL }}"
-            NEXT_PUBLIC_API_URL="https://${{ secrets.PROD_DOMAIN }}/api"
+            NEXT_PUBLIC_API_BASE_URL="https://${{ secrets.PROD_DOMAIN }}/api"
             FRONTEND_URL="${{ secrets.FRONTEND_URL }}"
             
             POSTGRES_USER_PROD="${{ secrets.POSTGRES_USER_PROD }}"
