@@ -52,14 +52,41 @@ jobs:
             
             echo "Deployment directory prepared"
 
-      - name: "Transfer Docker Compose files"
-        uses: appleboy/scp-action@v0.1.7
+      - name: "Transfer Docker Compose files via SSH"
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: "${{ secrets.HETZNER_SERVER_IP }}"
           username: "${{ secrets.HETZNER_SSH_USER }}"
           key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
-          source: "compose.yaml,compose.override.yaml,compose.production.yaml,compose.staging.yaml"
-          target: "/opt/mirkotrotta"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Downloading compose files from GitHub..."
+            
+            # Download compose files directly from GitHub
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o compose.yaml \
+              "https://api.github.com/repos/${{ github.repository }}/contents/compose.yaml?ref=${{ github.sha }}"
+            
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o compose.override.yaml \
+              "https://api.github.com/repos/${{ github.repository }}/contents/compose.override.yaml?ref=${{ github.sha }}"
+            
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o compose.production.yaml \
+              "https://api.github.com/repos/${{ github.repository }}/contents/compose.production.yaml?ref=${{ github.sha }}"
+            
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o compose.staging.yaml \
+              "https://api.github.com/repos/${{ github.repository }}/contents/compose.staging.yaml?ref=${{ github.sha }}"
+            
+            echo "Compose files downloaded successfully:"
+            ls -la compose*.yaml
 
       - name: "Create production environment file"
         uses: appleboy/ssh-action@v1.0.3
