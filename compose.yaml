@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: runtime # Production-like target by default
+    image: my-site-api # Allows pulling pre-built or using local build
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PORT=8000
+      # DATABASE_URL will be set by env_file or specific compose files
+      # FRONTEND_URL will be set by env_file or specific compose files
+    expose: # Use expose for production, ports will be mapped by NPM or override
+      - "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    networks:
+      - internal
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: runner # Production-like target (standalone output) by default
+    image: my-site-frontend # Allows pulling pre-built or using local build
+    environment:
+      - NODE_ENV=production # Default to production
+      # NEXT_PUBLIC_API_BASE_URL will be set by env_file or specific compose files
+      # PORT will be set by env_file or specific compose files for dev, or defaults to 3000 for Next.js standalone
+    expose: # Use expose for production, ports will be mapped by NPM or override
+      - "4000" # Or 3000 if Next.js standalone defaults to that and we want to be explicit
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - internal
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=myuser # Example, should be in .env
+      - POSTGRES_PASSWORD=mypassword # Example, should be in .env
+      - POSTGRES_DB=mydb # Example, should be in .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Named volume for persistence
+    expose: # Only expose to internal network by default
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - internal
+
+volumes:
+  postgres_data: # Define the named volume for PostgreSQL
+
+networks:
+  internal:
+    driver: bridge
+    name: my_site_internal_network
+  web:
+    external: true
+    name: web 

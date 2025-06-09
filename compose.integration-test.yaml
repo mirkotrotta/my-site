@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile # Uses the main Dockerfile
+      target: runner # Tests against production-like build
+    image: my-site-frontend-test # Use a distinct image name for test builds
+    restart: unless-stopped # Or 'no' if only for one-off test runs
+    expose:
+      - "4000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=http://api:8000/api # Internal Docker network URL
+      - PORT=4000
+    depends_on:
+      api:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile # Uses the main Dockerfile
+      target: runtime # Tests against production-like build
+    image: my-site-api-test # Use a distinct image name for test builds
+    restart: unless-stopped # Or 'no'
+    expose:
+      - "8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PORT=8000
+      - FRONTEND_URL=http://web:4000 # Internal Docker network URL
+      - DATABASE_URL=postgresql://${POSTGRES_USER_TEST:-testuser}:${POSTGRES_PASSWORD_TEST:-testpass}@db-test:5432/${POSTGRES_DB_TEST:-testdb}
+    depends_on:
+      db-test:
+        condition: service_healthy
+
+  db-test:
+    image: postgres:16-alpine
+    container_name: my-site-db-test
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER_TEST:-testuser}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_TEST:-testpass}
+      - POSTGRES_DB=${POSTGRES_DB_TEST:-testdb}
+    expose:
+      - "5432"
+    # For tests, you might not need persistent data or want a fresh DB each time.
+    # If you need persistence for test setup: 
+    # volumes:
+    #   - postgres_data_test:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s # Faster check for tests
+      timeout: 3s
+      retries: 3
+    restart: "no" # Typically, test DB doesn't need to restart unless_stopped
+
+# volumes: # Define if you need persistent test DB data
+#   postgres_data_test:
+
+networks:
+  default:
+    name: my_site_integration_test_network 

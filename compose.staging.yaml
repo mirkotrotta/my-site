@@ -1,0 +1,96 @@
+# compose.staging.yaml - staging environment for testing before production
+# Uses different ports, service names, and volumes to avoid conflicts.
+# Assumes pre-built images are available.
+# Environment variables should be provided by the host environment.
+
+services:
+  web-staging:
+    image: ${DOCKER_REGISTRY:-ghcr.io/mirkotrotta/my-site}/my-site-web:${TAG:-staging-latest} # Or a specific staging tag
+    container_name: my-site-web-staging
+    restart: unless-stopped
+    expose:
+      - "4000"
+    environment:
+      - NODE_ENV=production # Staging should run in production mode
+      - NEXT_PUBLIC_API_BASE_URL=https://${STAGING_DOMAIN}/api
+      - NEXT_PRIVATE_API_URL=http://api-staging:8000/api
+      - PORT=4000
+    depends_on:
+      api-staging:
+        condition: service_healthy
+    networks:
+      - web
+      - staging_internal
+
+  api-staging:
+    image: ${DOCKER_REGISTRY:-ghcr.io/mirkotrotta/my-site}/my-site-api:${TAG:-staging-latest} # Or a specific staging tag
+    container_name: my-site-api-staging
+    restart: unless-stopped
+    expose:
+      - "8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PORT=8000
+      - FRONTEND_URL=https://${STAGING_DOMAIN}
+      - DATABASE_URL=${DATABASE_URL_STAGING} # e.g. postgresql://user:pass@db-staging:5432/dbname_staging
+    depends_on:
+      db-staging:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - web
+      - staging_internal
+
+  db-staging:
+    image: postgres:16-alpine
+    container_name: my-site-db-staging
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER_STAGING}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_STAGING}
+      - POSTGRES_DB=${POSTGRES_DB_STAGING}
+    volumes:
+      - postgres_data_staging:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - staging_internal
+
+  npm-staging:
+    image: 'jc21/nginx-proxy-manager:latest'
+    container_name: my-site-npm-staging
+    restart: unless-stopped
+    ports:
+      - '8080:80'   # Different HTTP port for staging
+      - '8443:443'  # Different HTTPS port for staging
+      - '8181:81'   # Different admin interface port for staging
+    volumes:
+      - npm_data_staging:/data
+      - npm_letsencrypt_staging:/etc/letsencrypt
+    networks:
+      - web
+    environment:
+      - DB_SQLITE_FILE=/data/database.sqlite
+
+volumes:
+  postgres_data_staging:
+  npm_data_staging:
+  npm_letsencrypt_staging:
+
+networks:
+  web:
+    external: true
+    name: web
+  staging_internal:
+    driver: bridge
+    name: my_site_staging_internal_network 

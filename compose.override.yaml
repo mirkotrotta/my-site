@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  api:
+    command: uvicorn main:app --host 0.0.0.0 --port ${API_PORT:-8000} --reload # Add --reload for dev
+    volumes:
+      - ./backend:/app
+      # These anonymous volumes prevent host pollution if these dirs are in /app inside container
+      - /app/__pycache__ 
+      - /app/env # Assuming backend/Dockerfile might create a venv here
+    ports:
+      - "${API_PORT:-8000}:${API_PORT:-8000}"
+    env_file:
+      - .env.docker # Load Docker-specific development environment variables
+    depends_on:
+      db:
+        condition: service_healthy # Ensure DB is ready before API starts
+    # Healthcheck is now defined in compose.yaml and should work
+    networks:
+      - internal
+
+  frontend:
+    # Using npm ci ensures a clean install from package-lock.json, avoiding ENOTEMPTY errors.
+    # It will first delete node_modules if it exists in the volume.
+    command: sh -c "npm ci && npm run dev"
+    ports:
+      - "${FRONTEND_PORT:-4000}:${FRONTEND_PORT:-4000}"
+    environment:
+      - NODE_ENV=development 
+    volumes:
+      - ./frontend:/app # Mounts your local code (including package.json and package-lock.json)
+      - /app/node_modules # Anonymous volume for node_modules. `npm ci` will populate this.
+      - /app/.next 
+    env_file:
+      - .env.docker 
+    depends_on:
+      api: # Restore dependency on api health
+        condition: service_healthy
+    networks:
+      - internal
+
+  db:
+    ports:
+      - "${DB_PORT:-5432}:5432" # Expose DB port for local development tools
+    env_file:
+      - .env.docker # Load database credentials
+    # The volume `postgres_data` is already defined in compose.yaml
+    # and will be used for persistence.
+    networks:
+      - internal
+
+# Networks are inherited from compose.yaml
+# Volumes are inherited from compose.yaml (postgres_data) 
