@@ -58,9 +58,8 @@ jobs:
           host: "${{ secrets.HETZNER_SERVER_IP }}"
           username: "${{ secrets.HETZNER_SSH_USER }}"
           key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
-          source: "./compose.yaml,./compose.override.yaml,./compose.production.yaml,./compose.staging.yaml"
-          target: "/opt/mirkotrotta/"
-          strip_components: 1
+          source: "compose.yaml,compose.override.yaml,compose.production.yaml,compose.staging.yaml"
+          target: "/opt/mirkotrotta"
 
       - name: "Create production environment file"
         uses: appleboy/ssh-action@v1.0.3
