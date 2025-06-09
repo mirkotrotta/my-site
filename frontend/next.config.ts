@@ -55,8 +55,12 @@ const nextConfig = {
 
     return [
       {
-        source: '/api/:path*',
-        destination: `${apiBaseUrl}/api/:path*`,
+        source: '/api/github/:path*',
+        destination: `${apiBaseUrl}/api/github/:path*`,
+      },
+      {
+        source: '/api/resume/:path*',
+        destination: `${apiBaseUrl}/api/resume/:path*`,
       },
     ]
   },
