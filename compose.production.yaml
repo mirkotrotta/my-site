@@ -12,6 +12,8 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_BASE_URL=https://${PROD_DOMAIN}/api # Client-side access to API
       - NEXT_PRIVATE_API_URL=http://api:8000/api # Server-side access to API within Docker network
+      - NEXT_PUBLIC_FORMSPREE_ENDPOINT=${NEXT_PUBLIC_FORMSPREE_ENDPOINT} # Contact form
+      - BUTTONDOWN_API_KEY=${BUTTONDOWN_API_KEY} # Newsletter
       - PORT=4000 # Port Next.js standalone should listen on internally
     depends_on:
       api:
@@ -30,6 +32,7 @@ services:
       - PORT=8000 # Port uvicorn listens on
       - FRONTEND_URL=https://${PROD_DOMAIN} # For CORS or backend logic
       - DATABASE_URL=${DATABASE_URL_PROD} # Will be like postgresql://user:pass@db:5432/dbname
+      - GH_BACKEND_TOKEN=${GH_BACKEND_TOKEN} # GitHub API token
       # Other production-specific API env vars
     depends_on:
       db:
