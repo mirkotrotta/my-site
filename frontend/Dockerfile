@@ -1,11 +1,9 @@
 # Stage 1: Dependencies
 FROM node:22-slim AS deps
+# Install dependencies as root first
 WORKDIR /app
-
-# Copy package files
-COPY package.json package-lock.json ./
-
-# Install dependencies
+COPY package.json package-lock.json* ./
+# npm ci can be faster and is better for reproducible builds
 RUN npm ci
 
 # Stage 2: Build
@@ -15,46 +13,47 @@ WORKDIR /app
 # Accept build arguments
 ARG NEXT_PUBLIC_API_URL=http://localhost:8000/api
 
-# Copy dependencies from deps stage
 COPY --from=deps /app/node_modules ./node_modules
-# Copy application source
 COPY . .
 
-# Tell Next.js to skip the ESLint check and TypeScript type checking during build
 ENV NEXT_DISABLE_ESLINT_DURING_BUILD=true
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NEXT_SKIP_TYPECHECKING=true
-
-# Set the API URL for the build
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
-# Build the application
 RUN npm run build
 
 # Stage 3: Runtime
 FROM node:22-slim AS runner
 WORKDIR /app
 
-# Set environment variables
 ENV NODE_ENV production
-ENV HOSTNAME 0.0.0.0
+# ENV HOSTNAME 0.0.0.0 # Not typically needed for runner if binding to 0.0.0.0 in CMD
 ENV PORT 4000
 
-# Create a non-root user
+# Create a non-root user `nextjs` and group `nodejs`
+# Explicitly create home directory and set ownership
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs && \
+    adduser --system --uid 1001 --ingroup nodejs --home /home/nextjs --shell /bin/sh nextjs && \
+    mkdir -p /home/nextjs/.npm && \
+    chown -R nextjs:nodejs /home/nextjs && \
     chown -R nextjs:nodejs /app
 
-# Copy only necessary files from build stage
+# Set the HOME environment variable
+ENV HOME=/home/nextjs
+# Explicitly set npm cache to be within the user's home directory or a writable app path
+ENV NPM_CONFIG_CACHE=$HOME/.npm
+# Or alternatively to keep cache within the app structure (ensure /app/.npm-cache is writable by nextjs if used)
+# ENV NPM_CONFIG_CACHE=/app/.npm-cache 
+
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Switch to non-root user
 USER nextjs
 
-# Expose port
 EXPOSE 4000
 
-# Start the application
+# The standalone output for Next.js typically includes a server.js
+# and listens on 0.0.0.0 by default.
 CMD ["node", "server.js"] 

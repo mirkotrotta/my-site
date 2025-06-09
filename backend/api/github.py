@@ -1,4 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 import httpx
 import os
 from dotenv import load_dotenv
@@ -6,10 +8,13 @@ import logging
 
 router = APIRouter()
 
+# Initialize rate limiter for this router
+limiter = Limiter(key_func=get_remote_address)
+
 load_dotenv()
 
 GITHUB_API_URL = "https://api.github.com/user/repos"
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_TOKEN = os.getenv("GH_BACKEND_TOKEN")
 
 # Get logger
 logger = logging.getLogger(__name__)
@@ -17,7 +22,8 @@ logger = logging.getLogger(__name__)
 # Register both routes (with and without trailing slash)
 @router.get("")
 @router.get("/")
-async def get_projects():
+@limiter.limit("20/minute")
+async def get_projects(request: Request):
     # Check if token is available
     if not GITHUB_TOKEN:
         logger.warning("Missing GITHUB_TOKEN in environment, returning fallback data")

@@ -1,35 +1,221 @@
-# .github/workflows/deploy.yml
-name: Deploy to Oracle VM
+# Deploy to Hetzner Cloud
+# 
+# Required GitHub Secrets:
+# - HETZNER_SERVER_IP: IP address of Hetzner Cloud VM
+# - HETZNER_SSH_USER: SSH username for deployment
+# - HETZNER_SSH_PRIVATE_KEY: SSH private key for server access
+# - GH_BACKEND_TOKEN: GitHub Personal Access Token for backend API
+# - POSTGRES_USER_PROD: PostgreSQL username
+# - POSTGRES_PASSWORD_PROD: PostgreSQL password
+# - POSTGRES_DB_PROD: PostgreSQL database name
+# - PROD_DOMAIN: Production domain name
+# - BUTTONDOWN_API_KEY: Buttondown newsletter API key
+# - NEXT_PUBLIC_FORMSPREE_ENDPOINT: Formspree form endpoint
+# - NEXT_PUBLIC_SITE_URL: Public site URL for frontend
+# - FRONTEND_URL: Frontend URL for backend CORS
+
+name: "Deploy to Hetzner"
 
 on:
   push:
-    branches: [main]        # auto-deploy every successful push to main
-  workflow_dispatch:        # allow a manual "Run workflow" button
+    branches: ["main"]
+  workflow_dispatch: {}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20     # prevent hung jobs
+    timeout-minutes: 20
 
     steps:
-    # 1) check out repo
-    - uses: actions/checkout@v4
+      - name: "Checkout code"
+        uses: actions/checkout@v4
 
-    # 2) SSH and run the deployment commands using appleboy/ssh-action
-    - name: Deploy
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.SERVER_IP }}
-        username: ubuntu
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        script: |
-          set -e
-          cd ~/my-site
-          echo "▶ pulling latest code…"
-          git pull origin main
-          echo "▶ pulling latest images…"
-          docker compose -f docker-compose.prod.yml pull
-          echo "▶ recreating stack…"
-          docker compose -f docker-compose.prod.yml up -d
-          echo "✅ deploy complete"
+      - name: "Sync configuration files to Hetzner"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            echo "Starting deployment at $(date)"
+            
+            sudo mkdir -p /opt/mirkotrotta
+            sudo chown -R $USER:$USER /opt/mirkotrotta
+            cd /opt/mirkotrotta
+            
+            echo "Cleaning previous deployment files..."
+            rm -f compose*.yaml .env.production .env 2>/dev/null || true
+            
+            echo "Deployment directory prepared"
+
+      - name: "Transfer Docker Compose files"
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          source: "compose.yaml,compose.override.yaml,compose.production.yaml,compose.staging.yaml"
+          target: "/opt/mirkotrotta/"
+
+      - name: "Create production environment file"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Creating .env.production with secrets..."
+            
+            cat > .env.production << 'ENVEOF'
+            TAG="${{ github.sha }}"
+            DOCKER_REGISTRY="ghcr.io/mirkotrotta/my-site"
+            
+            PROD_DOMAIN="${{ secrets.PROD_DOMAIN }}"
+            NEXT_PUBLIC_SITE_URL="${{ secrets.NEXT_PUBLIC_SITE_URL }}"
+            NEXT_PUBLIC_API_URL="https://${{ secrets.PROD_DOMAIN }}/api"
+            FRONTEND_URL="${{ secrets.FRONTEND_URL }}"
+            
+            POSTGRES_USER_PROD="${{ secrets.POSTGRES_USER_PROD }}"
+            POSTGRES_PASSWORD_PROD="${{ secrets.POSTGRES_PASSWORD_PROD }}"
+            POSTGRES_DB_PROD="${{ secrets.POSTGRES_DB_PROD }}"
+            DATABASE_URL_PROD="postgresql://${{ secrets.POSTGRES_USER_PROD }}:${{ secrets.POSTGRES_PASSWORD_PROD }}@db:5432/${{ secrets.POSTGRES_DB_PROD }}"
+            
+            GITHUB_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+            GH_BACKEND_TOKEN="${{ secrets.GH_BACKEND_TOKEN }}"
+            
+            BUTTONDOWN_API_KEY="${{ secrets.BUTTONDOWN_API_KEY }}"
+            NEXT_PUBLIC_FORMSPREE_ENDPOINT="${{ secrets.NEXT_PUBLIC_FORMSPREE_ENDPOINT }}"
+            ENVEOF
+            
+            echo ".env.production created successfully"
+
+      - name: "Stop existing services"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Stopping existing services..."
+            
+            if [ -f compose.production.yaml ]; then
+              docker compose -f compose.production.yaml down --remove-orphans 2>/dev/null || true
+            fi
+            
+            docker container prune -f 2>/dev/null || true
+            
+            echo "Services stopped successfully"
+
+      - name: "Pull latest container images"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Pulling container images for SHA: ${{ github.sha }}"
+            
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+            
+            docker pull "ghcr.io/mirkotrotta/my-site/my-site-web:${{ github.sha }}"
+            docker pull "ghcr.io/mirkotrotta/my-site/my-site-api:${{ github.sha }}"
+            
+            docker pull postgres:16-alpine
+            docker pull jc21/nginx-proxy-manager:latest
+            docker pull containrrr/watchtower:latest
+            
+            echo "All images pulled successfully"
+
+      - name: "Start application stack"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Starting application stack..."
+            
+            docker network inspect web >/dev/null 2>&1 || docker network create web
+            
+            docker compose -f compose.production.yaml --env-file .env.production up -d
+            
+            echo "Application stack started"
+
+      - name: "Verify deployment health"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Verifying deployment health..."
+            
+            sleep 30
+            
+            echo "Container status:"
+            docker compose -f compose.production.yaml ps
+            
+            echo "Checking service health..."
+            
+            for i in {1..24}; do
+              if docker compose -f compose.production.yaml exec -T api curl -f http://localhost:8000/health > /dev/null 2>&1; then
+                echo "API health check passed"
+                break
+              fi
+              if [ $i -eq 24 ]; then
+                echo "API health check failed after 2 minutes"
+                docker compose -f compose.production.yaml logs api
+                exit 1
+              fi
+              echo "Waiting for API to be healthy... ($i/24)"
+              sleep 5
+            done
+            
+            echo "Testing external connectivity..."
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:80 || echo "000")
+            if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
+              echo "External HTTP connectivity verified (Status: $HTTP_STATUS)"
+            else
+              echo "External HTTP returned status: $HTTP_STATUS"
+            fi
+            
+            echo "Deployment verification completed"
+
+      - name: "Deployment summary"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            cd /opt/mirkotrotta
+            
+            echo ""
+            echo "DEPLOYMENT SUMMARY"
+            echo "=================="
+            echo "Timestamp: $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)"
+            echo "SHA: ${{ github.sha }}"
+            echo "Short SHA: ${GITHUB_SHA:0:7}"
+            echo "Domain: ${{ secrets.PROD_DOMAIN }}"
+            echo "Server: ${{ secrets.HETZNER_SERVER_IP }}"
+            echo ""
+            echo "Running containers:"
+            docker compose -f compose.production.yaml ps --format "table {{.Service}}\t{{.Status}}\t{{.Ports}}"
+            echo ""
+            echo "Deployment completed successfully!" 

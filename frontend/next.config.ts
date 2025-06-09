@@ -27,9 +27,31 @@ const nextConfig = {
   // Add rewrites for development to proxy API requests to the backend
   async rewrites() {
     const isDevelopment = process.env.NODE_ENV === 'development';
-    const apiBaseUrl = isDevelopment 
-      ? 'http://localhost:8000' 
-      : (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api:8000');
+    
+    console.log('Environment variables:');
+    console.log('  NODE_ENV:', process.env.NODE_ENV);
+    console.log('  NEXT_PRIVATE_API_URL:', process.env.NEXT_PRIVATE_API_URL);
+    console.log('  NEXT_PUBLIC_API_BASE_URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
+    
+    // Use NEXT_PRIVATE_API_URL if available (for Docker internal network)
+    // Otherwise fall back to localhost for local development outside Docker
+    let apiBaseUrl;
+    if (process.env.NEXT_PRIVATE_API_URL) {
+      // NEXT_PRIVATE_API_URL should be http://api:8000/api, we need http://api:8000
+      const fullUrl = process.env.NEXT_PRIVATE_API_URL;
+      if (fullUrl.endsWith('/api')) {
+        apiBaseUrl = fullUrl.slice(0, -4); // Remove last 4 characters ('/api')
+      } else {
+        apiBaseUrl = fullUrl;
+      }
+    } else if (isDevelopment) {
+      apiBaseUrl = 'http://localhost:8000';
+    } else {
+      const publicUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api:8000/api';
+      apiBaseUrl = publicUrl.endsWith('/api') ? publicUrl.slice(0, -4) : publicUrl;
+    }
+
+    console.log('Final API base URL:', apiBaseUrl);
 
     return [
       {

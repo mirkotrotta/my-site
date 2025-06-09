@@ -1,10 +1,10 @@
 name: Build & Push
 
 on:
-    push:
-      branches: [main]
-    pull_request:
-      branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 # Grant needed permissions for both image pushing and checkout
 permissions:
@@ -23,6 +23,11 @@ jobs:
         service: [web, api]
       # Don't fail the entire matrix if one service fails
       fail-fast: false
+    outputs:
+      # Export image tags for potential use by deployment workflow
+      image-tag-web: ${{ steps.image-tags.outputs.web-tag }}
+      image-tag-api: ${{ steps.image-tags.outputs.api-tag }}
+      commit-sha: ${{ github.sha }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -48,6 +53,31 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Generate image tags for both latest and SHA-based tagging
+      - name: Generate image tags
+        id: image-tags
+        run: |
+          IMAGE_BASE="ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}"
+          COMMIT_SHA="${{ github.sha }}"
+          SHORT_SHA="${COMMIT_SHA:0:7}"
+          
+          # Create tag list for Docker build
+          TAGS="${IMAGE_BASE}:latest,${IMAGE_BASE}:${COMMIT_SHA},${IMAGE_BASE}:${SHORT_SHA}"
+          
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+          echo "image-base=${IMAGE_BASE}" >> $GITHUB_OUTPUT
+          echo "commit-sha=${COMMIT_SHA}" >> $GITHUB_OUTPUT
+          echo "short-sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
+          
+          # Export service-specific tags for deployment workflow
+          if [ "${{ matrix.service }}" == "web" ]; then
+            echo "web-tag=${COMMIT_SHA}" >> $GITHUB_OUTPUT
+          elif [ "${{ matrix.service }}" == "api" ]; then
+            echo "api-tag=${COMMIT_SHA}" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "Generated tags for ${{ matrix.service }}: ${TAGS}"
+
       # Get the proper context path based on service
       - name: Set service context
         id: service-context
@@ -66,9 +96,10 @@ jobs:
         continue-on-error: true
         run: |
           echo "Attempting to pull cache for ${{ matrix.service }}..."
-          docker pull ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:cache || echo "No previous cache found, will build from scratch"
+          docker pull ${{ steps.image-tags.outputs.image-base }}:cache || \
+            echo "No previous cache found, will build from scratch"
 
-      # Build and push the image
+      # Build and push the image with multiple tags
       - name: Build and push image
         uses: docker/build-push-action@v4
         with:
@@ -78,10 +109,10 @@ jobs:
           # Can add arm64 back later when basic pipeline works
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:latest
+          tags: ${{ steps.image-tags.outputs.tags }}
           # Make cache handling conditional/safe
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:cache,mode=max
+          cache-from: type=registry,ref=${{ steps.image-tags.outputs.image-base }}:cache
+          cache-to: type=registry,ref=${{ steps.image-tags.outputs.image-base }}:cache,mode=max
           # Set build args for frontend environment variables
           build-args: |
             NEXT_PUBLIC_API_URL=https://mirkotrotta.com/api
@@ -138,12 +169,65 @@ jobs:
             echo "::notice::Backend test complete, check logs for any issues"
           fi
 
-      # Final status check
+      # Final status check with enhanced reporting
       - name: Report build status
         run: |
           echo "Build and test for ${{ matrix.service }} service completed"
-          echo "Image: ghcr.io/${{ github.repository }}/my-site-${{ matrix.service }}:latest"
+          echo "Image tags created:"
+          echo "  - ${{ steps.image-tags.outputs.image-base }}:latest"
+          echo "  - ${{ steps.image-tags.outputs.image-base }}:${{ steps.image-tags.outputs.commit-sha }}"
+          echo "  - ${{ steps.image-tags.outputs.image-base }}:${{ steps.image-tags.outputs.short-sha }}"
           echo "Build logs available in GitHub Actions console"
           
-          # Add useful metadata for debugging
+          # Add useful metadata for debugging and deployment
           echo "::notice::Image successfully built and pushed to GHCR for ${{ matrix.service }} service"
+          echo "::notice::Commit SHA: ${{ steps.image-tags.outputs.commit-sha }}"
+          echo "::notice::Ready for deployment with TAG=${{ steps.image-tags.outputs.commit-sha }}"
+
+  # Prepare deployment artifacts (for future use by deploy workflow)
+  prepare-deployment:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Prepare deployment configuration
+        run: |
+          echo "Preparing deployment configuration for Hetzner..."
+          echo "Commit SHA: ${{ github.sha }}"
+          
+          # Create deployment summary
+          cat > deployment-summary.md << EOF
+          # Deployment Ready 🚀
+          
+          **Commit**: \`${{ github.sha }}\`
+          **Branch**: \`${{ github.ref_name }}\`
+          **Timestamp**: \`$(date -u +"%Y-%m-%d %H:%M:%S UTC")\`
+          
+          ## Images Built:
+          - \`ghcr.io/${{ github.repository }}/my-site-web:${{ github.sha }}\`
+          - \`ghcr.io/${{ github.repository }}/my-site-api:${{ github.sha }}\`
+          
+          ## Configuration Files Ready:
+          - compose.production.yaml
+          - .env.production (on server)
+          
+          ## Next Steps:
+          Deploy workflow can now sync config files and deploy with TAG=${{ github.sha }}
+          EOF
+          
+          cat deployment-summary.md
+          
+      - name: Upload deployment artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-config-${{ github.sha }}
+          path: |
+            compose.production.yaml
+            compose.yaml
+            compose.override.yaml
+            compose.staging.yaml
+            deployment-summary.md
+          retention-days: 30

@@ -47,8 +47,6 @@ yarn-error.log*
 .env.production.local
 .env*
 !.env.example # Ensure example env files are NOT ignored
-.env
-.env.production
 
 # Temporary files
 tmp/
@@ -94,7 +92,10 @@ tasks_backup/
 README-task-master.md
 .windsurfrules
 i18n-audit.md
-scripts/
+scripts/README.md
+scripts/dev.js
+scripts/*.log
+scripts/task-complexity-report.json
 project-audit.md
 
 # Python virtual environment
@@ -161,7 +162,7 @@ tasks_backup/*.txt
 /docs/build/
 
 # Allow specific documentation files only
-*.txt
+# *.txt - Commented out to allow PRD files in scripts/
 *.md
 *.json
 *.yaml
@@ -193,3 +194,17 @@ data/traefik/acme/*
 
 # Keep workflows
 !.github/workflows/*.yml
+
+# Ensure example env files are NOT ignored (more specific rules at the end)
+!.env.example
+!.env.docker.example
+
+# Keep important project documents in scripts/
+scripts/prd.txt
+scripts/phase3.txt
+scripts/example_prd.txt
+scripts/README.md
+scripts/dev.js
+scripts/*.log
+scripts/task-complexity-report.json
+

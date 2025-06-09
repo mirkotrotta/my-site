@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Request
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 import json
 import os
 from models.schemas import (
@@ -8,6 +10,9 @@ from models.schemas import (
 from typing import Optional, Dict, Any
 
 router = APIRouter()
+
+# Initialize rate limiter for this router
+limiter = Limiter(key_func=get_remote_address)
 
 # --- Helper Functions ---
 
@@ -30,7 +35,8 @@ DE_RESUME_PATH = os.path.join(DATA_DIR, "resume_de.json")
 # Register both routes (with and without trailing slash)
 @router.get("")
 @router.get("/")
-def get_resume(lang: Optional[str] = Query("en", description="Language code for the resume (en, de)")):
+@limiter.limit("20/minute")
+def get_resume(request: Request, lang: Optional[str] = Query("en", description="Language code for the resume (en, de)")):
     # Default to English if specified language is not supported
     language = lang if lang in ["en", "de"] else "en"
     
