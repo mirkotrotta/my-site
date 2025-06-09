@@ -85,8 +85,17 @@ jobs:
               -o compose.staging.yaml \
               "https://api.github.com/repos/${{ github.repository }}/contents/compose.staging.yaml?ref=${{ github.sha }}"
             
-            echo "Compose files downloaded successfully:"
-            ls -la compose*.yaml
+            # Download scripts
+            mkdir -p scripts
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o scripts/prod-manage.sh \
+              "https://api.github.com/repos/${{ github.repository }}/contents/scripts/prod-manage.sh?ref=${{ github.sha }}"
+            
+            chmod +x scripts/prod-manage.sh
+            
+            echo "Compose files and scripts downloaded successfully:"
+            ls -la compose*.yaml scripts/
 
       - name: "Create production environment file"
         uses: appleboy/ssh-action@v1.0.3
