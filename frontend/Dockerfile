@@ -55,5 +55,6 @@ USER nextjs
 EXPOSE 4000
 
 # The standalone output for Next.js typically includes a server.js
-# and listens on 0.0.0.0 by default.
+# Force binding to 0.0.0.0 to ensure container accessibility
+ENV HOSTNAME=0.0.0.0
 CMD ["node", "server.js"] 
