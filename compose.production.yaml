@@ -1,0 +1,146 @@
+# compose.production.yaml  – production stack with Nginx Proxy Manager
+# Assumes pre-built images are available (e.g., from a CI/CD pipeline)
+# Environment variables (secrets, domain, etc.) should be provided by the host environment.
+
+version: '3.8'
+
+services:
+  web: # Renamed from frontend for consistency with compose.yaml if we decide that
+    image: ${DOCKER_REGISTRY:-ghcr.io/mirkotrotta/my-site}/my-site-web:${TAG:-latest}
+    restart: unless-stopped
+    expose:
+      - "4000" # Assuming Next.js standalone runs on 4000 or is configured to
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=https://${PROD_DOMAIN}/api # Client-side access to API
+      - NEXT_PRIVATE_API_URL=http://api:8000/api # Server-side access to API within Docker network
+      - PORT=4000 # Port Next.js standalone should listen on internally
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - web
+      - internal
+
+  api:
+    image: ${DOCKER_REGISTRY:-ghcr.io/mirkotrotta/my-site}/my-site-api:${TAG:-latest}
+    restart: unless-stopped
+    expose:
+      - "8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PORT=8000 # Port uvicorn listens on
+      - FRONTEND_URL=https://${PROD_DOMAIN} # For CORS or backend logic
+      - DATABASE_URL=${DATABASE_URL_PROD} # Will be like postgresql://user:pass@db:5432/dbname
+      # Other production-specific API env vars
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - web
+      - internal
+
+  db: # New database service for production
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER_PROD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD_PROD}
+      - POSTGRES_DB=${POSTGRES_DB_PROD}
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data # Use a specific production volume
+    expose:
+      - "5432" # Only accessible within the Docker network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"] # Uses env vars from within the container
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - internal
+
+  npm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'   # HTTP
+      - '443:443' # HTTPS
+      - '81:81'   # Admin interface
+    volumes:
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
+    networks:
+      - web
+    environment:
+      # Optional: Set custom admin email and password
+      # - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@${PROD_DOMAIN}}
+      # - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
+      - DB_SQLITE_FILE=/data/database.sqlite
+
+  watchtower:
+    image: containrrr/watchtower:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 86400 --cleanup # Daily check
+    environment:
+      # - WATCHTOWER_NOTIFICATIONS=shoutrrr # Keep if you use it
+      # - WATCHTOWER_NOTIFICATION_URL=${NOTIFICATION_URL:-} # Keep if you use it
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true # Recommended
+      - WATCHTOWER_ROLLING_RESTART=true # Avoids downtime if possible for stateless services
+      - WATCHTOWER_LABEL_ENABLE=true # Only watch services with com.centurylinklabs.watchtower.enable=true label
+    networks:
+      - internal
+
+  netdata:
+    image: netdata/netdata:latest
+    restart: unless-stopped
+    hostname: ${PROD_DOMAIN:-mirkotrotta.com} # Displayed in Netdata UI
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN:-}
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+      - NETDATA_CLAIM_ROOMS=${NETDATA_CLAIM_ROOMS:-}
+      - DOCKER_USR=root
+    expose:
+      - "19999"
+    networks:
+      - web
+      - internal
+
+volumes:
+  postgres_data_prod:
+  npm_data:
+  npm_letsencrypt:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+
+networks:
+  web:
+    external: true
+    name: web
+  internal:
+    driver: bridge 
+    name: my_site_internal_network 

@@ -195,6 +195,10 @@ data/traefik/acme/*
 # Keep workflows
 !.github/workflows/*.yml
 
+# Keep compose files at root
+!/compose*.yml
+!/compose*.yaml
+
 # Ensure example env files are NOT ignored (more specific rules at the end)
 !.env.example
 !.env.docker.example
