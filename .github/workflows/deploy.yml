@@ -92,7 +92,12 @@ jobs:
               -o scripts/prod-manage.sh \
               "https://api.github.com/repos/${{ github.repository }}/contents/scripts/prod-manage.sh?ref=${{ github.sha }}"
             
-            chmod +x scripts/prod-manage.sh
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o scripts/init-npm.sh \
+              "https://api.github.com/repos/${{ github.repository }}/contents/scripts/init-npm.sh?ref=${{ github.sha }}"
+            
+            chmod +x scripts/prod-manage.sh scripts/init-npm.sh
             
             echo "Compose files and scripts downloaded successfully:"
             ls -la compose*.yaml scripts/
@@ -128,6 +133,9 @@ jobs:
             
             BUTTONDOWN_API_KEY="${{ secrets.BUTTONDOWN_API_KEY }}"
             NEXT_PUBLIC_FORMSPREE_ENDPOINT="${{ secrets.NEXT_PUBLIC_FORMSPREE_ENDPOINT }}"
+            
+            NPM_ADMIN_EMAIL="mirkotrottac@gmail.com"
+            NPM_ADMIN_PASSWORD="${{ secrets.NPM_ADMIN_PASSWORD }}"
             ENVEOF
             
             echo ".env.production created successfully"
@@ -235,6 +243,24 @@ jobs:
             fi
             
             echo "Deployment verification completed"
+
+      - name: "Initialize NPM Admin Credentials"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            cd /opt/mirkotrotta
+            
+            echo "Initializing NPM admin credentials..."
+            
+            # Source environment variables for the script
+            export $(grep -v '^#' .env.production | xargs)
+            
+            # Run NPM initialization
+            ./scripts/init-npm.sh
 
       - name: "Deployment summary"
         uses: appleboy/ssh-action@v1.0.3

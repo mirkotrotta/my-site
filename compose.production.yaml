@@ -76,10 +76,15 @@ services:
     networks:
       - web
     environment:
-      # Optional: Set custom admin email and password
-      # - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@${PROD_DOMAIN}}
-      # - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme}
       - DB_SQLITE_FILE=/data/database.sqlite
+      # Initialize with known credentials for fresh deployments
+      - DISABLE_IPV6=true
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:81/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   watchtower:
     image: containrrr/watchtower:latest
