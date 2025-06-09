@@ -30,6 +30,12 @@ services:
       - PORT=8000
       - FRONTEND_URL=http://web:4000 # Internal Docker network URL
       - DATABASE_URL=postgresql://${POSTGRES_USER_TEST:-testuser}:${POSTGRES_PASSWORD_TEST:-testpass}@db-test:5432/${POSTGRES_DB_TEST:-testdb}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     depends_on:
       db-test:
         condition: service_healthy
