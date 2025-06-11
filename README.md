@@ -1,87 +1,77 @@
-![Build & Push](https://github.com/mirkotrotta/my-site/actions/workflows/build.yml/badge.svg)
-[![Deploy to Hetzner](https://github.com/mirkotrotta/my-site/actions/workflows/deploy.yml/badge.svg)](https://github.com/mirkotrotta/my-site/actions/workflows/deploy.yml)
+# Mirko Trotta - Portfolio Website
 
-# my-site
+My personal portfolio website built with modern web technologies and deployed to production with automated CI/CD.
 
-This is my private personal website repository. Built using the [Moon Site](https://github.com/mirkotrotta/moon-site) template, it's used to power my portfolio, blog, and resume at [https://my-domain.com](https://my-domain.com).
+🌐 **Live Site**: [https://mirkotrotta.com](https://mirkotrotta.com)
+
+---
+
+## About
+
+A full-stack web application showcasing my development skills and professional experience. Features a multilingual design (English/German), dynamic blog system, and contact functionality.
+
+**Key Features:**
+- Multilingual support with internationalization
+- Responsive design for all devices
+- Contact form with email integration
+- Blog system with markdown content
+- Project showcase and resume sections
+- Production deployment with SSL and monitoring
 
 ---
 
-For the open-source template version, visit:
-👉 [github.com/mirkotrotta/moon-site](https://github.com/mirkotrotta/moon-site)
+## Tech Stack
+
+**Frontend:** Next.js 14, TypeScript, Tailwind CSS, React Hook Form, Framer Motion  
+**Backend:** Node.js, PostgreSQL, Prisma ORM, Next.js API Routes  
+**Infrastructure:** Docker, Hetzner Cloud, Nginx Proxy Manager, Let's Encrypt  
+**Tools:** GitHub Actions CI/CD, ESLint, Prettier, Zod validation
 
 ---
+
+## Architecture
+
+**Frontend:** Next.js app with server-side rendering and static generation  
+**Backend:** API routes for contact forms and data management  
+**Database:** PostgreSQL with Prisma ORM for type safety  
+**Deployment:** Dockerized application with automated CI/CD pipeline  
+**Security:** HTTPS, input validation, CORS protection, security headers
+
+---
+
+## Features
+
+- **Multilingual Support** - English and German versions
+- **Dynamic Blog** - Markdown-based content management
+- **Contact System** - Form with email integration
+- **Project Gallery** - Showcase of development work
+- **Resume Section** - Professional experience and skills
+- **Responsive Design** - Mobile-first approach
+- **SEO Optimized** - Meta tags, sitemaps, structured data
+- **Performance** - Image optimization and lazy loading
+
 
 ## Deployment
 
-This application is deployed to **Hetzner Cloud** using Docker Compose with Nginx Proxy Manager for reverse proxy and SSL termination. The deployment is fully automated via GitHub Actions CI/CD.
+Automated deployment using GitHub Actions CI/CD pipeline:
+- Docker containerization
+- Deployment to Hetzner Cloud VPS
+- SSL certificates with Let's Encrypt
+- Nginx reverse proxy
+- Zero-downtime deployments
 
-- **Production Stack**: Uses `compose.production.yaml` with NPM on ports 80/443/81
-- **CI/CD**: Automated deployment on every push to `main` branch
-- **Container Registry**: GitHub Container Registry (GHCR)
-- **Deployment Target**: Hetzner CPX21 VM at `/opt/mirkotrotta`
+---
 
-## GitHub Secrets Configuration
+## Contact
 
-The following secrets must be configured in your GitHub repository settings (`Settings` → `Secrets and variables` → `Actions`) for the CI/CD pipeline to work:
+**Mirko Trotta**  
+Full-Stack Developer
 
-### 🔑 Hetzner Server Secrets
-| Secret Name | Description | Example |
-|-------------|-------------|---------|
-| `HETZNER_SERVER_IP` | IP address of your Hetzner Cloud VM | `1.2.3.4` |
-| `HETZNER_SSH_USER` | SSH username for deployment | `deploy` |
-| `HETZNER_SSH_PRIVATE_KEY` | SSH private key for server access | `-----BEGIN OPENSSH PRIVATE KEY-----` |
-| `HETZNER_SSH_PASSPHRASE` | SSH key passphrase (if applicable) | `your-passphrase` |
+- 🌐 Website: [mirkotrotta.com](https://mirkotrotta.com)
+- 💼 LinkedIn: [linkedin.com/in/mirkotrotta](https://linkedin.com/in/mirkotrotta)
+- 📧 Email: [hello@mirkotrotta.com](mailto:hello@mirkotrotta.com)
+- 📱 GitHub: [github.com/mirkotrotta](https://github.com/mirkotrotta)
 
-### 🌐 Domain & Networking
-| Secret Name | Description | Example |
-|-------------|-------------|---------|
-| `PROD_DOMAIN` | Production domain name | `example.com` |
-| `ACME_EMAIL` | Email for Let's Encrypt certificates | `admin@example.com` |
+---
 
-### 🗄️ Database Configuration
-| Secret Name | Description | Example |
-|-------------|-------------|---------|
-| `POSTGRES_USER_PROD` | PostgreSQL username | `mysite_user` |
-| `POSTGRES_PASSWORD_PROD` | PostgreSQL password | `secure_password_123` |
-| `POSTGRES_DB_PROD` | PostgreSQL database name | `mysite_prod` |
-
-### 🔧 API & Integration Secrets
-| Secret Name | Description | Example |
-|-------------|-------------|---------|
-| `GITHUB_TOKEN` | GitHub API token for repository access | `ghp_xxxxxxxxxxxx` |
-| `RESEND_API_KEY` | Resend.com API key for transactional emails | `re_xxxxxxxxxxxx` |
-| `CONTACT_EMAIL` | Contact form destination email | `contact@example.com` |
-
-### 📊 Analytics (Optional)
-| Secret Name | Description | Example |
-|-------------|-------------|---------|
-| `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` | Google Analytics tracking ID | `G-XXXXXXXXXX` |
-| `NEXT_PUBLIC_UMAMI_SITE_ID` | Umami Analytics site ID | `xxxxxxxx-xxxx-xxxx` |
-| `NEXT_PUBLIC_UMAMI_URL` | Umami Analytics instance URL | `https://analytics.example.com` |
-
-## Environment Variables
-
-This project uses environment variables for configuration. Two template files are provided:
-
-### .env.example
-
-Contains all available environment variables with documentation and example values. Copy this file to create your own `.env` file:
-
-```bash
-cp .env.example .env
-```
-
-Then edit the `.env` file with your specific configuration values.
-
-### .env.production
-
-In production, this file is automatically generated by the GitHub Actions deployment workflow using the secrets configured above. **Do not manually create this file in production** - it will be overwritten on each deployment.
-
-### Local Development
-
-For local development, set `DISABLE_HTTPS=true` and use `localhost` as your domain.
-
-### Security Note
-
-Never commit your `.env` file with actual secrets to version control. The `.env` file is included in `.gitignore` to prevent accidental commits.
+*This project demonstrates modern full-stack development skills including React, TypeScript, PostgreSQL, Docker, and DevOps practices. Open to discussing development opportunities and collaborations.*
