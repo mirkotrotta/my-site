@@ -1,6 +1,9 @@
 // next.config.ts
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   output: 'standalone',
   typescript: {
     // Disable TypeScript checks in the build process to allow CI to pass
@@ -28,11 +31,6 @@ const nextConfig = {
   async rewrites() {
     const isDevelopment = process.env.NODE_ENV === 'development';
     
-    console.log('Environment variables:');
-    console.log('  NODE_ENV:', process.env.NODE_ENV);
-    console.log('  NEXT_PRIVATE_API_URL:', process.env.NEXT_PRIVATE_API_URL);
-    console.log('  NEXT_PUBLIC_API_BASE_URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
-    
     // Use NEXT_PRIVATE_API_URL if available (for Docker internal network)
     // Otherwise fall back to localhost for local development outside Docker
     let apiBaseUrl;
@@ -50,8 +48,6 @@ const nextConfig = {
       const publicUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://api:8000/api';
       apiBaseUrl = publicUrl.endsWith('/api') ? publicUrl.slice(0, -4) : publicUrl;
     }
-
-    console.log('Final API base URL:', apiBaseUrl);
 
     return [
       {
