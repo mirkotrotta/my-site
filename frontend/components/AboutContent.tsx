@@ -95,7 +95,7 @@ export default function AboutContent({ language }: AboutContentProps) {
         </section>
         </div>
 
-      <div className="-mx-4 sm:-mx-0 md:-mx-8 lg:-mx-12 mb-16">
+      <div className="-mx-4 sm:-mx-0 md:-mx-8 lg:-mx-12">
        <GlobalCTA 
           title={t('about.cta.title')}
           subtitle={t('about.cta.subtitle')}

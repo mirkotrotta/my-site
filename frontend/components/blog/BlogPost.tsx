@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { components } from "@/components/blog/mdxComponents";
 import Script from "next/script";
@@ -246,7 +246,7 @@ export default function BlogPost({ post }: BlogPostProps) {
         </article>
       </SidebarLayout>
 
-      <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 mb-16">
+      <div className="-mx-4 sm:-mx-6 md:-mx-8">
         <GlobalCTA
           title={t('about.cta.title')}
           subtitle={t('about.cta.subtitle')}

@@ -207,8 +207,25 @@ data/traefik/acme/*
 scripts/prd.txt
 scripts/phase3.txt
 scripts/example_prd.txt
-scripts/README.md
 scripts/dev.js
 scripts/*.log
 scripts/task-complexity-report.json
 
+# Added by Task Master AI
+# Dependency directories
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+
+# Task Master specific files
+.taskmaster/
+
+# roo specific files
+.roo/
+.roomodes

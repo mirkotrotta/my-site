@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import GlobalContainer from './GlobalContainer';
 
 type SidebarLayoutProps = {
   children: ReactNode;
@@ -35,7 +34,7 @@ export default function SidebarLayout({
   }
 
   return (
-    <GlobalContainer className={`py-8 md:py-12 ${className}`}>
+    <div className={`w-full px-4 sm:px-6 md:px-8 py-8 md:py-12 mx-auto ${className}`}>
       <div className={`grid grid-cols-1 gap-y-8 ${gridTemplateClass}`}>
         {sidebarLeft && (
           <div className="order-2 lg:order-1 row-span-1 lg:row-span-2">
@@ -57,6 +56,6 @@ export default function SidebarLayout({
           </div>
         )}
       </div>
-    </GlobalContainer>
+    </div>
   );
 } 

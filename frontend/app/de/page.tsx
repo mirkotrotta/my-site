@@ -9,10 +9,9 @@ import ClientBlogSection from "@/app/ClientBlogSection";
 import HeroWithSidebar from "@/components/ui/HeroWithSidebar";
 import Button from "@/components/ui/Button";
 import useTranslation from '@/hooks/useTranslation'; // Import the hook
+import Image from 'next/image';
 
 // Define a type for the language keys
-type LanguageKey = 'en' | 'de';
-
 export default function Home() {
   // Use the translation hook
   const { t, language } = useTranslation();
@@ -46,9 +45,11 @@ export default function Home() {
         <div className="md:grid md:grid-cols-12 gap-12 items-center">
           <div className="md:col-span-4 mb-8 md:mb-0">
             <div className="relative aspect-auto max-w-sm mx-auto overflow-hidden bg-gray-100 dark:bg-gray-800">
-              <img 
+              <Image 
                 src="/images/mirko-trotta-profile-aboutpage.jpg" 
-                alt={t('homepage.about.imageAlt')} // Fetches from de.json
+                alt={t('homepage.about.imageAlt')}
+                width={400}
+                height={400}
                 className="h-full w-full object-cover"
               />
             </div>
@@ -102,7 +103,7 @@ export default function Home() {
       </section>
 
       {/* Global CTA Section */}
-      <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 mb-16">
+      <div className="-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12">
         <GlobalCTA 
           title={t('homepage.cta.title')}
           subtitle={t('homepage.cta.subtitle')}

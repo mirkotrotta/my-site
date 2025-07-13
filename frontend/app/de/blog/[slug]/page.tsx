@@ -88,21 +88,19 @@ export default async function BlogPostPage({ params }: PageParams) {
   }
   
   return (
-    <div className="container mx-auto px-4 py-12">
-      <Suspense fallback={<Loading message={dictionary.blog.loadingPost} />}>
-        {/* If post exists in other language but not current, show language notice */}
-        {!existsInCurrentLang && existsInOtherLang && (
-          <LanguageNotice 
-            slug={slug}
-            currentLang={lang}
-            targetLang={otherLang}
-            message={dictionary.blog.otherLanguageAvailable}
-            linkText={dictionary.blog.readInLanguage}
-          />
-        )}
-        
-        <BlogPost post={{...postData, language: lang}} />
-      </Suspense>
-    </div>
+    <Suspense fallback={<Loading message={dictionary.blog.loadingPost} />}>
+      {/* If post exists in other language but not current, show language notice */}
+      {!existsInCurrentLang && existsInOtherLang && (
+        <LanguageNotice 
+          slug={slug}
+          currentLang={lang}
+          targetLang={otherLang}
+          message={dictionary.blog.otherLanguageAvailable}
+          linkText={dictionary.blog.readInLanguage}
+        />
+      )}
+      
+      <BlogPost post={{...postData, language: lang}} />
+    </Suspense>
   );
 } 
