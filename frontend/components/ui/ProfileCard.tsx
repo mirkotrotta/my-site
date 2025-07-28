@@ -99,7 +99,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
             </a>
           </div>
           {/* Email */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <a
               href={`mailto:${email}`}
               aria-label="Email"
@@ -108,9 +108,9 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
               <Mail size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
               {email}
             </a>
-          </div>
+          </div>*/}
           {/* Phone */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`} // Remove spaces for tel link
               aria-label="Phone"
@@ -119,12 +119,12 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
               <Phone size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
               {phone}
             </a>
-          </div>
+          </div>*/}
           {/* Date of Birth */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <Calendar size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
             {dob}
-          </div>
+          </div>*/}
           {/* Nationality */}
           <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <Flag size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
