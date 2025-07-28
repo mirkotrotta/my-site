@@ -19,7 +19,10 @@
     },
     "footer": {
       "copyright": "© {{year}} Mirko Trotta. Alle Rechte vorbehalten.",
-      "builtWith": "Erstellt mit Next.js, Tailwind CSS und FastAPI."
+      "builtWith": "Built with purpose. Engineered to last.",
+      "privacy": "Datenschutzerklärung",
+      "terms": "Nutzungsbedingungen",
+      "cookieSettings": "Cookie-Einstellungen"
     },
     "darkMode": {
       "toggle": "Dunkelmodus umschalten"
@@ -236,5 +239,29 @@
     "success": "Danke für Ihr Abonnement!",
     "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
     "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "search": {
+    "placeholder": "Artikel suchen..."
+  },
+  "cookieBanner": {
+    "title": "Cookie-Einstellungen 🍪",
+    "message": "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. Durch die Nutzung unserer Website stimmen Sie der Verwendung von Cookies zu. Sie können Ihre Einstellungen unten verwalten.",
+    "buttonText": "Alle akzeptieren",
+    "declineButtonText": "Alle ablehnen",
+    "manageButtonText": "Cookies verwalten",
+    "privacyPolicyText": "Datenschutzerklärung",
+    "manageTitle": "Cookie-Einstellungen verwalten",
+    "manageMessage": "Sie können unten verschiedene Arten von Cookies aktivieren oder deaktivieren. Essenzielle Cookies sind immer aktiviert, da sie für die Funktion der Website notwendig sind.",
+    "manageEssentialTitle": "Essenzielle Cookies",
+    "manageEssentialSubtitle": "Erforderlich, damit die Website ordnungsgemäß funktioniert.",
+    "manageEssentialStatusText": "Immer aktiviert",
+    "manageAnalyticsTitle": "Analyse-Cookies",
+    "manageAnalyticsSubtitle": "Diese Cookies ermöglichen es uns, die Seitennutzung zu analysieren und die Leistung zu verbessern.",
+    "manageSocialTitle": "Soziale Cookies",
+    "manageSocialSubtitle": "Ermöglichen soziale Medien-Funktionen und das Teilen von Inhalten.",
+    "manageAdvertTitle": "Werbe-Cookies",
+    "manageAdvertSubtitle": "Personalisieren Werbung und messen deren Leistung.",
+    "manageCancelButtonText": "Abbrechen",
+    "manageSaveButtonText": "Einstellungen speichern"
   }
 } 

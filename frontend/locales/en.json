@@ -19,7 +19,10 @@
     },
     "footer": {
       "copyright": "© {{year}} Mirko Trotta. All rights reserved.",
-      "builtWith": "Crafted with Next.js, Tailwind CSS and FastAPI."
+      "builtWith": "Built with purpose. Engineered to last.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookieSettings": "Cookie Settings"
     },
     "darkMode": {
       "toggle": "Toggle dark mode"
@@ -213,5 +216,29 @@
     "success": "Thanks for subscribing!",
     "invalidEmail": "Please enter a valid email address",
     "genericError": "An error occurred. Please try again."
+  },
+  "search": {
+    "placeholder": "Search articles..."
+  },
+  "cookieBanner": {
+    "title": "Cookie Preferences 🍪",
+    "message": "We use cookies to enhance your experience. By using our website, you agree to our use of cookies. You can manage your preferences below.",
+    "buttonText": "Accept All",
+    "declineButtonText": "Decline All",
+    "manageButtonText": "Manage Cookies",
+    "privacyPolicyText": "Privacy Policy",
+    "manageTitle": "Manage Cookie Preferences",
+    "manageMessage": "You can enable or disable different types of cookies below. Essential cookies are always enabled as they are necessary for the website to function properly.",
+    "manageEssentialTitle": "Essential Cookies",
+    "manageEssentialSubtitle": "Required for the website to function properly.",
+    "manageEssentialStatusText": "Always enabled",
+    "manageAnalyticsTitle": "Analytics Cookies",
+    "manageAnalyticsSubtitle": "These cookies allow us to analyze site usage and improve performance.",
+    "manageSocialTitle": "Social Cookies",
+    "manageSocialSubtitle": "Enable social media features and sharing.",
+    "manageAdvertTitle": "Advertising Cookies",
+    "manageAdvertSubtitle": "Personalize advertisements and measure their performance.",
+    "manageCancelButtonText": "Cancel",
+    "manageSaveButtonText": "Save Preferences"
   }
 } 

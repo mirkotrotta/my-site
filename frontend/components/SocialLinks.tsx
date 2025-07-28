@@ -49,7 +49,7 @@ export function SocialIcon({
       break;
   }
 
-  const iconClass = "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200";
+  const iconClass = "text-gray-600 hover:text-blue-500 dark:text-gray-400 dark:hover:text-white transition-colors duration-200";
   let icon: ReactNode;
   let label: string = platform.charAt(0).toUpperCase() + platform.slice(1);
     

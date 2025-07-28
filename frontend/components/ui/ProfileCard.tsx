@@ -43,9 +43,9 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   return (
     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 overflow-auto w-full max-w-xs md:max-w-sm lg:max-w-md max-h-[90vh] flex flex-col items-center mx-auto">
       {/* Profile Image*/}
-      <div className="w-full h-56 md:h-64 relative">
+      <div className="w-full aspect-square relative">
         <Image
-          src="/images/mirko-trotta-profile-resume-2025.jpg"
+          src="/images/mirko-trotta-profile-homepage.jpg"
           alt="Profile"
           fill
           className="object-cover w-full h-full"

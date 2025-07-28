@@ -1,81 +1,69 @@
 "use client";
 
 import { ReactNode, useEffect } from 'react';
+import useConsent from '@/hooks/useConsent';
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 type AnalyticsProviderProps = {
   children: ReactNode;
   googleAnalyticsId?: string;
-  fathomSiteId?: string;
-  plausibleDomain?: string;
-  umamiWebsiteId?: string;
 };
 
 /**
- * AnalyticsProvider - A component that integrates multiple analytics services.
+ * AnalyticsProvider - A component that integrates Google Analytics 4 with consent management.
  * 
- * To use this component, wrap your _app.tsx or RootLayout component:
+ * This component implements:
+ * - Google Analytics 4 (GA4) with Google Consent Mode v2
+ * - Consent-based script loading via react-cookie-manager
+ * - Automatic pageview tracking for route changes
+ * 
+ * Usage:
  * ```tsx
- * <AnalyticsProvider 
- *   googleAnalyticsId="G-XXXXXXXXXX"
- *   fathomSiteId="XXXXXXXXXX"
- *   plausibleDomain="yourdomain.com"
- *   umamiWebsiteId="XXXXXXXXXX"
- * >
+ * <AnalyticsProvider googleAnalyticsId="G-XXXXXXXXXX">
  *   {children}
  * </AnalyticsProvider>
  * ```
- * 
- * This component implements:
- * - Google Analytics 4 (GA4)
- * - Fathom Analytics (privacy-friendly)
- * - Plausible Analytics (privacy-friendly)
- * - Umami Analytics (self-hostable)
- * 
- * For each provider, you only need to include the ID/domain for the services you want to use.
  */
 export default function AnalyticsProvider({
   children,
-  googleAnalyticsId,
-  fathomSiteId,
-  plausibleDomain,
-  umamiWebsiteId
+  googleAnalyticsId = "G-2M4MLECK0Q" // Default to your GA4 measurement ID
 }: AnalyticsProviderProps) {
+  // CMP-driven consent state
+  const consentGranted = useConsent();
+
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
   // Track page views when route changes
   useEffect(() => {
-    if (!pathname) return;
+    if (!pathname || !consentGranted || !googleAnalyticsId) return;
     
     const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
     
     // Google Analytics pageview
-    if (googleAnalyticsId && typeof window.gtag === 'function') {
+    if (typeof window.gtag === 'function') {
       window.gtag('config', googleAnalyticsId, {
         page_path: url,
       });
     }
-    
-    // Fathom pageview
-    if (fathomSiteId && typeof window.fathom === 'object') {
-      window.fathom.trackPageview();
-    }
-    
-    // Plausible pageview
-    if (plausibleDomain && typeof window.plausible === 'function') {
-      window.plausible('pageview');
-    }
-    
-    // Umami pageview is automatic
-    
-  }, [pathname, searchParams, googleAnalyticsId, fathomSiteId, plausibleDomain]);
+  }, [pathname, searchParams, googleAnalyticsId, consentGranted]);
   
   return (
     <>
-      {/* Google Analytics */}
+      {/* Google Consent Mode v2 – default to denied BEFORE any other GA code */}
       {googleAnalyticsId && (
+        <Script id="ga-consent-default" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('consent', 'default', { 'analytics_storage': 'denied' });
+          `}
+        </Script>
+      )}
+
+      {/* Google Analytics */}
+      {googleAnalyticsId && consentGranted && (
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
@@ -84,56 +72,26 @@ export default function AnalyticsProvider({
           <Script id="google-analytics" strategy="afterInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
+              function gtag(){dataLayer.push(arguments);} 
               gtag('js', new Date());
               gtag('config', '${googleAnalyticsId}');
+              // Update consent to granted now that user has opted-in
+              gtag('consent', 'update', { 'analytics_storage': 'granted' });
             `}
           </Script>
         </>
       )}
       
-      {/* Fathom Analytics */}
-      {fathomSiteId && (
-        <Script
-          src="https://cdn.usefathom.com/script.js"
-          data-site={fathomSiteId}
-          defer
-          strategy="afterInteractive"
-        />
-      )}
-      
-      {/* Plausible Analytics */}
-      {plausibleDomain && (
-        <Script
-          src="https://plausible.io/js/script.js"
-          data-domain={plausibleDomain}
-          defer
-          strategy="afterInteractive"
-        />
-      )}
-      
-      {/* Umami Analytics */}
-      {umamiWebsiteId && (
-        <Script
-          src="https://analytics.umami.is/script.js"
-          data-website-id={umamiWebsiteId}
-          strategy="afterInteractive"
-        />
-      )}
+
       
       {children}
     </>
   );
 }
 
-// Augment the window object to include analytics properties
+// Augment the window object to include Google Analytics gtag
 declare global {
   interface Window {
-    gtag: (command: string, ...args: any[]) => void;
-    fathom: {
-      trackPageview: () => void;
-      trackGoal: (code: string, cents: number) => void;
-    };
-    plausible: (event: string, options?: any) => void;
+    gtag: (command: string, targetId?: string, config?: Record<string, unknown>) => void;
   }
 } 

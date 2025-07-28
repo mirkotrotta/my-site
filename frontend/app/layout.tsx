@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google"; // Removed
 import { IBM_Plex_Sans } from "next/font/google"; // Keep this import
 import "./globals.css";
-import AnalyticsProvider from '@/components/analytics/AnalyticsProvider';
-import Script from 'next/script';
-// Removed ThemeProvider, Header, Footer imports
+import { Providers } from "@/components/providers";
 
 // const geistSans = Geist({ // Removed
 //   variable: "--font-geist-sans",
@@ -48,23 +46,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${ibmPlexSans.variable}`} suppressHydrationWarning>
-      {/* Body tag gets theme classes applied dynamically by components/Layout.tsx */}
-      <body> 
-        {/* Removed ThemeProvider wrapper */}
-        {/* Removed Header and Footer components */}
-        {children} {/* Render children directly */}
-        
-        {/* Analytics Script */}
-        {process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL && process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
-          <Script
-            src={process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL}
-            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
-            strategy="lazyOnload"
-          />
-        )}
-        {/* Optional: Other Analytics Providers */}
-        {/* <AnalyticsProvider /> */}
+    <html lang="en" className={ibmPlexSans.variable} suppressHydrationWarning>
+      <body>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
