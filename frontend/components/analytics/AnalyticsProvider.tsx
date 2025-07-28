@@ -27,7 +27,7 @@ type AnalyticsProviderProps = {
  */
 export default function AnalyticsProvider({
   children,
-  googleAnalyticsId = "G-2M4MLECK0Q" // Default to your GA4 measurement ID
+  googleAnalyticsId = process.env.NEXT_PUBLIC_GA4_TRACKING_ID || "G-2M4MLECK0Q" // Use environment variable with fallback
 }: AnalyticsProviderProps) {
   // CMP-driven consent state
   const consentGranted = useConsent();

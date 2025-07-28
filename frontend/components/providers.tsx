@@ -89,7 +89,7 @@ export function Providers({ children }: ProvidersProps) {
         `
       }} />
       <CookieManagerWithNoSSR
-        cookieKitId="687e637efdf1be96c8f56417"
+        cookieKitId={process.env.NEXT_PUBLIC_COOKIEKIT_SITE_ID || "687e637efdf1be96c8f56417"}
         translations={cookieBannerTranslations}
         privacyPolicyUrl={`/${lang}/privacy`}
         theme={theme === 'dark' ? 'dark' : 'light'}
