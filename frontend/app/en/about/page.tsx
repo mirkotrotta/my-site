@@ -1,14 +1,6 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
-import Layout from '@/components/Layout';
-import SocialLinks from '@/components/SocialLinks';
-import GlobalCTA from '@/components/ui/GlobalCTA';
-import ClientBlogSection from '@/app/ClientBlogSection';
-import SkillsServicesGrid from '@/components/ui/SkillsServicesGrid';
-import { skillsData } from '@/lib/data';
-import ButtonGroup from '@/components/ui/ButtonGroup';
-import FeatureNormal from '@/components/ui/FeatureNormal';
 import AboutContent from '../../../components/AboutContent';
+import { PersonStructuredData } from '@/components/SEOStructuredData';
 
 export const metadata: Metadata = {
   title: 'About Me',
@@ -26,5 +18,20 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutContent language="en" />;
+  return (
+    <>
+      <PersonStructuredData
+        name="Mirko Trotta"
+        jobTitle="Full Stack Developer"
+        description="Full stack developer with a background in design and digital production. Building scalable web apps with React, FastAPI, Docker, and CI/CD for cloud deployment. Based in Germany."
+        url="https://mirkotrotta.com/en/about"
+        image="https://mirkotrotta.com/images/mirko-trotta-profile-aboutpage.jpg"
+        sameAs={[
+          "https://github.com/mirkotrotta",
+          "https://linkedin.com/in/mirkotrotta"
+        ]}
+      />
+      <AboutContent language="en" />
+    </>
+  );
 } 
