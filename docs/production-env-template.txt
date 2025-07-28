@@ -1,0 +1,54 @@
+# Production Environment Variables Template
+# Copy this content to .env.production and fill in your actual values
+
+# =============================================================================
+# DOMAIN CONFIGURATION
+# =============================================================================
+PROD_DOMAIN=mirkotrotta.com
+
+# =============================================================================
+# COOKIEKIT.IO CONSENT MANAGEMENT
+# =============================================================================
+NEXT_PUBLIC_COOKIEKIT_SITE_ID=687e637efdf1be96c8f56417
+
+# =============================================================================
+# GOOGLE ANALYTICS 4 (GA4)
+# =============================================================================
+NEXT_PUBLIC_GA4_TRACKING_ID=G-2M4MLECK0Q
+
+# =============================================================================
+# CONTACT FORM & NEWSLETTER
+# =============================================================================
+NEXT_PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/YOUR_FORMSPREE_ID
+BUTTONDOWN_API_KEY=your_buttondown_api_key_here
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+DATABASE_URL_PROD=postgresql://username:password@db:5432/database_name
+POSTGRES_USER_PROD=your_postgres_user
+POSTGRES_PASSWORD_PROD=your_secure_postgres_password
+POSTGRES_DB_PROD=your_database_name
+
+# =============================================================================
+# GITHUB API (for backend functionality)
+# =============================================================================
+GH_BACKEND_TOKEN=your_github_personal_access_token
+
+# =============================================================================
+# DOCKER REGISTRY & DEPLOYMENT
+# =============================================================================
+DOCKER_REGISTRY=ghcr.io/mirkotrotta/my-site
+TAG=latest
+
+# =============================================================================
+# MONITORING & ALERTS
+# =============================================================================
+NETDATA_CLAIM_TOKEN=your_netdata_claim_token
+NETDATA_CLAIM_ROOMS=your_netdata_rooms
+
+# =============================================================================
+# OPTIONAL: NOTIFICATIONS
+# =============================================================================
+# WATCHTOWER_NOTIFICATIONS=shoutrrr
+# WATCHTOWER_NOTIFICATION_URL=your_notification_url 

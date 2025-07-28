@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ReactNode, useEffect, useState } from 'react'
 import { Sun, Moon, Menu, X } from 'lucide-react'
-import SocialLinks from '@/components/SocialLinks'
+
 import GlobalContainer from '@/components/ui/GlobalContainer'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import useTranslation from '@/hooks/useTranslation'

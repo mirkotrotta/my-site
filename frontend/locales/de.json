@@ -19,7 +19,10 @@
     },
     "footer": {
       "copyright": "© {{year}} Mirko Trotta. Alle Rechte vorbehalten.",
-      "builtWith": "Erstellt mit Next.js, Tailwind CSS und FastAPI."
+      "builtWith": "Built with purpose. Engineered to last.",
+      "privacy": "Datenschutzerklärung",
+      "terms": "Nutzungsbedingungen",
+      "cookieSettings": "Cookie-Einstellungen"
     },
     "darkMode": {
       "toggle": "Dunkelmodus umschalten"
@@ -209,15 +212,26 @@
   "contact": {
     "title": "Kontaktiere mich",
     "subtitle": "Ich freue mich, von Ihnen zu hören.",
-    "form": {
-      "name": "Ihr Name",
-      "email": "Ihre E-Mail-Adresse",
-      "subject": "Betreff",
-      "message": "Ihre Nachricht",
-      "submit": "Nachricht senden"
-    },
+    "name": "Ihr Name",
+    "email": "Ihre E-Mail-Adresse",
+    "subject": "Betreff",
+    "message": "Ihre Nachricht",
+    "send": "Nachricht senden",
+    "sending": "Wird gesendet...",
     "success": "Vielen Dank! Ihre Nachricht wurde gesendet.",
     "error": "Hoppla! Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "privacyNotice": "Durch das Absenden dieses Formulars stimmen Sie unseren Datenverarbeitungspraktiken zu, wie in unserer",
+    "privacyPolicy": "Datenschutzerklärung",
+    "errors": {
+      "nameRequired": "Name ist erforderlich",
+      "nameLength": "Name muss mindestens 2 Zeichen lang sein",
+      "emailRequired": "E-Mail ist erforderlich",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "subjectRequired": "Betreff ist erforderlich",
+      "messageRequired": "Nachricht ist erforderlich",
+      "messageLength": "Nachricht muss mindestens 10 Zeichen lang sein",
+      "general": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    },
     "connect": {
       "title": "Mit mir verbinden",
       "subtitle": "Lieber über andere Kanäle verbinden? Kontaktieren Sie mich über Social Media oder E-Mail.",
@@ -235,6 +249,33 @@
     "subscribing": "Wird abonniert...",
     "success": "Danke für Ihr Abonnement!",
     "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
-    "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
+    "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "consentText": "Ich stimme zu, Newsletter-Updates zu erhalten und akzeptiere die",
+    "privacyPolicy": "Datenschutzerklärung",
+    "consentRequired": "Sie müssen der Datenschutzerklärung zustimmen, um sich zu abonnieren"
+  },
+  "search": {
+    "placeholder": "Artikel suchen..."
+  },
+  "cookieBanner": {
+    "title": "Cookie-Einstellungen 🍪",
+    "message": "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. Durch die Nutzung unserer Website stimmen Sie der Verwendung von Cookies zu. Sie können Ihre Einstellungen unten verwalten.",
+    "buttonText": "Alle akzeptieren",
+    "declineButtonText": "Alle ablehnen",
+    "manageButtonText": "Cookies verwalten",
+    "privacyPolicyText": "Datenschutzerklärung",
+    "manageTitle": "Cookie-Einstellungen verwalten",
+    "manageMessage": "Sie können unten verschiedene Arten von Cookies aktivieren oder deaktivieren. Essenzielle Cookies sind immer aktiviert, da sie für die Funktion der Website notwendig sind.",
+    "manageEssentialTitle": "Essenzielle Cookies",
+    "manageEssentialSubtitle": "Erforderlich, damit die Website ordnungsgemäß funktioniert.",
+    "manageEssentialStatusText": "Immer aktiviert",
+    "manageAnalyticsTitle": "Analyse-Cookies",
+    "manageAnalyticsSubtitle": "Diese Cookies ermöglichen es uns, die Seitennutzung zu analysieren und die Leistung zu verbessern.",
+    "manageSocialTitle": "Soziale Cookies",
+    "manageSocialSubtitle": "Ermöglichen soziale Medien-Funktionen und das Teilen von Inhalten.",
+    "manageAdvertTitle": "Werbe-Cookies",
+    "manageAdvertSubtitle": "Personalisieren Werbung und messen deren Leistung.",
+    "manageCancelButtonText": "Abbrechen",
+    "manageSaveButtonText": "Einstellungen speichern"
   }
 } 

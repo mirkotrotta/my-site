@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { MapPin, Globe, Phone, Mail, Calendar, Flag } from "lucide-react";  
+import { MapPin } from "lucide-react";  
 import { SiLinkedin, SiGithub } from "react-icons/si";
 import Button from "./Button";
 import useTranslation from "@/hooks/useTranslation";
@@ -28,12 +28,8 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   
   // Fallbacks for demo/development
   const location = profile?.location || "Hanau, Germany";
-  const phone = profile?.phone || "+49 173 940 55 70";
-  const email = profile?.email || "mirkotrotta@gmail.com";
   const linkedin = profile?.linkedin || "https://www.linkedin.com/in/mirkotrotta";
   const github = profile?.github || "https://github.com/mirkotrotta";
-  const dob = profile?.dob || "07 October 1981";
-  const nationality = profile?.nationality || t('resume.profile.nationality') || "Italian";
   
   // For PDF downloads in Next.js with i18n, we need to break out of the locale-prefixed URL structure
   // by forcing an absolute URL path that starts with the root domain
@@ -43,9 +39,9 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
   return (
     <div className="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 overflow-auto w-full max-w-xs md:max-w-sm lg:max-w-md max-h-[90vh] flex flex-col items-center mx-auto">
       {/* Profile Image*/}
-      <div className="w-full h-56 md:h-64 relative">
+      <div className="w-full aspect-square relative">
         <Image
-          src="/images/mirko-trotta-profile-resume-2025.jpg"
+          src="/images/mirko-trotta-profile-homepage.jpg"
           alt="Profile"
           fill
           className="object-cover w-full h-full"
@@ -99,7 +95,7 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
             </a>
           </div>
           {/* Email */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <a
               href={`mailto:${email}`}
               aria-label="Email"
@@ -108,9 +104,9 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
               <Mail size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
               {email}
             </a>
-          </div>
+          </div>*/}
           {/* Phone */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`} // Remove spaces for tel link
               aria-label="Phone"
@@ -119,17 +115,17 @@ export default function ProfileCard({ profile }: ProfileCardProps) {
               <Phone size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
               {phone}
             </a>
-          </div>
+          </div>*/}
           {/* Date of Birth */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <Calendar size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
             {dob}
-          </div>
+          </div>*/}
           {/* Nationality */}
-          <div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
+          {/*<div className="flex items-center text-gray-700 dark:text-gray-200 text-sm">
             <Flag size={16} className="mr-2 text-gray-400 dark:text-gray-500" />
             {nationality}
-          </div>
+          </div>*/}
         </div>
         {/* Buttons */}
         <div className="w-full flex flex-col gap-2 mt-auto">

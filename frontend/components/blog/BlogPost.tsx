@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { components } from "@/components/blog/mdxComponents";
-import Script from "next/script";
 import Loading from '@/components/ui/Loading';
 import MDXErrorBoundary from './MDXErrorBoundary';
 import GlobalContainer from '@/components/ui/GlobalContainer';
@@ -18,6 +17,7 @@ import SocialSharing from './SocialSharing';
 import GlobalCTA from '../ui/GlobalCTA';
 import NewsletterForm from '../forms/NewsletterForm';
 import useTranslation from '@/hooks/useTranslation';
+import BlogPostStructuredData from './BlogPostStructuredData';
 
 export type Frontmatter = {
   title: string;
@@ -132,39 +132,12 @@ export default function BlogPost({ post }: BlogPostProps) {
   }
 
   const { frontmatter, mdxSource, slug, relatedPosts = [] } = post;
-  const publishDate = new Date(frontmatter.date).toISOString();
   
   // Generate the cover image URL, or fallback to a placeholder
   const coverImage = frontmatter.coverImage || `https://picsum.photos/seed/${slug}/1200/600`;
 
-  // Prepare structured data with correct URL path including language
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": frontmatter.title,
-    "datePublished": publishDate,
-    "dateModified": publishDate,
-    "description": frontmatter.summary || "",
-    "keywords": frontmatter.tags?.join(", ") || "",
-    "url": `/${lang}/blog/${slug}`,
-    "image": coverImage,
-    "author": {
-      "@type": "Person",
-      "name": "Mirko Trotta"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Mirko Trotta",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "/logo.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `/${lang}/blog/${slug}`
-    }
-  };
+  // Prepare the URL for structured data
+  const postUrl = `/${lang}/blog/${slug}`;
 
   // Handle client-side error
   if (hasError) {
@@ -208,9 +181,7 @@ export default function BlogPost({ post }: BlogPostProps) {
   return (
     <>
       {/* Add JSON-LD structured data */}
-      <Script id="blogpost-ld-json" type="application/ld+json">
-        {JSON.stringify(jsonLd)}
-      </Script>
+      <BlogPostStructuredData post={post} url={postUrl} />
       <SidebarLayout
         sidebarLeft={contentSidebar}
         sidebarRight={relatedContentSidebar}

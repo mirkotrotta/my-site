@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import useTranslation from '@/hooks/useTranslation';
+import Link from 'next/link';
 
 interface FormData {
   name: string;
@@ -18,7 +19,7 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -129,10 +130,10 @@ export default function ContactForm() {
       setSubmitStatus('success');
       setStatusMessage(t('contact.success'));
       
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Contact form error:', error);
       setSubmitStatus('error');
-      setStatusMessage(error.message || t('contact.errors.general'));
+      setStatusMessage(error instanceof Error ? error.message : t('contact.errors.general'));
     } finally {
       setIsSubmitting(false);
     }
@@ -238,6 +239,16 @@ export default function ContactForm() {
           {errors.message && (
             <p className="mt-1 text-sm text-red-600">{errors.message}</p>
           )}
+        </div>
+        
+        {/* Privacy Notice */}
+        <div className="mb-6">
+          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            {t('contact.privacyNotice')}{' '}
+            <Link href={`/${language}/privacy`} className="text-blue-600 dark:text-blue-400 hover:underline">
+              {t('contact.privacyPolicy')}
+            </Link>
+          </p>
         </div>
         
         {/* Submit button */}

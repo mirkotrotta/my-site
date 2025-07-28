@@ -13,6 +13,8 @@
 # - NEXT_PUBLIC_FORMSPREE_ENDPOINT: Formspree form endpoint
 # - NEXT_PUBLIC_SITE_URL: Public site URL for frontend
 # - FRONTEND_URL: Frontend URL for backend CORS
+# - NEXT_PUBLIC_COOKIEKIT_SITE_ID: Cookiekit.io site ID for consent management
+# - NEXT_PUBLIC_GA4_TRACKING_ID: Google Analytics 4 tracking ID
 
 name: "Deploy to Hetzner"
 
@@ -133,6 +135,12 @@ jobs:
             
             BUTTONDOWN_API_KEY="${{ secrets.BUTTONDOWN_API_KEY }}"
             NEXT_PUBLIC_FORMSPREE_ENDPOINT="${{ secrets.NEXT_PUBLIC_FORMSPREE_ENDPOINT }}"
+            
+            # Cookiekit.io Consent Management
+            NEXT_PUBLIC_COOKIEKIT_SITE_ID="${{ secrets.NEXT_PUBLIC_COOKIEKIT_SITE_ID }}"
+            
+            # Google Analytics 4
+            NEXT_PUBLIC_GA4_TRACKING_ID="${{ secrets.NEXT_PUBLIC_GA4_TRACKING_ID }}"
             
             NPM_ADMIN_EMAIL="mirkotrottac@gmail.com"
             NPM_ADMIN_PASSWORD="${{ secrets.NPM_ADMIN_PASSWORD }}"
