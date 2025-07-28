@@ -5,9 +5,14 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const submittedEmail = body?.email || body?.email_address || body?.payload?.email_address;
+    const consent = body?.consent;
 
     if (!submittedEmail || !submittedEmail.includes('@')) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+    }
+
+    if (!consent) {
+      return NextResponse.json({ error: 'Consent is required to subscribe' }, { status: 400 });
     }
 
     const apiKey = process.env.BUTTONDOWN_API_KEY;
@@ -16,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Newsletter service is not configured correctly' }, { status: 500 });
     }
 
-    console.log(`Subscribing email: ${submittedEmail} to Buttondown`);
+    console.log(`Subscribing email: ${submittedEmail} to Buttondown with consent: ${consent}`);
 
     const response = await fetch('https://api.buttondown.email/v1/subscribers', {
       method: 'POST',

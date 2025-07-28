@@ -55,12 +55,6 @@ export default function ContactContent({ language }: ContactContentProps) {
               </div>
             </div>
           </div>
-          
-          <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {t('contact.privacy')}
-            </p>
-          </div>
         </div>
       </div>
     </Layout>

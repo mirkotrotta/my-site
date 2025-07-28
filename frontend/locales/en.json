@@ -162,15 +162,26 @@
   "contact": {
     "title": "Get in Touch",
     "subtitle": "I look forward to hearing from you.",
-    "form": {
-      "name": "Your Name",
-      "email": "Your Email",
-      "subject": "Subject",
-      "message": "Your Message",
-      "submit": "Send Message"
-    },
+    "name": "Your Name",
+    "email": "Your Email",
+    "subject": "Subject",
+    "message": "Your Message",
+    "send": "Send Message",
+    "sending": "Sending...",
     "success": "Thank you! Your message has been sent.",
     "error": "Oops! There was an error sending your message. Please try again.",
+    "privacyNotice": "By submitting this form, you agree to our data processing practices as described in our",
+    "privacyPolicy": "Privacy Policy",
+    "errors": {
+      "nameRequired": "Name is required",
+      "nameLength": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "subjectRequired": "Subject is required",
+      "messageRequired": "Message is required",
+      "messageLength": "Message must be at least 10 characters",
+      "general": "An error occurred. Please try again."
+    },
     "connect": {
       "title": "Connect With Me",
       "subtitle": "Prefer to connect through other channels? Reach out via social media or email.",
@@ -215,7 +226,10 @@
     "subscribing": "Subscribing...",
     "success": "Thanks for subscribing!",
     "invalidEmail": "Please enter a valid email address",
-    "genericError": "An error occurred. Please try again."
+    "genericError": "An error occurred. Please try again.",
+    "consentText": "I agree to receive newsletter updates and accept the",
+    "privacyPolicy": "Privacy Policy",
+    "consentRequired": "You must agree to the privacy policy to subscribe"
   },
   "search": {
     "placeholder": "Search articles..."

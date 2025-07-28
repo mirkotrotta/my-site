@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import useTranslation from '@/hooks/useTranslation';
+import Link from 'next/link';
 
 interface NewsletterFormProps {
   language?: string; // Allow explicit language override from parent
@@ -11,6 +12,7 @@ interface NewsletterFormProps {
 export default function NewsletterForm({ language: parentLanguage }: NewsletterFormProps = {}) {
   const { t, language: hookLanguage } = useTranslation();
   const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [error, setError] = useState<string | null>(null);
   
@@ -31,6 +33,12 @@ export default function NewsletterForm({ language: parentLanguage }: NewsletterF
       setError(getText('newsletter.invalidEmail', 'Please enter a valid email address'));
       return;
     }
+
+    if (!consent) {
+      setStatus('error');
+      setError(getText('newsletter.consentRequired', 'You must agree to the privacy policy to subscribe'));
+      return;
+    }
     
     setStatus('loading');
     setError(null);
@@ -39,7 +47,7 @@ export default function NewsletterForm({ language: parentLanguage }: NewsletterF
       const res = await fetch(`/api/newsletter`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, language })
+        body: JSON.stringify({ email, language, consent })
       });
 
       const data = await res.json();
@@ -55,10 +63,11 @@ export default function NewsletterForm({ language: parentLanguage }: NewsletterF
 
       setStatus('success');
       setEmail('');
-    } catch (err: any) {
+      setConsent(false);
+    } catch (err: unknown) {
       console.error('Newsletter subscription error:', err);
       setStatus('error');
-      setError(err.message || getText('newsletter.genericError', 'An error occurred. Please try again.'));
+      setError(err instanceof Error ? err.message : getText('newsletter.genericError', 'An error occurred. Please try again.'));
     }
   };
 
@@ -79,6 +88,23 @@ export default function NewsletterForm({ language: parentLanguage }: NewsletterF
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500"
         />
+        <div className="flex items-start space-x-2">
+          <input
+            type="checkbox"
+            id="consent"
+            name="consent"
+            required
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+          />
+          <label htmlFor="consent" className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+            {getText('newsletter.consentText', 'I agree to receive newsletter updates and accept the')}{' '}
+            <Link href={`/${language}/privacy`} className="text-blue-600 dark:text-blue-400 hover:underline">
+              {getText('newsletter.privacyPolicy', 'Privacy Policy')}
+            </Link>
+          </label>
+        </div>
         <button
           type="submit"
           disabled={status === 'loading'}
