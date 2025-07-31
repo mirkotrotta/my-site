@@ -23,38 +23,72 @@ ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
 
 RUN npm run build
 
-# Stage 3: Runtime
-FROM node:22-slim AS runner
+# Stage 3: Development (for local development with volume mounts)
+FROM node:22-slim AS development
 WORKDIR /app
 
-ENV NODE_ENV production
-# ENV HOSTNAME 0.0.0.0 # Not typically needed for runner if binding to 0.0.0.0 in CMD
+ENV NODE_ENV development
 ENV PORT 4000
 
-# Create a non-root user `nextjs` and group `nodejs`
-# Explicitly create home directory and set ownership
+# Create a non-root user for development
 RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 --ingroup nodejs --home /home/nextjs --shell /bin/sh nextjs && \
-    mkdir -p /home/nextjs/.npm && \
+    adduser --system --uid 1001 --ingroup nodejs --home /home/nextjs --shell /bin/sh nextjs
+
+# Create necessary directories and set proper permissions
+RUN mkdir -p /home/nextjs/.npm && \
+    mkdir -p /app && \
+    mkdir -p /app/.next && \
     chown -R nextjs:nodejs /home/nextjs && \
     chown -R nextjs:nodejs /app
 
 # Set the HOME environment variable
 ENV HOME=/home/nextjs
-# Explicitly set npm cache to be within the user's home directory or a writable app path
 ENV NPM_CONFIG_CACHE=$HOME/.npm
-# Or alternatively to keep cache within the app structure (ensure /app/.npm-cache is writable by nextjs if used)
-# ENV NPM_CONFIG_CACHE=/app/.npm-cache 
 
+# Copy package files and install dependencies for development
+COPY --chown=nextjs:nodejs package.json package-lock.json* ./
+USER nextjs
+RUN npm ci
+
+EXPOSE 4000
+
+# Force binding to 0.0.0.0 to ensure container accessibility
+ENV HOSTNAME=0.0.0.0
+CMD ["npm", "run", "dev"]
+
+# Stage 4: Runtime (for production)
+FROM node:22-slim AS runner
+WORKDIR /app
+
+ENV NODE_ENV production
+ENV PORT 4000
+
+# Create a non-root user `nextjs` and group `nodejs`
+# Create the user and group first
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 --ingroup nodejs --home /home/nextjs --shell /bin/sh nextjs
+
+# Create necessary directories and set proper permissions
+RUN mkdir -p /home/nextjs/.npm && \
+    mkdir -p /app && \
+    chown -R nextjs:nodejs /home/nextjs && \
+    chown -R nextjs:nodejs /app
+
+# Set the HOME environment variable
+ENV HOME=/home/nextjs
+# Set npm cache to be within the user's home directory
+ENV NPM_CONFIG_CACHE=$HOME/.npm
+
+# Copy files with proper ownership
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
+# Switch to the nextjs user
 USER nextjs
 
 EXPOSE 4000
 
-# The standalone output for Next.js typically includes a server.js
 # Force binding to 0.0.0.0 to ensure container accessibility
 ENV HOSTNAME=0.0.0.0
 CMD ["node", "server.js"] 

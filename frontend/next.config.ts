@@ -1,4 +1,6 @@
 // next.config.ts
+import path from 'path';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
@@ -26,6 +28,9 @@ const nextConfig = {
     return config;
   },
   transpilePackages: ['gray-matter'],
+  
+  // Ensure content files are copied to the build output
+  outputFileTracingRoot: path.join(__dirname, '../'),
   
   // Add security headers including HSTS
   async headers() {

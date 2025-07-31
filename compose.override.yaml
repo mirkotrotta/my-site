@@ -20,17 +20,17 @@ services:
       - internal
 
   frontend:
-    # Using npm ci ensures a clean install from package-lock.json, avoiding ENOTEMPTY errors.
-    # It will first delete node_modules if it exists in the volume.
-    command: sh -c "npm ci && npm run dev"
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: development # Use development stage for local development
     ports:
       - "${FRONTEND_PORT:-4000}:${FRONTEND_PORT:-4000}"
     environment:
       - NODE_ENV=development 
     volumes:
-      - ./frontend:/app # Mounts your local code (including package.json and package-lock.json)
-      - /app/node_modules # Anonymous volume for node_modules. `npm ci` will populate this.
-      - /app/.next 
+      - ./frontend:/app:delegated # Use delegated mode for better performance
+      - frontend_next_cache:/app/.next # Named volume for Next.js cache
     env_file:
       - .env.docker 
     depends_on:
@@ -50,4 +50,6 @@ services:
       - internal
 
 # Networks are inherited from compose.yaml
-# Volumes are inherited from compose.yaml (postgres_data) 
+# Volumes are inherited from compose.yaml (postgres_data)
+volumes:
+  frontend_next_cache: 
