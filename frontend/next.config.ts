@@ -29,9 +29,6 @@ const nextConfig = {
   },
   transpilePackages: ['gray-matter'],
   
-  // Ensure content files are copied to the build output
-  outputFileTracingRoot: path.join(__dirname, '../'),
-  
   // Add security headers including HSTS
   async headers() {
     return [
