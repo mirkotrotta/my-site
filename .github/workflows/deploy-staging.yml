@@ -1,0 +1,95 @@
+name: Deploy Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Image tag to deploy (commit SHA or 'latest')
+        required: true
+        default: latest
+      domain:
+        description: Staging domain name
+        required: true
+        default: staging.mirkotrotta.com
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy staging over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: "${{ secrets.HETZNER_SERVER_IP }}"
+          username: "${{ secrets.HETZNER_SSH_USER }}"
+          key: "${{ secrets.HETZNER_SSH_PRIVATE_KEY }}"
+          script: |
+            set -e
+            echo "Starting staging deployment at $(date)"
+
+            sudo mkdir -p /opt/mirkotrotta
+            sudo chown -R $USER:$USER /opt/mirkotrotta
+            cd /opt/mirkotrotta
+
+            echo "Downloading compose.staging.yaml from repository"
+            curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3.raw" \
+              -o compose.staging.yaml \
+              "https://api.github.com/repos/${{ github.repository }}/contents/compose.staging.yaml?ref=${{ github.sha }}"
+
+            echo "Creating .env.staging with provided inputs/secrets"
+            cat > .env.staging << 'ENVEOF'
+            TAG="${{ inputs.tag }}"
+            DOCKER_REGISTRY="ghcr.io/mirkotrotta/my-site"
+            STAGING_DOMAIN="${{ inputs.domain }}"
+
+            POSTGRES_USER_STAGING="${{ secrets.POSTGRES_USER_STAGING }}"
+            POSTGRES_PASSWORD_STAGING="${{ secrets.POSTGRES_PASSWORD_STAGING }}"
+            POSTGRES_DB_STAGING="${{ secrets.POSTGRES_DB_STAGING }}"
+            DATABASE_URL_STAGING="postgresql://${{ secrets.POSTGRES_USER_STAGING }}:${{ secrets.POSTGRES_PASSWORD_STAGING }}@db-staging:5432/${{ secrets.POSTGRES_DB_STAGING }}"
+            ENVEOF
+
+            echo "Ensuring external 'web' network exists"
+            docker network inspect web >/dev/null 2>&1 || docker network create web
+
+            echo "Logging into GHCR"
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+
+            echo "Pulling staging images (best-effort)"
+            docker pull "ghcr.io/mirkotrotta/my-site/my-site-web:${{ inputs.tag }}" || true
+            docker pull "ghcr.io/mirkotrotta/my-site/my-site-api:${{ inputs.tag }}" || true
+
+            echo "Starting staging services (db-staging, api-staging, web-staging)"
+            docker compose -f compose.staging.yaml --env-file .env.staging up -d db-staging api-staging web-staging
+
+            echo "Waiting briefly and displaying container status"
+            sleep 5
+            docker compose -f compose.staging.yaml ps --format "table {{.Service}}\t{{.Status}}\t{{.Ports}}"
+
+            echo "Attempting API health probe (non-fatal if unavailable)"
+            for i in {1..24}; do
+              if docker compose -f compose.staging.yaml exec -T api-staging curl -f http://localhost:8000/health >/dev/null 2>&1; then
+                echo "API health check passed"
+                break
+              fi
+              if [ $i -eq 24 ]; then
+                echo "API health check failed after 2 minutes (continuing)"
+                docker compose -f compose.staging.yaml logs api-staging || true
+              fi
+              sleep 5
+            done
+
+            echo "Staging deployment complete"
+
+      - name: Post-Deploy Note
+        run: |
+          echo "If not already configured, add a Proxy Host in Nginx Proxy Manager:"
+          echo "Domain: ${{ inputs.domain }}"
+          echo "Forward: web-staging:4000 (http), Websockets ON"
+          echo "Custom Location: /api -> api-staging:8000 (http)"
+          echo "SSL: Request Let's Encrypt, Force SSL, HTTP/2"
+
+
